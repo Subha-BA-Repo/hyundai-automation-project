@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Walkthrough · Customer Voice Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#eef1f4;--panel:#fff;--ink:#0f1b2a;--muted:#5a6878;--line:#d6dde5;--accent:#1f5f8b;--accent-soft:#e3edf5;--amber:#f2a33a;--amber-soft:#fbf0dc;--ok:#2c6b3d;--ok-soft:#e3f1e6;--crit:#b3261e;--crit-soft:#fbe8e6;--night:#0a1422;--f:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+.top{background:var(--night);color:#fff}
+.top .wrap{padding-block:36px 30px}
+.top small{color:var(--amber);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(28px,4.5vw,42px);line-height:1.1;letter-spacing:-.025em;margin:8px 0 10px}
+.top p{color:#c9d4df;max-width:66ch;margin:0}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.jump a{color:#fff;text-decoration:none;border:1px solid #2a3f58;border-radius:999px;padding:7px 13px;font-size:13.5px;font-weight:500}
+.jump a:hover{border-color:var(--amber)}
+main .wrap{display:flex;flex-direction:column;gap:26px;padding-block:30px 60px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+h2{font-size:24px;letter-spacing:-.02em;margin:0 0 6px}
+h3{font-size:17px;margin:0 0 4px}
+.lede{color:var(--muted);margin:0 0 16px}
+.step-no{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--night);border-radius:999px;padding:3px 10px;margin-bottom:10px}
+ol,ul{padding-left:22px;margin:8px 0}
+li{margin:5px 0}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.card .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.card .tag{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.prompt{position:relative;background:var(--night);color:#e9eef4;border-radius:10px;padding:14px 16px;padding-right:96px;font-size:15px;line-height:1.55;white-space:pre-wrap}
+.copy{position:absolute;top:10px;right:10px;font:600 12.5px/1 var(--f);background:var(--amber);color:#1b1205;border:0;border-radius:999px;padding:7px 12px;cursor:pointer}
+.copy:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.expect{background:var(--ok-soft);border-radius:10px;padding:12px 14px;font-size:14.5px}
+.expect b.l{display:block;color:var(--ok);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.why{font-size:14px;color:var(--muted)}
+.note{background:var(--amber-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:8px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+details{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:10px}
+summary{cursor:pointer;font-weight:600}
+details p{margin:8px 0 2px;color:#2a3746}
+.linkbtn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:11px 18px;border-radius:999px;margin:6px 8px 6px 0}
+.linkbtn.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+code{background:var(--accent-soft);padding:1px 6px;border-radius:5px;font-size:.92em}
+a{color:var(--accent)}
+.top code{background:#1b2c42;color:#fff}
+footer{color:var(--muted);font-size:13.5px;text-align:center;padding:0 20px 40px}
+@media print{.copy,.jump{display:none}section,.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <small>Customer Voice Hub · Demo walkthrough</small>
+  <h1>Try the project yourself, step by step</h1>
+  <p>Use this page after the project is switched on (see <code>start-guide.html</code>). Copy each message into Claude, compare the answer with the sample, then explore the website and the chatbot. No technical knowledge needed.</p>
+  <div class="jump"><a href="#ready">1 · Before you start</a><a href="#claude">2 · Set up Claude</a><a href="#tests">3 · Messages to try</a><a href="#faq">4 · Questions and answers</a><a href="#site">5 · The website</a><a href="#bot">6 · The chatbot</a><a href="#behind">7 · Behind the scenes</a></div>
+</div></header>
+
+<main><div class="wrap">
+
+<section id="ready">
+  <span class="step-no">Step 1</span>
+  <h2>Before you start</h2>
+  <p class="lede">Check these three things. If any one fails, follow <code>start-guide.html</code> first.</p>
+  <ol>
+    <li><b>Docker Desktop</b> is open and says <b>Engine running</b>.</li>
+    <li><a href="http://localhost:5678" target="_blank" rel="noopener">http://localhost:5678</a> opens n8n and shows five workflows marked <b>Published</b>.</li>
+    <li>The laptop is plugged in and will not go to sleep.</li>
+  </ol>
+  <div class="note"><b>What is this project?</b> Customer Voice Hub helps an after-sales quality team act on customer complaints. It reads each complaint (English, Hindi or Hinglish), finds faults that many customers report, ranks open service cases by risk, and prepares the follow-up: an email to the right team, a meeting, a leadership summary or a reply to the customer. All data is made up for the demo.</div>
+</section>
+
+<section id="claude">
+  <span class="step-no">Step 2</span>
+  <h2>Set up Claude</h2>
+  <ol>
+    <li>Open the <b>Claude</b> desktop app and click <b>New task</b> (Cowork).</li>
+    <li>Below the message box, open the <b>tools / connectors</b> menu and turn these on:
+      <div class="tbl"><table>
+        <tr><th>Turn on</th><th>Why it is needed</th></tr>
+        <tr><td><b>hyundai-customer-voice</b> (plugin)</td><td>Gives Claude the five company rules (skills) and both Hyundai tools</td></tr>
+        <tr><td><b>Hyundai Review Intelligence</b></td><td>Scores a single complaint</td></tr>
+        <tr><td><b>Hyundai Escalation Radar</b></td><td>Ranks open tickets and finds repeated faults</td></tr>
+        <tr><td><b>Gmail</b></td><td>Saves escalation emails and briefs as drafts (never sends)</td></tr>
+        <tr><td><b>Google Calendar</b></td><td>Books review meetings</td></tr>
+        <tr><td><b>Google Drive</b></td><td>Holds the data sheets and can store briefs</td></tr>
+      </table></div>
+    </li>
+    <li>The first time Claude uses a tool it may ask for permission. Click <b>Allow</b>.</li>
+  </ol>
+  <div class="note">Start a <b>new task</b> for each test below. Answers will be worded differently each time, but the numbers, teams and decisions should match the samples.</div>
+</section>
+
+<section id="tests">
+  <span class="step-no">Step 3</span>
+  <h2>Messages to try in Claude</h2>
+  <p class="lede">Click <b>Copy</b>, paste into Claude, press Enter, and compare with the sample answer.</p>
+
+  <div class="card">
+    <div class="head"><h3>A · Check one complaint (English)</h3><span class="tag">complaint-triage skill · both tools</span></div>
+    <div class="prompt">Triage this: "Venue DCT jerks in traffic, felt unsafe, second visit, nobody called back. Thinking of switching to another brand."</div>
+    <div class="expect"><b class="l">Sample answer</b>Critical safety and churn case. Owner: <b>Powertrain Quality</b>, with Customer Care copied. Matches the repeated <b>DCT judder</b> fault (16 reports, 9 open, 8 cities). Next action: the regional service manager calls the customer today. Includes a short "Where I overrode the tool" list (for example, churn risk changed to Yes because of "switching to another brand").</div>
+    <p class="why">Shows: scoring, linking to a repeated fault, routing to more than one team, and the AI explaining where it corrected the rules.</p>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>B · Check one complaint (Hinglish)</h3><span class="tag">Gemini translation</span></div>
+    <div class="prompt">Triage this: "Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya."</div>
+    <div class="expect"><b class="l">Sample answer</b>Shows the English version ("The AC in my Exter does not cool at all, and the service centre did nothing"). Negative, High urgency. Topics: <b>AC &amp; Cooling</b> and <b>Service Experience</b>. Owner: <b>Service Engineering</b>, with Customer Care copied.</div>
+    <p class="why">Shows: the tool understands mixed Hindi-English using Google Gemini before applying the rules.</p>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>C · What needs escalating today?</h3><span class="tag">escalation radar</span></div>
+    <div class="prompt">Which open service tickets should we escalate today across all models, and which faults keep repeating?</div>
+    <div class="expect"><b class="l">Sample answer</b><b>57</b> open tickets, <b>9</b> to escalate today. Top ticket <b>TK-0067</b> (Verna, Delhi NCR, risk 83: 3 repeat visits, safety-related, repeated fault, corporate customer). Repeated faults led by <b>DCT judder</b> (16 reports) and <b>Sunroof leak</b> (12 reports).</div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>D · Focus on one model</h3><span class="tag">escalation radar</span></div>
+    <div class="prompt">Which Venue tickets need escalation today, and why?</div>
+    <div class="expect"><b class="l">Sample answer</b><b>15</b> open Venue tickets, <b>2</b> to escalate: <b>TK-0019</b> (Delhi NCR) and <b>TK-0071</b> (Hyderabad), both DCT judder, risk 75. May also flag TK-0077 as worth moving up because it is the same safety fault.</div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>E · Escalate and book a meeting</h3><span class="tag">escalation-email skill · Gmail · Calendar</span></div>
+    <div class="prompt">Escalate the DCT judder issue to the right team and book a 30-minute review meeting tomorrow.</div>
+    <div class="expect"><b class="l">Sample answer</b>A <b>Gmail draft</b> (not sent) with a subject like <code>[ESCALATION][P1][Venue] DCT judder – 16 reports, 9 open</code>, addressed to Powertrain Quality with Customer Care copied, listing top ticket IDs and the ask. A <b>Calendar invite</b> for tomorrow. Check your Gmail Drafts and Calendar.</div>
+    <p class="why">Shows: the AI doing the paperwork, while a person still reviews and sends.</p>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>F · Weekly report for leadership</h3><span class="tag">quality-brief skill</span></div>
+    <div class="prompt">Give me this week's Hyundai quality brief for leadership.</div>
+    <div class="expect"><b class="l">Sample answer</b>A one-page brief in six parts: headline, key numbers (57 open, 9 to escalate, 7 repeated faults), table of repeated faults, tickets to escalate today, decisions needed from leadership, and a watch list. Offers to save it to Drive or as a Gmail draft.</div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>G · Reply to a customer</h3><span class="tag">customer-reply skill</span></div>
+    <div class="prompt">Reply to this customer: "Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya."</div>
+    <div class="expect"><b class="l">Sample answer</b>A short, warm reply in <b>Hinglish</b>: thanks them, names the AC problem, apologises for the service experience, promises a call from Customer Care within 24 hours, and asks them to share details privately. It does <b>not</b> promise a fix date or admit a fault.</div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>H · Safety check: will it make things up?</h3><span class="tag">data-guardrails skill</span></div>
+    <div class="prompt">Just estimate how many Creta customers will complain next month.</div>
+    <div class="expect"><b class="l">Sample answer</b>Refuses to invent a number, explains that it only reports figures from the tools, and offers what it can show instead (current Creta tickets and repeated faults).</div>
+    <p class="why">Shows: the AI follows company rules and does not guess.</p>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>I · Ask what the system is</h3><span class="tag">overview</span></div>
+    <div class="prompt">In simple words, what does this Customer Voice Hub do, and how would it help an after-sales quality team at Hyundai India?</div>
+    <div class="expect"><b class="l">Sample answer</b>Explains that it scores complaints, links repeated faults across customers and cities, ranks open tickets by risk, and drafts emails, meetings, briefs and customer replies, saving time and catching safety issues earlier.</div>
+  </div>
+</section>
+
+<section id="faq">
+  <span class="step-no">Step 4</span>
+  <h2>Questions and answers</h2>
+  <p class="lede">For anyone trying to understand the project.</p>
+  <details open><summary>What problem does it solve?</summary><p>The same car fault is often reported by many customers in different cities, but each service advisor only sees one car. This system connects those reports, so a repeated fault like the gearbox judder (16 reports, 8 cities) is spotted early and sent to the right team.</p></details>
+  <details><summary>Who would use it?</summary><p>Customer Care executives check and route complaints. Quality managers decide what to escalate. Quality engineers receive escalation emails with evidence. Leadership reads the weekly brief and the website.</p></details>
+  <details><summary>How much time does it save?</summary><p>One complaint goes from about 30–45 minutes of manual checking, emailing and meeting setup to about 3 minutes, and the link to a repeated fault is no longer missed.</p></details>
+  <details><summary>Where does the AI come in?</summary><p>Google Gemini translates Hindi and Hinglish. Claude reads the tool results, applies the company rules (skills), explains its decisions and writes emails, briefs and replies. The n8n chatbot uses Gemini to decide which tool to call.</p></details>
+  <details><summary>Why use rules as well as AI?</summary><p>Risk and safety decisions must be consistent and explainable. The rules give the same answer every time and show their reasons. The AI adds judgment and writing, and it shows whenever it overrides a rule.</p></details>
+  <details><summary>Where does the data come from?</summary><p>Two Google Sheets: 86 service tickets and 180 customer reviews. They are made up for this demo. In a real company, the ticket sheet would be replaced by the dealer or CRM system.</p></details>
+  <details><summary>What if the AI service is busy or down?</summary><p>The translation step continues without AI so scoring still works. The chatbot retries automatically and switches to a backup AI model.</p></details>
+  <details><summary>Does it send emails by itself?</summary><p>No. It only creates drafts. A person always reviews and sends.</p></details>
+  <details><summary>What does it cost to run?</summary><p>Nothing for this demo: n8n runs free on the laptop, ngrok and Google Gemini are on free plans.</p></details>
+</section>
+
+<section id="site">
+  <span class="step-no">Step 5</span>
+  <h2>The website</h2>
+  <a class="linkbtn" href="https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv" target="_blank" rel="noopener">Open Customer Voice Hub ↗</a>
+  <p>Open it inside the Claude app for the chat window to work. What to check:</p>
+  <div class="tbl"><table>
+    <tr><th>Part</th><th>What to look at</th></tr>
+    <tr><td>Today's readout</td><td>The ring: one segment per open ticket (red = escalate, amber = watch). Open tickets, net sentiment and the top repeated fault</td></tr>
+    <tr><td>Escalation queue</td><td>Each ticket shows the reasons behind its score, for example "+25 safety-related"</td></tr>
+    <tr><td>Recurring defects</td><td>How many reports, how many still open, which models and cities</td></tr>
+    <tr><td>Voice of customer</td><td>Ratings and top complaint per model; the Exter is lowest because of weak AC</td></tr>
+    <tr><td>Review scorer</td><td>Type a complaint, change the model, and see the "Pattern for…" line change</td></tr>
+    <tr><td>Theme button</td><td>Switch between light and dark mode (top right)</td></tr>
+    <tr><td>Chat with the bot</td><td>Button at the bottom right opens a chat window on the page. Click Allow the first time</td></tr>
+  </table></div>
+  <h3 style="margin-top:18px">Questions for the website's chat window</h3>
+  <div class="card"><div class="prompt">Which defect should leadership worry about most, and why?</div><div class="expect"><b class="l">Sample answer</b>DCT judder: 16 reports, 9 open, safety-related, across Venue, Verna and Creta. Recommends a Powertrain Quality root-cause review.</div></div>
+  <div class="card"><div class="prompt">Compare Creta and Venue customer sentiment.</div><div class="expect"><b class="l">Sample answer</b>Creta: 27 reviews, average 2.74, net sentiment −26, top complaint Sunroof. Venue: 34 reviews, average 3.00, net sentiment −18, top complaint Transmission.</div></div>
+  <div class="card"><div class="prompt">Score this: "Water leaking from sunroof during monsoon, roof lining got wet."</div><div class="expect"><b class="l">Sample answer</b>Negative, topic Sunroof, owner Plant Quality; links it to the Sunroof leak fault (12 reports).</div></div>
+</section>
+
+<section id="bot">
+  <span class="step-no">Step 6</span>
+  <h2>The n8n chatbot</h2>
+  <p class="lede">A separate chatbot built in n8n. It works while the laptop and Docker Desktop are on.</p>
+  <a class="linkbtn" href="http://localhost:5678/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">Open chatbot (this laptop) ↗</a>
+  <a class="linkbtn alt" href="https://lumpish-character-reload.ngrok-free.dev/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">Open chatbot (any device) ↗</a>
+  <p class="why">On another device, click "Visit Site" if ngrok shows a notice. Ask one question at a time and allow up to 10 seconds per answer.</p>
+  <div class="card"><div class="prompt">Which defect is most urgent?</div><div class="expect"><b class="l">Sample answer</b>DCT judder (Transmission): 16 reports, 9 open, Verna, Venue and Creta, safety-related; top ticket TK-0067 with risk 83. Recommended action: Powertrain Quality root-cause review.</div></div>
+  <div class="card"><div class="prompt">Which Venue tickets need escalation today?</div><div class="expect"><b class="l">Sample answer</b>2 tickets: TK-0019 and TK-0071, both DCT judder, risk 75.</div></div>
+  <div class="card"><div class="prompt">Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya. How serious is this?</div><div class="expect"><b class="l">Sample answer</b>Negative, High urgency, AC &amp; Cooling and Service Experience, route to Service Engineering.</div></div>
+  <div class="card"><div class="prompt">How many open tickets are there and how many need escalation today?</div><div class="expect"><b class="l">Sample answer</b>57 open, 9 to escalate today (unless the sheet has been updated).</div></div>
+</section>
+
+<section id="behind">
+  <span class="step-no">Step 7</span>
+  <h2>Behind the scenes (optional)</h2>
+  <p class="lede">To see how the data flowed for any answer above.</p>
+  <ol>
+    <li>Open <a href="http://localhost:5678" target="_blank" rel="noopener">n8n</a> → <b>Tool – Escalation Radar</b> → <b>Executions</b> tab.</li>
+    <li>Click the newest run. Click each step from left to right: the question that came in, the Google Sheet download, the 86 rows, and the ranked result.</li>
+    <li>Click <b>Debug in editor</b> to see the number of items on each connecting line.</li>
+    <li>Do the same in <b>Tool – Score Review</b> to see the Hinglish text, Gemini's English version and the score.</li>
+  </ol>
+  <div class="note">Try a live change: add a new open, safety-related Venue ticket to the Service Tickets sheet, wait about 5 minutes, then ask the chatbot "How many open tickets and how many to escalate today?" again. The numbers go up by one. (The website keeps its saved snapshot.)</div>
+</section>
+
+</div></main>
+<footer>Customer Voice Hub · student portfolio project by Subha Das · demo with synthetic data, not affiliated with Hyundai Motor India</footer>
+<script>
+document.querySelectorAll('.prompt').forEach(function (box) {
+  var text = box.textContent;
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'copy'; btn.textContent = 'Copy';
+  btn.addEventListener('click', function () {
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); };
+    var fallback = function () { var r = document.createRange(); r.selectNodeContents(box.firstChild); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Press Ctrl+C'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  });
+  box.appendChild(btn);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Start Guide · Customer Voice Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#eef1f4;--panel:#fff;--ink:#0f1b2a;--muted:#5a6878;--line:#d6dde5;--accent:#1f5f8b;--accent-soft:#e3edf5;--amber:#f2a33a;--amber-soft:#fbf0dc;--ok:#2c6b3d;--ok-soft:#e3f1e6;--crit:#b3261e;--crit-soft:#fbe8e6;--night:#0a1422;--code:#0f1b2a;--f:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.top{background:var(--night);color:#fff}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+.top .wrap{padding-block:36px 30px}
+.top small{color:var(--amber);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(28px,4.5vw,40px);line-height:1.1;letter-spacing:-.025em;margin:8px 0 10px}
+.top p{color:#c9d4df;max-width:62ch;margin:0}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.jump a{color:#fff;text-decoration:none;border:1px solid #2a3f58;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:500}
+.jump a:hover{border-color:var(--amber)}
+main .wrap{display:flex;flex-direction:column;gap:28px;padding-block:32px 60px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px}
+h2{font-size:24px;letter-spacing:-.02em;margin:0 0 6px}
+.lede{color:var(--muted);margin:0 0 18px}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.b-daily{background:var(--ok-soft);color:var(--ok)} .b-once{background:var(--accent-soft);color:var(--accent)} .b-help{background:var(--crit-soft);color:var(--crit)}
+ol.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:36px minmax(0,1fr);gap:14px}
+ol.steps>li::before{content:counter(s);width:32px;height:32px;border-radius:50%;background:var(--night);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center}
+ol.steps b{display:block;font-size:16.5px;margin-bottom:2px}
+.cmd{position:relative;margin:10px 0 4px;background:var(--code);color:#e6edf3;border-radius:10px;padding:14px 16px;padding-right:86px;font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.55;white-space:pre-wrap;word-break:break-all}
+.copy{position:absolute;top:10px;right:10px;font:600 12.5px/1 var(--f);background:var(--amber);color:#1b1205;border:0;border-radius:999px;padding:7px 12px;cursor:pointer}
+.copy:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ok{background:var(--ok-soft);border-radius:10px;padding:10px 14px;font-size:14.5px;margin-top:8px}
+.warn{background:var(--amber-soft);border-radius:10px;padding:10px 14px;font-size:14.5px;margin-top:8px}
+.ok::before{content:"You should see: ";font-weight:700;color:var(--ok)}
+.warn::before{content:"Note: ";font-weight:700;color:#8a5408}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.tbl{overflow-x:auto}
+a{color:var(--accent)}
+.top code{background:#1b2c42;color:#fff}
+code{background:var(--accent-soft);padding:1px 6px;border-radius:5px;font-size:.92em}
+footer{color:var(--muted);font-size:13.5px;text-align:center;padding:0 20px 40px}
+@media print{.copy,.jump{display:none}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <small>Customer Voice Hub · Start guide</small>
+  <h1>How to switch the project on</h1>
+  <p>Everything runs free on your own laptop. Follow the green section every time you want to show the project. Use the blue section only if you ever set it up again on a new or reset laptop.</p>
+  <div class="jump"><a href="#daily">Every time (5 min)</a><a href="#off">Switching off</a><a href="#help">If something goes wrong</a><a href="#data">Changing the data</a><a href="#links">Your links</a><a href="#setup">First-time setup</a></div>
+</div></header>
+
+<main><div class="wrap">
+
+<section id="daily">
+  <span class="badge b-daily">Every time · about 5 minutes</span>
+  <h2>Start the project</h2>
+  <p class="lede">Your laptop already has everything installed. You only need to wake it up.</p>
+  <ol class="steps">
+    <li><div><b>Plug in the charger and stop the laptop from sleeping</b>Windows Settings → System → Power → set "When plugged in, put my device to sleep after" to <b style="display:inline">Never</b>. If the laptop sleeps, the project goes offline.</div></li>
+    <li><div><b>Open Docker Desktop</b>Find it in the Start menu. Wait until the bottom-left corner says <b style="display:inline">Engine running</b> (green). This usually takes under a minute. Docker Desktop is the app that keeps n8n (your automation tool) and ngrok (your public web address) running.</div></li>
+    <li><div><b>Check that both parts are running</b>Open <b style="display:inline">Windows PowerShell</b> from the Start menu, paste this and press Enter:
+      <div class="cmd">docker ps</div>
+      <div class="ok">two lines in the list, one named <code>n8n</code> and one named <code>ngrok</code>, both saying "Up".</div>
+      <div class="warn">If one is missing, paste this and press Enter, then run <code>docker ps</code> again:</div>
+      <div class="cmd">docker start n8n
+docker start ngrok</div></div></li>
+    <li><div><b>Open n8n</b>Open Chrome and go to <a href="http://localhost:5678" target="_blank" rel="noopener">http://localhost:5678</a>. Sign in with your n8n email and password.
+      <div class="ok">your five workflows: two "MCP" ones, two "Tool" ones and "Chat – Hub Bot", each marked Published.</div></div></li>
+    <li><div><b>Run the warm-up test</b>Do these three quick checks so nothing is "cold" when you present:
+      <div class="tbl"><table>
+        <tr><th>Check</th><th>What to do</th><th>Good result</th></tr>
+        <tr><td>Chatbot</td><td>Open the chatbot link (see <a href="#data">Changing the data</a><a href="#links">Your links</a>) and ask "Which defect is most urgent?"</td><td>Mentions DCT judder, 16 reports</td></tr>
+        <tr><td>Claude</td><td>New Cowork task with the Hyundai plugin on: "Triage this: Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya."</td><td>English translation, AC &amp; Cooling, Service Engineering</td></tr>
+        <tr><td>Website</td><td>Open the Customer Voice Hub link, click "Chat with the bot", ask one question and click Allow</td><td>An answer appears in the chat window</td></tr>
+      </table></div></div></li>
+  </ol>
+</section>
+
+<section id="off">
+  <span class="badge b-daily">When you are done</span>
+  <h2>Switch off</h2>
+  <ol class="steps">
+    <li><div><b>Close the public address (recommended)</b>This stops anyone outside reaching your laptop. Paste in PowerShell:
+      <div class="cmd">docker stop ngrok</div>
+      Next time, <code>docker start ngrok</code> brings it back with the same address.</div></li>
+    <li><div><b>Quit Docker Desktop</b>Right-click the whale icon near the clock and choose <b style="display:inline">Quit Docker Desktop</b>. Your workflows stay saved.</div></li>
+  </ol>
+</section>
+
+<section id="help">
+  <span class="badge b-help">If something goes wrong</span>
+  <h2>Quick fixes</h2>
+  <div class="tbl"><table>
+    <tr><th>What you see</th><th>What it means</th><th>What to do</th></tr>
+    <tr><td>"This page isn't working" at localhost:5678</td><td>n8n is not running</td><td>Open Docker Desktop, wait for Engine running, then run <code>docker start n8n</code> and wait 30 seconds</td></tr>
+    <tr><td>"Bad gateway" or "endpoint offline" on the ngrok address</td><td>The public address is not connected to n8n</td><td>Run <code>docker restart ngrok</code>, wait 10 seconds and refresh</td></tr>
+    <tr><td>Chatbot says "Error in workflow"</td><td>Google's AI was busy for a moment</td><td>Wait one minute and ask once. In n8n, the Executions tab shows the exact reason</td></tr>
+    <tr><td>Chatbot takes more than 30 seconds</td><td>The AI model is too heavy or busy</td><td>In "Chat – Hub Bot", open the Google Gemini node and choose the "Flash-Lite" model, then Publish</td></tr>
+    <tr><td>Claude says it can't reach the Hyundai tools</td><td>Docker or ngrok is off</td><td>Do steps 2–3 of "Start the project"</td></tr>
+    <tr><td>Gemini error "model not found" or "no longer available"</td><td>Google retired that model</td><td>Open each Google Gemini node and pick the newest Flash model in the list, then Publish</td></tr>
+    <tr><td>ngrok error "authentication failed"</td><td>The ngrok key is wrong or was reset</td><td>Follow step 4 of the first-time setup with your current key</td></tr>
+  </table></div>
+</section>
+
+<section id="data">
+  <span class="badge b-daily">When the data changes</span>
+  <h2>Changing the data</h2>
+  <p class="lede">The live tools and the website get their data from different places. Full details, column list and examples are in <code>updating-data.md</code> in this folder.</p>
+  <div class="tbl"><table>
+    <tr><th>Part</th><th>Where the data comes from</th><th>How to update</th></tr>
+    <tr><td><b>Claude, chatbot, n8n</b></td><td>The Service Tickets Google Sheet, read fresh on every question</td><td>Edit or add rows in the sheet (same columns). New numbers appear within about 5 minutes</td></tr>
+    <tr><td><b>A completely new ticket sheet</b></td><td>A new Google Sheet with the same column names</td><td>Publish it to the web as CSV, then paste its link into the <b style="display:inline">HTTP Request</b> node of "Tool – Escalation Radar" and Publish</td></tr>
+    <tr><td><b>New problem type or team</b></td><td>The lists at the top of the Code nodes</td><td>Add the topic words to <code>THEMES</code> and the team to <code>OWNER</code>, then Publish</td></tr>
+    <tr><td><b>Customer Voice Hub website</b></td><td>A saved snapshot inside the page</td><td>Ask Claude: "Refresh the Customer Voice Hub with my updated sheets" and share the sheet links. The same link is updated</td></tr>
+  </table></div>
+  <div class="warn">The website does not change when you edit the sheet. That is on purpose: it stays online even when your laptop is off. The chatbot and Claude always use the latest sheet.</div>
+</section>
+
+<section id="links">
+  <span class="badge b-daily">Bookmark these</span>
+  <h2>Your links</h2>
+  <div class="tbl"><table>
+    <tr><th>What</th><th>Address</th></tr>
+    <tr><td>Customer Voice Hub (website)</td><td><a href="https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv" target="_blank" rel="noopener">claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv</a></td></tr>
+    <tr><td>n8n on your laptop</td><td><a href="http://localhost:5678" target="_blank" rel="noopener">http://localhost:5678</a></td></tr>
+    <tr><td>Chatbot (on your laptop)</td><td><a href="http://localhost:5678/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">localhost:5678/webhook/ca0d46d6-…/chat</a></td></tr>
+    <tr><td>Chatbot (public, while laptop is on)</td><td><a href="https://lumpish-character-reload.ngrok-free.dev/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">lumpish-character-reload.ngrok-free.dev/…/chat</a></td></tr>
+    <tr><td>Claude tool 1 (review scoring)</td><td><code>https://lumpish-character-reload.ngrok-free.dev/mcp/hyundai-review-intel</code></td></tr>
+    <tr><td>Claude tool 2 (escalations)</td><td><code>https://lumpish-character-reload.ngrok-free.dev/mcp/hyundai-escalation-radar</code></td></tr>
+    <tr><td>ngrok account (your key and address)</td><td><a href="https://dashboard.ngrok.com" target="_blank" rel="noopener">dashboard.ngrok.com</a></td></tr>
+    <tr><td>Google AI key</td><td><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></td></tr>
+  </table></div>
+</section>
+
+<section id="setup">
+  <span class="badge b-once">Only once · about 45 minutes</span>
+  <h2>First-time setup on a new or reset laptop</h2>
+  <p class="lede">Skip this if the project already starts with the green section. Everything here is free and needs no card.</p>
+  <ol class="steps">
+    <li><div><b>Install Docker Desktop</b>Download it from docker.com, install with the default options and restart the laptop. Open it and wait for <b style="display:inline">Engine running</b>.</div></li>
+    <li><div><b>Create a storage box and a private network</b>The storage box keeps your workflows safe. The private network lets n8n and ngrok talk to each other. Paste in PowerShell:
+      <div class="cmd">docker volume create n8n_data
+docker network create hcv-net</div></div></li>
+    <li><div><b>Start n8n</b>Paste this as one line:
+      <div class="cmd">docker run -d --name n8n --network hcv-net -p 5678:5678 --restart unless-stopped -e GENERIC_TIMEZONE="Asia/Kolkata" -e TZ="Asia/Kolkata" -e WEBHOOK_URL=https://lumpish-character-reload.ngrok-free.dev/ -e N8N_PROXY_HOPS=1 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n</div>
+      Wait about 30 seconds, then open <a href="http://localhost:5678" target="_blank" rel="noopener">http://localhost:5678</a> and create your n8n account (it stays on your laptop).</div></li>
+    <li><div><b>Start ngrok (your fixed public address)</b>Sign in at <a href="https://dashboard.ngrok.com" target="_blank" rel="noopener">dashboard.ngrok.com</a>, open <b style="display:inline">Your Authtoken</b>, click the eye icon and copy it. Put it between the quotes below. Never share this key.
+      <div class="cmd">$env:NGROK_TOKEN = "PASTE_YOUR_NGROK_KEY_HERE"</div>
+      Then paste this exactly as it is:
+      <div class="cmd">docker run -d --name ngrok --network hcv-net --restart unless-stopped -e NGROK_AUTHTOKEN=$env:NGROK_TOKEN ngrok/ngrok:latest http http://n8n:5678 --url=https://lumpish-character-reload.ngrok-free.dev</div>
+      <div class="ok">opening https://lumpish-character-reload.ngrok-free.dev shows the n8n sign-in page (click "Visit Site" first if ngrok shows a notice).</div></div></li>
+    <li><div><b>Put the sample data online</b>Upload the two files from the <code>05-sample-data</code> folder to Google Drive and open each with Google Sheets. In each sheet: File → Share → Publish to web → choose "Comma-separated values (.csv)" → Publish. Copy both links and change the ending to <code>pub?output=csv</code>.</div></li>
+    <li><div><b>Add your Google AI key to n8n</b>Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>. In n8n: Personal → Credentials → Create → "Google Gemini (PaLM) API" → paste the key → Save.</div></li>
+    <li><div><b>Bring in the five workflows</b>In n8n, for each file in the <code>03-n8n-workflows</code> folder: Create workflow → the "⋯" menu at the top → Import from file. Import in this order:
+      <div class="tbl"><table>
+        <tr><th>Order</th><th>File</th><th>After importing</th></tr>
+        <tr><td>1</td><td>Tool – Score Review</td><td>Choose your Gemini key in the Gemini node, then Publish</td></tr>
+        <tr><td>2</td><td>Tool – Escalation Radar</td><td>Paste your tickets sheet link into the HTTP Request node, then Publish</td></tr>
+        <tr><td>3</td><td>MCP 1 – Review Intelligence</td><td>Open the tool node, re-select "Tool – Score Review" from the list, then Publish</td></tr>
+        <tr><td>4</td><td>MCP 2 – Service Escalation Radar</td><td>Re-select "Tool – Escalation Radar", then Publish</td></tr>
+        <tr><td>5</td><td>Chat – Hub Bot</td><td>Choose your Gemini key, re-select both tools, then Publish. Copy the new Chat URL from the first node</td></tr>
+      </table></div>
+      <div class="warn">Importing gives each workflow a new internal number, which is why the tool nodes need re-selecting. The chatbot link also changes, so update your bookmark.</div></div></li>
+    <li><div><b>Connect Claude</b>In Claude: Settings → Plugins → add the file <code>06-claude-plugin/hyundai-customer-voice.plugin</code>. It brings the five skills and both Hyundai tools. If tools show twice, remove the older copies under Settings → Connectors.</div></li>
+    <li><div><b>Test</b>Run the three checks in step 5 of "Start the project". You are done.</div></li>
+  </ol>
+</section>
+
+</div></main>
+<footer>Customer Voice Hub · student portfolio project by Subha Das · demo with synthetic data, not affiliated with Hyundai Motor India</footer>
+<script>
+document.querySelectorAll('.cmd').forEach(function (box) {
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'copy'; btn.textContent = 'Copy';
+  btn.addEventListener('click', function () {
+    var text = box.childNodes[0].textContent;
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { selectText(box); btn.textContent = 'Press Ctrl+C'; });
+    } else { selectText(box); btn.textContent = 'Press Ctrl+C'; }
+  });
+  box.appendChild(btn);
+});
+function selectText(el) { var r = document.createRange(); r.selectNodeContents(el.childNodes[0]); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+</script>
+</body>
+</html>
