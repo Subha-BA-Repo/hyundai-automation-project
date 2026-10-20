@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Report · Customer Voice Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#eef1f4;--panel:#fff;--ink:#0f1b2a;--muted:#5a6878;--line:#d6dde5;--accent:#1f5f8b;--accent-soft:#e3edf5;--amber:#f2a33a;--amber-soft:#fbf0dc;--ok:#2c6b3d;--ok-soft:#e3f1e6;--crit:#b3261e;--crit-soft:#fbe8e6;--night:#0a1422;--f:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+.cover{background:var(--night);color:#fff}
+.cover .wrap{padding-block:48px 40px}
+.cover small{color:var(--amber);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.08;letter-spacing:-.03em;margin:10px 0 14px}
+.cover p{color:#c9d4df;max-width:64ch;margin:0}
+.meta{display:flex;gap:10px 26px;flex-wrap:wrap;margin-top:22px;font-size:14px;color:#c9d4df}
+.meta b{color:#fff;font-weight:600}
+main .wrap{display:flex;flex-direction:column;gap:26px;padding-block:32px 60px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}
+h2{font-size:24px;letter-spacing:-.02em;margin:0 0 4px}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h3{font-size:17px;margin:18px 0 4px}
+p{margin:8px 0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.stat{background:var(--bg);border-radius:12px;padding:14px}
+.stat b{display:block;font-size:28px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:10px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
+.flow div{background:var(--accent-soft);border-radius:12px;padding:12px;font-size:14px}
+.flow b{display:block;font-size:12px;color:var(--accent);margin-bottom:2px}
+@media (max-width:720px){.flow{grid-template-columns:minmax(0,1fr)}}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+.t-ok{background:var(--ok-soft);color:var(--ok)}
+.t-warn{background:var(--amber-soft);color:#8a5408}
+ul{padding-left:20px;margin:8px 0}
+li{margin:4px 0}
+.quote{border-left:4px solid var(--amber);background:var(--amber-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin-top:12px}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13.5px;text-align:center;padding:0 20px 40px}
+@media print{body{background:#fff}section{break-inside:avoid;border-color:#ccc}}
+</style>
+</head>
+<body>
+<header class="cover"><div class="wrap">
+  <small>Project report · AI For All 2.0 Cowork capstone</small>
+  <h1>Customer Voice Hub</h1>
+  <p>An AI assistant and automation setup that helps an after-sales quality team at a car maker act on customer complaints faster: it reads every complaint, links repeated problems together, and tells the right team what to do first. Built for Hyundai Motor India as the example company, using made-up demo data.</p>
+  <div class="meta"><span><b>Built by</b> Subha Das, MBA Business Analytics, Chandigarh University</span><span><b>Built</b> 19–20 Oct 2026</span><span><b>For</b> Hyundai Motor India Management Trainee interview</span></div>
+</div></header>
+
+<main><div class="wrap">
+
+<section>
+  <div class="kicker">1 · Summary</div>
+  <h2>What was built, in one paragraph</h2>
+  <p>Customer complaints arrive from reviews, social media and service centres. The same fault often shows up as many separate complaints, so nobody sees the bigger problem until it becomes serious. Customer Voice Hub fixes that. Two automation tools score each complaint and rank open service cases by risk. An AI assistant (Claude) uses those tools, follows written company rules, and drafts the follow-up emails and meetings. Everything is shown on one website, and a chatbot lets anyone ask questions in plain English or Hinglish.</p>
+  <div class="stats">
+    <div class="stat"><b>266</b><span>customer complaints and reviews analysed</span></div>
+    <div class="stat"><b>9</b><span>service cases flagged to escalate today</span></div>
+    <div class="stat"><b>7</b><span>repeated faults found (8+ reports each)</span></div>
+    <div class="stat"><b>1 s</b><span>to score a Hinglish complaint</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="kicker">2 · The problem</div>
+  <h2>Why this matters</h2>
+  <ul>
+    <li><b>Repeated faults hide in plain sight.</b> In the demo data, a gearbox jerking problem (called DCT judder) appears in 16 separate tickets across the Venue, Verna and Creta in 8 cities. Each service advisor sees only one car.</li>
+    <li><b>Urgent cases wait in the queue.</b> Some tickets are safety-related or on their third workshop visit, but they look the same as routine cases.</li>
+    <li><b>Customers write in mixed languages.</b> Complaints like "Exter ka AC bilkul thanda nahi karta" are easy for people to understand but are missed by simple keyword checks.</li>
+    <li><b>Reporting takes time.</b> Someone has to pull numbers, write the escalation email and set up the review meeting by hand.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="kicker">3 · The solution</div>
+  <h2>How a complaint moves through the system</h2>
+  <div class="flow">
+    <div><b>Step 1</b>A customer writes a review, post or complaint</div>
+    <div><b>Step 2</b>Tool 1 translates it if needed and scores it: tone, topic, urgency, owner team</div>
+    <div><b>Step 3</b>Tool 2 checks open tickets: risk score 0–100 and repeated faults</div>
+    <div><b>Step 4</b>The AI assistant applies company rules and explains its reasoning</div>
+    <div><b>Step 5</b>Action: email draft, meeting, leadership summary or customer reply</div>
+  </div>
+  <h3>The parts</h3>
+  <div class="tbl"><table>
+    <tr><th>Part</th><th>What it does</th><th>Built with</th></tr>
+    <tr><td><b>Tool 1 · Review Intelligence</b></td><td>Translates Hindi or Hinglish to English with Google's AI, then scores the complaint with fixed rules: positive or negative, 12 topics (gearbox, AC, sunroof and so on), urgency, safety and churn warnings, and the team that should act</td><td>n8n workflow + Google Gemini</td></tr>
+    <tr><td><b>Tool 2 · Escalation Radar</b></td><td>Reads all service tickets, gives each open ticket a 0–100 risk score from five rules (days open, repeat visits, safety, repeated fault, fleet customer), and groups tickets about the same fault</td><td>n8n workflow</td></tr>
+    <tr><td><b>Claude connection</b></td><td>Both tools are published so Claude can use them on request</td><td>n8n "MCP Server" + ngrok public address</td></tr>
+    <tr><td><b>Five written skills</b></td><td>Company rules for the AI: how to triage, how to write escalation emails, how to brief leadership, how to reply to customers, and data-safety rules</td><td>Claude plugin</td></tr>
+    <tr><td><b>Customer Voice Hub website</b></td><td>Today's readout, escalation list, repeated faults, model-by-model feedback, a review scorer, and a built-in chat assistant. Light and dark mode</td><td>Claude artifact (shared link)</td></tr>
+    <tr><td><b>Chatbot</b></td><td>A separate chatbot anyone can open in a browser; it uses the same two tools and answers in short, formatted replies</td><td>n8n AI Agent + Gemini</td></tr>
+  </table></div>
+  <h3>Assignment requirements</h3>
+  <div class="tbl"><table>
+    <tr><th>Requirement</th><th>Delivered</th></tr>
+    <tr><td>8 connected services</td><td><span class="tag t-ok">Done</span> Review Intelligence, Escalation Radar, Gmail, Google Calendar, Google Drive, GitHub, Canva, Lovable</td></tr>
+    <tr><td>2 self-built n8n connections</td><td><span class="tag t-ok">Done</span> Review Intelligence and Escalation Radar</td></tr>
+    <tr><td>5 skills</td><td><span class="tag t-ok">Done</span> complaint-triage, escalation-email, quality-brief, customer-reply, data-guardrails</td></tr>
+    <tr><td>1 plugin</td><td><span class="tag t-ok">Done</span> hyundai-customer-voice (5 skills + both tools)</td></tr>
+    <tr><td>Shareable link</td><td><span class="tag t-ok">Done</span> Customer Voice Hub website, shared with anyone who has the link</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <div class="kicker">4 · Results</div>
+  <h2>What the system found in the demo data</h2>
+  <div class="tbl"><table>
+    <tr><th>Finding</th><th>Detail</th><th>Owner team</th></tr>
+    <tr><td>Top repeated fault</td><td>DCT gearbox judder: 16 reports, 9 still open, 3 models, 8 cities, safety-related</td><td>Powertrain Quality</td></tr>
+    <tr><td>Second repeated fault</td><td>Sunroof water leak: 12 reports, 10 still open</td><td>Plant Quality</td></tr>
+    <tr><td>Highest-risk ticket</td><td>TK-0067, Verna, Delhi NCR: risk 83 (3 repeat visits, safety-related, corporate customer)</td><td>Powertrain Quality</td></tr>
+    <tr><td>Lowest-rated model</td><td>Exter, 2.61 out of 5, mostly weak AC cooling</td><td>Service Engineering</td></tr>
+    <tr><td>Ticket trend</td><td>New tickets rose from about 6 a week in August to 9–11 a week from mid-September</td><td>Leadership watch item</td></tr>
+  </table></div>
+  <div class="quote"><b>Best moment in testing:</b> a customer wrote "thinking of switching to another brand". The rule-based tool missed it because its word list only had "switch brand". The AI assistant, following the triage skill, caught it, marked the case as a churn risk and showed exactly where it overrode the tool.</div>
+</section>
+
+<section>
+  <div class="kicker">5 · How it was built</div>
+  <h2>Build steps</h2>
+  <div class="tbl"><table>
+    <tr><th>Step</th><th>What was done</th></tr>
+    <tr><td>1. Plan</td><td>Picked the customer complaints use case from the capstone brief and adapted it to Hyundai India after-sales</td></tr>
+    <tr><td>2. Data</td><td>Created 180 sample reviews and 86 sample service tickets with realistic patterns, and published them as Google Sheets</td></tr>
+    <tr><td>3. Set up</td><td>Installed n8n inside Docker Desktop on the laptop (free), with saved storage so nothing is lost on restart</td></tr>
+    <tr><td>4. Warm-up</td><td>Built a first workflow that reads the reviews sheet and finds the lowest-rated model</td></tr>
+    <tr><td>5. Tool 1</td><td>Built the review scoring workflow and published it for Claude</td></tr>
+    <tr><td>6. Public address</td><td>Gave n8n a fixed public web address with a free ngrok account, so Claude can reach it</td></tr>
+    <tr><td>7. Tool 2</td><td>Built the escalation radar workflow and tested both tools together in Claude</td></tr>
+    <tr><td>8. Skills and plugin</td><td>Wrote five skills and packaged them with both tools as one installable plugin</td></tr>
+    <tr><td>9. Website</td><td>Built the Customer Voice Hub website with the readout, lists, charts, scorer and chat assistant</td></tr>
+    <tr><td>10. Google AI</td><td>Added a Gemini translation step to Tool 1, so Hindi and Hinglish complaints are understood</td></tr>
+    <tr><td>11. Chatbot</td><td>Built an AI Agent chatbot in n8n that uses both tools, with its own styled chat page</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <div class="kicker">6 · Problems solved along the way</div>
+  <h2>What went wrong and how it was fixed</h2>
+  <div class="tbl"><table>
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>n8n page would not open</td><td>n8n had been stopped by mistake</td><td>Started it again; learned the start and stop commands</td></tr>
+    <tr><td>"Bad gateway" on the public address</td><td>The public address could not find n8n inside Docker</td><td>Put both on one private Docker network</td></tr>
+    <tr><td>Public address changed on every restart</td><td>The first free option gives a random address each time</td><td>Moved to a free ngrok account with a permanent address</td></tr>
+    <tr><td>ngrok rejected the key</td><td>The domain ID was pasted instead of the key</td><td>Stored the real key separately and checked its length</td></tr>
+    <tr><td>"Model no longer available"</td><td>Google retired the Gemini model n8n picked</td><td>Switched to the current Gemini Flash model</td></tr>
+    <tr><td>Translation took 60 seconds</td><td>The model was "thinking" before every answer</td><td>Chose a lighter model and capped the answer length: now about 1 second</td></tr>
+    <tr><td>Chatbot showed "Error in workflow"</td><td>Google's server was busy (error 503) on a preview model</td><td>Moved to a stable model, added automatic retries and a backup model</td></tr>
+    <tr><td>If Google's AI fails during a call</td><td>Outside services can go down</td><td>The translation step continues without AI, so the tool still gives a rule-based answer</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <div class="kicker">7 · Limitations</div>
+  <h2>What to be clear about</h2>
+  <ul>
+    <li><b>Synthetic data.</b> All tickets and reviews are made up to look realistic. The numbers show the method, not Hyundai's real performance.</li>
+    <li><b>Live only during demos.</b> The tools and chatbot run on the laptop, so they are offline when it is switched off.</li>
+    <li><b>Keyword-based scoring.</b> Gemini translates Hindi and Hinglish, but the scoring rules can still miss sarcasm or new phrasing.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="kicker">8 · Skills shown</div>
+  <h2>What this project demonstrates</h2>
+  <div class="tbl"><table>
+    <tr><th>Area</th><th>Evidence</th></tr>
+    <tr><td>AI and GenAI</td><td>Gemini translation inside a tool; an AI chatbot; Claude following written company rules</td></tr>
+    <tr><td>AI agents</td><td>Claude and the n8n agent decide which tool to use, combine results and explain decisions</td></tr>
+    <tr><td>Automation</td><td>Five n8n workflows, two of them published as tools for Claude; email and meeting drafts created automatically</td></tr>
+    <tr><td>Business thinking</td><td>Risk rules, owner teams, escalation priorities and a leadership brief designed around an after-sales quality team</td></tr>
+    <tr><td>Reliability</td><td>Version history on every workflow, retries, a backup AI model and a no-AI fallback</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <div class="kicker">9 · Files in this repository</div>
+  <h2>Where everything is</h2>
+  <div class="tbl"><table>
+    <tr><th>Folder</th><th>What is inside</th></tr>
+    <tr><td>01-live-demo</td><td>Launcher page and shortcuts for the live website, the chatbot and n8n</td></tr>
+    <tr><td>02-start-guide</td><td>Start guide (switch on and off, quick fixes), demo walkthrough with messages to try and sample answers, data update guide, n8n sticky notes and the demo plan</td></tr>
+    <tr><td>03-n8n-workflows</td><td>The five n8n workflows, ready to import</td></tr>
+    <tr><td>04-tool-code</td><td>The scoring and risk rules, plus all prompts and descriptions used</td></tr>
+    <tr><td>05-sample-data</td><td>The demo reviews and service tickets</td></tr>
+    <tr><td>06-claude-plugin</td><td>The installable plugin and its five skills</td></tr>
+    <tr><td>07-report</td><td>This report</td></tr>
+  </table></div>
+</section>
+
+</div></main>
+<footer>Customer Voice Hub · Subha Das · Independent student project with synthetic data, not affiliated with or endorsed by Hyundai Motor India.</footer>
+</body>
+</html>
