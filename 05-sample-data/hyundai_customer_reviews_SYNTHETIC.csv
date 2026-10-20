@@ -1,0 +1,181 @@
+review_id,date,model,powertrain,city,source,rating,review_text
+RV-0016,2026-07-01,Verna,Petrol MT,Lucknow,Service feedback form,2,Build quality feels solid. But panel gaps and rattles from the door trim.
+RV-0040,2026-07-01,Venue,Petrol MT,Mumbai,Social media mention,5,"Delivery was on the promised date. Plus, Bluelink app and connected features are very useful."
+RV-0074,2026-07-01,Venue,Petrol DCT,Kolkata,Dealer walk-in feedback,3,Touchscreen and bose sound are superb. But forward collision warning triggers falsely.
+RV-0089,2026-07-02,Venue,Petrol DCT,Mumbai,Call centre,1,Dct judder and jerks in stop-go traffic. charged for parts that were not replaced.
+RV-0062,2026-07-03,Aura,CNG,Jaipur,Call centre,5,"Ac cools the cabin very fast. Also, six airbags and ADAS give real peace of mind."
+RV-0140,2026-07-03,Exter,Petrol MT,Bengaluru,Social media mention,4,"Gearbox hesitation at low speed, felt unsafe once. Also, mileage is excellent, getting 18 kmpl in city."
+RV-0123,2026-07-04,Exter,Petrol MT,Hyderabad,Service feedback form,2,"Periodic maintenance is affordable. But AC takes too long to cool, compressor noise."
+RV-0156,2026-07-04,Creta,Petrol DCT,Chennai,Service feedback form,3,"Water leaking from sunroof during monsoon. However, delivery experience was memorable."
+RV-0160,2026-07-04,Grand i10 Nios,Diesel AT,Delhi NCR,Service feedback form,5,Bluelink app and connected features are very useful. clutch is light and gear shifts are easy.
+RV-0033,2026-07-06,Venue,Petrol DCT,Chandigarh,Service feedback form,2,"Gearbox hesitation at low speed, felt unsafe once. AC takes too long to cool, compressor noise."
+RV-0103,2026-07-06,Verna,Turbo DCT,Bengaluru,Dealer walk-in feedback,2,"Dashboard rattle noise started within 3 months. Plus, charged for parts that were not replaced."
+RV-0176,2026-07-06,Verna,Turbo DCT,Lucknow,Service feedback form,1,"Service advisor never called back, very poor follow-up. Also, Bluelink app keeps disconnecting."
+RV-0109,2026-07-07,Verna,Petrol DCT,Kolkata,Post-delivery survey,1,"Dashboard rattle noise started within 3 months. Plus, fuel economy dropped after the first service."
+RV-0165,2026-07-07,Verna,Petrol DCT,Mumbai,Dealer walk-in feedback,1,Panel gaps and rattles from the door trim. suspension feels stiff on bad roads.
+RV-0039,2026-07-08,Creta,Turbo DCT,Chandigarh,Post-delivery survey,5,"Spare parts were available immediately. Plus, climate control works perfectly."
+RV-0094,2026-07-08,Venue,Diesel AT,Kolkata,Post-delivery survey,3,Ventilated seats are a blessing in summer. But water leaking from sunroof during monsoon.
+RV-0141,2026-07-08,i20,Petrol DCT,Mumbai,Post-delivery survey,2,"Service advisor never called back, very poor follow-up. And Bluelink app and connected features are very useful."
+RV-0035,2026-07-09,Creta,Petrol MT,Lucknow,Call centre,3,"Water leaking from sunroof during monsoon. Also, build quality feels solid."
+RV-0119,2026-07-09,Venue,Petrol MT,Mumbai,Post-delivery survey,3,Dct judder and jerks in stop-go traffic. But periodic maintenance is affordable.
+RV-0056,2026-07-10,Grand i10 Nios,Diesel AT,Pune,Social media mention,5,"Touchscreen and bose sound are superb. Also, service cost is reasonable."
+RV-0066,2026-07-11,Creta,Petrol DCT,Chennai,Service feedback form,2,Infotainment screen freezes and android auto drops. forward collision warning triggers falsely.
+RV-0111,2026-07-11,Venue,Petrol MT,Mumbai,Social media mention,3,"Fuel efficiency is better than expected. However, charged for parts that were not replaced."
+RV-0137,2026-07-12,i20,Petrol DCT,Kolkata,Social media mention,4,Service advisor was polite and explained everything. And dashboard rattle noise started within 3 months.
+RV-0058,2026-07-13,Creta,Petrol DCT,Delhi NCR,Dealer walk-in feedback,3,Service cost is reasonable. But service took 3 days longer than promised.
+RV-0076,2026-07-13,i20,Turbo DCT,Kolkata,Post-delivery survey,1,Service took 3 days longer than promised. AC cooling is weak in peak summer afternoon.
+RV-0118,2026-07-14,Venue,Turbo DCT,Mumbai,Dealer walk-in feedback,3,"Gearbox hesitation at low speed, felt unsafe once. Also, periodic maintenance is affordable."
+RV-0093,2026-07-16,Exter,Diesel AT,Chandigarh,Dealer walk-in feedback,3,"Ac cooling is weak in peak summer afternoon. Also, ride quality is smooth and cabin is quiet."
+RV-0158,2026-07-16,Venue,Turbo DCT,Chennai,Dealer walk-in feedback,5,"Six airbags and adas give real peace of mind. Also, ventilated seats are a blessing in summer."
+RV-0025,2026-07-19,Venue,Diesel AT,Jaipur,Call centre,5,Genuine parts arrived same day. AC cools the cabin very fast.
+RV-0146,2026-07-20,i20,Petrol MT,Mumbai,Service feedback form,3,"Touchscreen and bose sound are superb. Also, service bill was much higher than estimate."
+RV-0151,2026-07-20,Exter,Turbo DCT,Kolkata,Social media mention,3,Ac cooling is weak in peak summer afternoon. But delivery was on the promised date.
+RV-0152,2026-07-20,Venue,Diesel AT,Lucknow,Post-delivery survey,3,"Gearbox hesitation at low speed, felt unsafe once. However, fuel efficiency is better than expected."
+RV-0069,2026-07-21,Creta,CNG,Chandigarh,Call centre,2,"Water leaking from sunroof during monsoon. Also, AC takes too long to cool, compressor noise."
+RV-0174,2026-07-21,Exter,Diesel AT,Chandigarh,Dealer walk-in feedback,1,"Ac cooling is weak in peak summer afternoon. Plus, charged for parts that were not replaced."
+RV-0006,2026-07-22,i20,Diesel AT,Lucknow,Dealer walk-in feedback,1,"Service took 3 days longer than promised. Also, AC takes too long to cool, compressor noise."
+RV-0032,2026-07-22,Alcazar,Petrol MT,Pune,Post-delivery survey,5,"Mileage is excellent, getting 17 kmpl in city. clutch is light and gear shifts are easy."
+RV-0163,2026-07-24,i20,Petrol DCT,Chandigarh,Service feedback form,2,"Service advisor never called back, very poor follow-up. And periodic maintenance is affordable."
+RV-0179,2026-07-24,Creta,CNG,Chandigarh,Call centre,2,Water leaking from sunroof during monsoon. But service advisor was polite and explained everything.
+RV-0131,2026-07-26,Venue,Petrol MT,Bengaluru,Social media mention,2,"Gearbox hesitation at low speed, felt unsafe once. However, periodic maintenance is affordable."
+RV-0014,2026-07-27,Aura,Diesel AT,Bengaluru,Social media mention,5,"Build quality feels solid. Also, spare parts were available immediately."
+RV-0130,2026-07-27,Venue,Diesel AT,Chandigarh,Post-delivery survey,3,Dct judder and jerks in stop-go traffic. But climate control works perfectly.
+RV-0167,2026-07-27,Exter,Petrol DCT,Kolkata,Dealer walk-in feedback,1,"Ac takes too long to cool, compressor noise. infotainment screen freezes and Android Auto drops."
+RV-0057,2026-07-28,i20,Diesel AT,Lucknow,Service feedback form,4,"Fit and finish is premium. Plus, spare parts were available immediately."
+RV-0145,2026-07-28,Creta,Petrol DCT,Delhi NCR,Post-delivery survey,1,"Water leaking from sunroof during monsoon. Plus, sunroof drain blocked, roof lining got wet."
+RV-0008,2026-07-29,Creta,Diesel AT,Chennai,Call centre,1,"Water leaking from sunroof during monsoon. Plus, suspension feels stiff on bad roads."
+RV-0098,2026-07-29,Venue,Turbo DCT,Lucknow,Call centre,2,Dct judder and jerks in stop-go traffic. forward collision warning triggers falsely.
+RV-0011,2026-08-01,Grand i10 Nios,Petrol DCT,Bengaluru,Dealer walk-in feedback,3,"Dct gearbox is smooth and quick. But sunroof drain blocked, roof lining got wet."
+RV-0021,2026-08-01,Verna,Petrol DCT,Kolkata,Service feedback form,3,Panel gaps and rattles from the door trim. But AC cools the cabin very fast.
+RV-0079,2026-08-01,Exter,Petrol MT,Pune,Post-delivery survey,1,"Ac cooling is weak in peak summer afternoon. Plus, panel gaps and rattles from the door trim."
+RV-0138,2026-08-01,Venue,Turbo DCT,Bengaluru,Service feedback form,3,"Dct judder and jerks in stop-go traffic. However, six airbags and ADAS give real peace of mind."
+RV-0083,2026-08-02,Verna,Petrol DCT,Kolkata,Social media mention,2,Panel gaps and rattles from the door trim. And spare parts were available immediately.
+RV-0121,2026-08-03,Creta,CNG,Hyderabad,Dealer walk-in feedback,2,"Sunroof drain blocked, roof lining got wet. And service was completed on time."
+RV-0037,2026-08-04,Grand i10 Nios,Petrol MT,Delhi NCR,Service feedback form,4,"Ac takes too long to cool, compressor noise. But service was completed on time."
+RV-0112,2026-08-04,i20,CNG,Chandigarh,Call centre,2,"Spare part not available, car stuck for 8 days. Also, AC cooling is weak in peak summer afternoon."
+RV-0047,2026-08-09,Alcazar,Petrol DCT,Lucknow,Dealer walk-in feedback,3,"Spare part not available, car stuck for 11 days. However, fit and finish is premium."
+RV-0124,2026-08-09,Exter,CNG,Mumbai,Dealer walk-in feedback,3,"Ac cooling is weak in peak summer afternoon. Also, spare parts were available immediately."
+RV-0177,2026-08-09,Creta,Diesel AT,Chennai,Dealer walk-in feedback,3,Water leaking from sunroof during monsoon. But clutch is light and gear shifts are easy.
+RV-0009,2026-08-10,Venue,Petrol MT,Chennai,Post-delivery survey,4,"Dct judder and jerks in stop-go traffic. However, panoramic sunroof is the best feature."
+RV-0010,2026-08-10,Verna,Petrol DCT,Hyderabad,Service feedback form,5,"Genuine parts arrived same day. Also, climate control works perfectly."
+RV-0022,2026-08-10,Aura,Diesel AT,Hyderabad,Post-delivery survey,3,"Suspension feels stiff on bad roads. Also, spare parts were available immediately."
+RV-0143,2026-08-10,Verna,CNG,Kolkata,Post-delivery survey,4,"Dct gearbox is smooth and quick. Also, service was completed on time."
+RV-0144,2026-08-10,Verna,Petrol MT,Bengaluru,Service feedback form,3,"Panel gaps and rattles from the door trim. However, sunroof makes the cabin feel premium."
+RV-0075,2026-08-11,Venue,Turbo DCT,Pune,Dealer walk-in feedback,2,"Service advisor never called back, very poor follow-up. Plus, sunroof drain blocked, roof lining got wet."
+RV-0052,2026-08-12,i20,Diesel AT,Mumbai,Service feedback form,4,"Service was completed on time. Plus, DCT gearbox is smooth and quick."
+RV-0092,2026-08-12,i20,CNG,Delhi NCR,Service feedback form,4,Service took 3 days longer than promised. But ride quality is smooth and cabin is quiet.
+RV-0106,2026-08-12,Alcazar,CNG,Chennai,Post-delivery survey,3,"Spare part not available, car stuck for 11 days. But service was completed on time."
+RV-0015,2026-08-14,Verna,Petrol DCT,Delhi NCR,Service feedback form,3,"Panel gaps and rattles from the door trim. Also, mileage is excellent, getting 17 kmpl in city."
+RV-0044,2026-08-14,Alcazar,Petrol DCT,Kolkata,Social media mention,3,"Spare part not available, car stuck for 12 days. However, Bluelink app and connected features are very useful."
+RV-0061,2026-08-15,Exter,Petrol DCT,Bengaluru,Social media mention,3,"Ac cooling is weak in peak summer afternoon. Also, service advisor was polite and explained everything."
+RV-0113,2026-08-15,Grand i10 Nios,Petrol MT,Jaipur,Service feedback form,4,"Mileage is excellent, getting 16 kmpl in city. Plus, service was completed on time."
+RV-0115,2026-08-15,Alcazar,Turbo DCT,Bengaluru,Call centre,5,"Climate control works perfectly. Also, clutch is light and gear shifts are easy."
+RV-0020,2026-08-16,Verna,Petrol DCT,Chandigarh,Service feedback form,1,"Panel gaps and rattles from the door trim. gearbox hesitation at low speed, felt unsafe once."
+RV-0155,2026-08-16,Exter,Petrol MT,Kolkata,Service feedback form,4,Delivery experience was memorable. panoramic sunroof is the best feature.
+RV-0004,2026-08-17,Grand i10 Nios,Petrol DCT,Delhi NCR,Post-delivery survey,2,"Bluelink app keeps disconnecting. Plus, DCT judder and jerks in stop-go traffic."
+RV-0012,2026-08-18,Verna,Diesel AT,Mumbai,Call centre,3,"Dashboard rattle noise started within 3 months. However, delivery experience was memorable."
+RV-0147,2026-08-18,Aura,CNG,Lucknow,Post-delivery survey,3,Dct gearbox is smooth and quick. But suspension feels stiff on bad roads.
+RV-0150,2026-08-18,Grand i10 Nios,Diesel AT,Lucknow,Post-delivery survey,3,"Ac takes too long to cool, compressor noise. However, service was completed on time."
+RV-0102,2026-08-19,Venue,Diesel AT,Mumbai,Call centre,2,"Dct judder and jerks in stop-go traffic. However, panoramic sunroof is the best feature."
+RV-0133,2026-08-19,Aura,Diesel AT,Pune,Social media mention,3,"Sunroof drain blocked, roof lining got wet. However, DCT gearbox is smooth and quick."
+RV-0081,2026-08-20,Alcazar,Turbo DCT,Hyderabad,Call centre,3,Dashboard rattle noise started within 3 months. But periodic maintenance is affordable.
+RV-0105,2026-08-20,Grand i10 Nios,Turbo DCT,Chennai,Call centre,1,"Infotainment screen freezes and android auto drops. Plus, water leaking from sunroof during monsoon."
+RV-0148,2026-08-20,Alcazar,Petrol DCT,Chennai,Call centre,4,"Genuine parts arrived same day. Also, waiting for spare parts for over a week."
+RV-0030,2026-08-21,Creta,Turbo DCT,Chennai,Social media mention,1,"Water leaking from sunroof during monsoon. Plus, infotainment screen freezes and Android Auto drops."
+RV-0090,2026-08-21,Exter,Diesel AT,Delhi NCR,Call centre,5,Dct gearbox is smooth and quick. sunroof makes the cabin feel premium.
+RV-0117,2026-08-21,Venue,Turbo DCT,Chandigarh,Dealer walk-in feedback,3,Fit and finish is premium. But AC cooling is weak in peak summer afternoon.
+RV-0153,2026-08-21,i20,CNG,Mumbai,Social media mention,1,"Service advisor never called back, very poor follow-up. Also, gearbox hesitation at low speed, felt unsafe once."
+RV-0045,2026-08-23,i20,CNG,Hyderabad,Call centre,4,"Mileage is excellent, getting 17 kmpl in city. And service took 3 days longer than promised."
+RV-0107,2026-08-23,Aura,Petrol MT,Hyderabad,Dealer walk-in feedback,3,Ventilated seats are a blessing in summer. But waiting period of 13 weeks is too long.
+RV-0157,2026-08-23,Venue,Diesel AT,Bengaluru,Dealer walk-in feedback,3,Dct judder and jerks in stop-go traffic. But service advisor was polite and explained everything.
+RV-0169,2026-08-23,Grand i10 Nios,Petrol DCT,Bengaluru,Post-delivery survey,3,Ac cooling is weak in peak summer afternoon. But sunroof makes the cabin feel premium.
+RV-0024,2026-08-24,i20,CNG,Hyderabad,Social media mention,4,"Service advisor never called back, very poor follow-up. Also, fuel efficiency is better than expected."
+RV-0088,2026-08-24,i20,Petrol DCT,Mumbai,Post-delivery survey,4,Service was completed on time. fuel efficiency is better than expected.
+RV-0178,2026-08-27,Exter,Diesel AT,Jaipur,Call centre,1,"Ac cooling is weak in peak summer afternoon. AC takes too long to cool, compressor noise."
+RV-0077,2026-08-28,Venue,CNG,Jaipur,Service feedback form,4,"Delivery experience was memorable. Also, service cost is reasonable."
+RV-0166,2026-08-28,Creta,CNG,Mumbai,Service feedback form,5,Delivery experience was memorable. service was completed on time.
+RV-0099,2026-08-29,Exter,Petrol DCT,Chennai,Dealer walk-in feedback,2,"Ac takes too long to cool, compressor noise. And ventilated seats are a blessing in summer."
+RV-0036,2026-08-30,i20,Turbo DCT,Pune,Call centre,3,"Spare part not available, car stuck for 15 days. But touchscreen and Bose sound are superb."
+RV-0127,2026-08-30,Alcazar,Petrol DCT,Delhi NCR,Call centre,2,Waiting for spare parts for over a week. charged for parts that were not replaced.
+RV-0139,2026-08-31,Alcazar,CNG,Kolkata,Service feedback form,4,Build quality feels solid. spare parts were available immediately.
+RV-0171,2026-08-31,i20,Petrol MT,Hyderabad,Social media mention,3,Service took 3 days longer than promised. But ride quality is smooth and cabin is quiet.
+RV-0018,2026-09-01,Creta,Petrol MT,Mumbai,Social media mention,3,"Sunroof drain blocked, roof lining got wet. But fuel efficiency is better than expected."
+RV-0149,2026-09-01,Exter,Petrol MT,Chandigarh,Service feedback form,3,"Ac takes too long to cool, compressor noise. However, mileage is excellent, getting 21 kmpl in city."
+RV-0180,2026-09-02,Aura,Diesel AT,Chennai,Call centre,1,Suspension feels stiff on bad roads. waiting for spare parts for over a week.
+RV-0064,2026-09-04,Grand i10 Nios,Petrol DCT,Pune,Service feedback form,1,Delivery got delayed without any update. charged for parts that were not replaced.
+RV-0159,2026-09-04,Creta,Petrol MT,Pune,Dealer walk-in feedback,2,"Sunroof drain blocked, roof lining got wet. Plus, sunroof drain blocked, roof lining got wet."
+RV-0108,2026-09-05,Venue,Petrol MT,Bengaluru,Service feedback form,4,Dct judder and jerks in stop-go traffic. But AC cools the cabin very fast.
+RV-0043,2026-09-06,Creta,Petrol DCT,Delhi NCR,Post-delivery survey,2,"Water leaking from sunroof during monsoon. But mileage is excellent, getting 20 kmpl in city."
+RV-0095,2026-09-07,Verna,Diesel AT,Bengaluru,Social media mention,2,"Panel gaps and rattles from the door trim. Also, fuel efficiency is better than expected."
+RV-0104,2026-09-07,i20,Turbo DCT,Mumbai,Social media mention,1,Service took 3 days longer than promised. service took 3 days longer than promised.
+RV-0007,2026-09-09,Venue,Turbo DCT,Chennai,Post-delivery survey,1,Dct judder and jerks in stop-go traffic. forward collision warning triggers falsely.
+RV-0110,2026-09-09,Verna,Diesel AT,Mumbai,Post-delivery survey,1,"Dashboard rattle noise started within 3 months. Plus, dashboard rattle noise started within 3 months."
+RV-0154,2026-09-09,i20,CNG,Lucknow,Post-delivery survey,3,Dct gearbox is smooth and quick. And waiting period of 11 weeks is too long.
+RV-0034,2026-09-11,Aura,Petrol MT,Jaipur,Post-delivery survey,3,Touchscreen and bose sound are superb. But suspension feels stiff on bad roads.
+RV-0049,2026-09-11,Alcazar,CNG,Mumbai,Social media mention,5,"Service cost is reasonable. Also, fit and finish is premium."
+RV-0091,2026-09-11,Alcazar,Petrol MT,Jaipur,Service feedback form,2,"Spare part not available, car stuck for 8 days. But mileage is excellent, getting 21 kmpl in city."
+RV-0164,2026-09-11,Venue,CNG,Kolkata,Dealer walk-in feedback,2,"Dct judder and jerks in stop-go traffic. Also, DCT judder and jerks in stop-go traffic."
+RV-0005,2026-09-12,i20,Diesel AT,Pune,Service feedback form,1,Service took 3 days longer than promised. water leaking from sunroof during monsoon.
+RV-0084,2026-09-12,Alcazar,Petrol DCT,Chennai,Service feedback form,5,Genuine parts arrived same day. fuel efficiency is better than expected.
+RV-0050,2026-09-13,Creta,CNG,Mumbai,Post-delivery survey,1,"Sunroof drain blocked, roof lining got wet. Plus, water leaking from sunroof during monsoon."
+RV-0170,2026-09-13,Verna,Turbo DCT,Jaipur,Dealer walk-in feedback,5,"Fuel efficiency is better than expected. Plus, DCT gearbox is smooth and quick."
+RV-0172,2026-09-14,Grand i10 Nios,Petrol MT,Delhi NCR,Post-delivery survey,5,"Bluelink app and connected features are very useful. Plus, delivery was on the promised date."
+RV-0065,2026-09-15,Creta,CNG,Pune,Dealer walk-in feedback,3,"Service was completed on time. However, gearbox hesitation at low speed, felt unsafe once."
+RV-0001,2026-09-16,Exter,CNG,Hyderabad,Service feedback form,1,"Ac takes too long to cool, compressor noise. Plus, charged for parts that were not replaced."
+RV-0063,2026-09-16,Alcazar,Diesel AT,Mumbai,Call centre,3,"Spare part not available, car stuck for 15 days. But ADAS lane keep works well on highway."
+RV-0070,2026-09-16,i20,Petrol DCT,Bengaluru,Social media mention,4,"Service advisor never called back, very poor follow-up. But ride quality is smooth and cabin is quiet."
+RV-0026,2026-09-17,Venue,Turbo DCT,Delhi NCR,Service feedback form,3,"Gearbox hesitation at low speed, felt unsafe once. However, sunroof makes the cabin feel premium."
+RV-0055,2026-09-17,Verna,CNG,Lucknow,Post-delivery survey,5,"Service was completed on time. Also, climate control works perfectly."
+RV-0100,2026-09-17,i20,Petrol DCT,Mumbai,Call centre,5,"Spare parts were available immediately. Also, delivery was on the promised date."
+RV-0048,2026-09-18,Exter,CNG,Lucknow,Social media mention,3,Ac cooling is weak in peak summer afternoon. And DCT gearbox is smooth and quick.
+RV-0120,2026-09-18,Exter,CNG,Lucknow,Call centre,4,"Mileage is poor, only 9 kmpl in city traffic. But genuine parts arrived same day."
+RV-0173,2026-09-19,Alcazar,CNG,Delhi NCR,Post-delivery survey,2,Waiting for spare parts for over a week. But six airbags and ADAS give real peace of mind.
+RV-0175,2026-09-19,Venue,Diesel AT,Bengaluru,Social media mention,1,"Dct judder and jerks in stop-go traffic. Plus, waiting period of 11 weeks is too long."
+RV-0002,2026-09-21,Exter,Turbo DCT,Hyderabad,Call centre,4,"Ac cooling is weak in peak summer afternoon. However, ride quality is smooth and cabin is quiet."
+RV-0019,2026-09-21,Grand i10 Nios,Diesel AT,Chandigarh,Dealer walk-in feedback,4,"Fuel efficiency is better than expected. But spare part not available, car stuck for 12 days."
+RV-0068,2026-09-21,Venue,Diesel AT,Hyderabad,Call centre,4,"Bluelink app and connected features are very useful. And gearbox hesitation at low speed, felt unsafe once."
+RV-0054,2026-09-23,Creta,Petrol DCT,Mumbai,Social media mention,3,Water leaking from sunroof during monsoon. But DCT gearbox is smooth and quick.
+RV-0072,2026-09-23,i20,Petrol MT,Bengaluru,Call centre,2,"Service advisor never called back, very poor follow-up. Plus, mileage is poor, only 8 kmpl in city traffic."
+RV-0096,2026-09-23,i20,Petrol DCT,Hyderabad,Dealer walk-in feedback,2,"Service took 3 days longer than promised. However, six airbags and ADAS give real peace of mind."
+RV-0031,2026-09-24,Exter,Diesel AT,Pune,Service feedback form,3,"Ac cooling is weak in peak summer afternoon. Also, delivery experience was memorable."
+RV-0082,2026-09-24,Verna,Petrol MT,Chandigarh,Service feedback form,4,Dashboard rattle noise started within 3 months. But touchscreen and Bose sound are superb.
+RV-0078,2026-09-25,Verna,Petrol DCT,Chandigarh,Post-delivery survey,5,"Service advisor was polite and explained everything. Also, Bluelink app and connected features are very useful."
+RV-0132,2026-09-25,Venue,Diesel AT,Bengaluru,Dealer walk-in feedback,5,"Climate control works perfectly. Also, Bluelink app and connected features are very useful."
+RV-0162,2026-09-25,Venue,CNG,Hyderabad,Dealer walk-in feedback,2,"Bluelink app and connected features are very useful. Also, service advisor never called back, very poor follow-up."
+RV-0027,2026-09-26,Venue,Diesel AT,Lucknow,Service feedback form,3,"Gearbox hesitation at low speed, felt unsafe once. However, sunroof makes the cabin feel premium."
+RV-0135,2026-09-26,Exter,Diesel AT,Delhi NCR,Social media mention,1,"Ac cooling is weak in peak summer afternoon. Plus, Bluelink app keeps disconnecting."
+RV-0087,2026-09-27,Alcazar,Diesel AT,Delhi NCR,Call centre,4,Genuine parts arrived same day. And waiting period of 17 weeks is too long.
+RV-0085,2026-09-28,Aura,Diesel AT,Delhi NCR,Service feedback form,5,"Clutch is light and gear shifts are easy. Plus, service was completed on time."
+RV-0013,2026-09-30,Exter,Diesel AT,Bengaluru,Post-delivery survey,2,"Forward collision warning triggers falsely. AC takes too long to cool, compressor noise."
+RV-0080,2026-09-30,Grand i10 Nios,Petrol DCT,Bengaluru,Service feedback form,2,Six airbags and adas give real peace of mind. But water leaking from sunroof during monsoon.
+RV-0134,2026-09-30,Venue,Petrol DCT,Delhi NCR,Social media mention,3,"Gearbox hesitation at low speed, felt unsafe once. However, Bluelink app and connected features are very useful."
+RV-0053,2026-10-01,Grand i10 Nios,Petrol DCT,Delhi NCR,Social media mention,4,"Genuine parts arrived same day. Plus, climate control works perfectly."
+RV-0101,2026-10-01,Venue,Petrol DCT,Chandigarh,Post-delivery survey,2,"Sunroof drain blocked, roof lining got wet. Also, six airbags and ADAS give real peace of mind."
+RV-0161,2026-10-01,Alcazar,Petrol DCT,Lucknow,Post-delivery survey,4,Service cost is reasonable. And ADAS beeps too often and is annoying in city.
+RV-0023,2026-10-02,Creta,CNG,Pune,Service feedback form,1,"Rear seat is cramped for long trips. Also, infotainment screen freezes and Android Auto drops."
+RV-0126,2026-10-02,Aura,Petrol MT,Lucknow,Social media mention,3,"Touchscreen and bose sound are superb. Also, delivery got delayed without any update."
+RV-0042,2026-10-03,i20,Petrol DCT,Jaipur,Service feedback form,2,Service was completed on time. But service took 3 days longer than promised.
+RV-0046,2026-10-03,Exter,Diesel AT,Mumbai,Social media mention,4,"Ac cooling is weak in peak summer afternoon. However, build quality feels solid."
+RV-0073,2026-10-03,Creta,CNG,Mumbai,Call centre,3,Service advisor was polite and explained everything. And water leaking from sunroof during monsoon.
+RV-0097,2026-10-03,Verna,Diesel AT,Hyderabad,Dealer walk-in feedback,4,Panel gaps and rattles from the door trim. And ride quality is smooth and cabin is quiet.
+RV-0168,2026-10-03,Creta,Diesel AT,Kolkata,Post-delivery survey,4,"Sunroof drain blocked, roof lining got wet. Also, Bluelink app and connected features are very useful."
+RV-0060,2026-10-04,Creta,CNG,Kolkata,Social media mention,4,"Sunroof drain blocked, roof lining got wet. But ADAS lane keep works well on highway."
+RV-0003,2026-10-05,Alcazar,Petrol MT,Hyderabad,Dealer walk-in feedback,3,"Forward collision warning triggers falsely. However, climate control works perfectly."
+RV-0114,2026-10-05,Creta,CNG,Bengaluru,Service feedback form,3,Infotainment screen freezes and android auto drops. And ADAS lane keep works well on highway.
+RV-0041,2026-10-06,Verna,Petrol MT,Chandigarh,Call centre,4,"Panel gaps and rattles from the door trim. However, DCT gearbox is smooth and quick."
+RV-0067,2026-10-06,Alcazar,Turbo DCT,Hyderabad,Social media mention,5,"Sunroof makes the cabin feel premium. Also, clutch is light and gear shifts are easy."
+RV-0125,2026-10-06,Aura,Petrol DCT,Lucknow,Call centre,3,"Sunroof makes the cabin feel premium. And service advisor never called back, very poor follow-up."
+RV-0136,2026-10-07,Exter,Turbo DCT,Mumbai,Service feedback form,2,"Ac takes too long to cool, compressor noise. Also, delivery was on the promised date."
+RV-0028,2026-10-08,Verna,Petrol DCT,Delhi NCR,Post-delivery survey,2,"Panel gaps and rattles from the door trim. Also, dashboard rattle noise started within 3 months."
+RV-0029,2026-10-08,Venue,Turbo DCT,Hyderabad,Dealer walk-in feedback,3,"Mileage is excellent, getting 18 kmpl in city. However, spare part not available, car stuck for 10 days."
+RV-0059,2026-10-10,Alcazar,Petrol DCT,Hyderabad,Service feedback form,1,Infotainment screen freezes and android auto drops. waiting for spare parts for over a week.
+RV-0142,2026-10-11,Aura,Petrol MT,Chennai,Dealer walk-in feedback,4,"Ride quality is smooth and cabin is quiet. However, water leaking from sunroof during monsoon."
+RV-0116,2026-10-12,Aura,CNG,Chandigarh,Call centre,5,"Fit and finish is premium. Also, six airbags and ADAS give real peace of mind."
+RV-0017,2026-10-14,i20,Turbo DCT,Bengaluru,Service feedback form,3,"Service took 3 days longer than promised. However, service was completed on time."
+RV-0122,2026-10-14,Creta,Turbo DCT,Kolkata,Call centre,3,"Infotainment screen freezes and android auto drops. Also, mileage is excellent, getting 21 kmpl in city."
+RV-0038,2026-10-15,Aura,Petrol DCT,Mumbai,Dealer walk-in feedback,5,Delivery was on the promised date. DCT gearbox is smooth and quick.
+RV-0129,2026-10-15,Venue,Turbo DCT,Pune,Call centre,5,"Adas lane keep works well on highway. Plus, climate control works perfectly."
+RV-0051,2026-10-16,Grand i10 Nios,CNG,Jaipur,Call centre,3,Dashboard rattle noise started within 3 months. But ride quality is smooth and cabin is quiet.
+RV-0071,2026-10-16,Creta,Petrol DCT,Bengaluru,Call centre,5,Build quality feels solid. fuel efficiency is better than expected.
+RV-0086,2026-10-16,i20,Petrol MT,Lucknow,Call centre,2,Forward collision warning triggers falsely. But clutch is light and gear shifts are easy.
+RV-0128,2026-10-17,Creta,Diesel AT,Chandigarh,Post-delivery survey,4,"Sunroof drain blocked, roof lining got wet. However, delivery experience was memorable."
