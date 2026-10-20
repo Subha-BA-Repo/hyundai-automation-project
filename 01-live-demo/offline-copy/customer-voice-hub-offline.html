@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body style="margin:0">
+<title>Customer Voice Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: an instrument cluster up top (night drive), then a daylight service floor: queue, defects, models, the assistant, and how it is built. */
+:root{
+  --bg:#eef1f4; --panel:#ffffff; --ink:#0f1b2a; --muted:#5a6878; --line:#d6dde5;
+  --accent:#1f5f8b; --accent-ink:#ffffff; --accent-soft:#e3edf5;
+  --amber:#c27a12; --amber-soft:#fbf0dc;
+  --crit:#b3261e; --crit-soft:#fbe8e6; --ok:#2c6b3d; --ok-soft:#e3f1e6;
+  --bar:#a9bccd;
+  --night:#0a1422; --night-2:#112135; --night-line:#22364f; --chrome:#c9d4df; --chrome-dim:#7f93a8; --tell:#f2a33a; --tell-red:#ff6b5e; --tell-teal:#4fd1c5;
+  --f-display:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-cond:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1219; --panel:#131c26; --ink:#e3eaf1; --muted:#93a3b4; --line:#253242;
+  --accent:#6fb3e3; --accent-ink:#08121c; --accent-soft:#16293a;
+  --amber:#f0b45a; --amber-soft:#33260f;
+  --crit:#f28b80; --crit-soft:#3a1c1a; --ok:#8fd19e; --ok-soft:#173022;
+  --bar:#34485c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1219; --panel:#131c26; --ink:#e3eaf1; --muted:#93a3b4; --line:#253242;
+  --accent:#6fb3e3; --accent-ink:#08121c; --accent-soft:#16293a;
+  --amber:#f0b45a; --amber-soft:#33260f;
+  --crit:#f28b80; --crit-soft:#3a1c1a; --ok:#8fd19e; --ok-soft:#173022;
+  --bar:#34485c; color-scheme:dark}
+body[data-cvh="light"]{--bg:#eef1f4; --panel:#ffffff; --ink:#0f1b2a; --muted:#5a6878; --line:#d6dde5; --accent:#1f5f8b; --accent-ink:#ffffff; --accent-soft:#e3edf5; --amber:#c27a12; --amber-soft:#fbf0dc; --crit:#b3261e; --crit-soft:#fbe8e6; --ok:#2c6b3d; --ok-soft:#e3f1e6; --bar:#a9bccd; color-scheme:light}
+body[data-cvh="dark"]{--bg:#0c1219; --panel:#131c26; --ink:#e3eaf1; --muted:#93a3b4; --line:#253242; --accent:#6fb3e3; --accent-ink:#08121c; --accent-soft:#16293a; --amber:#f0b45a; --amber-soft:#33260f; --crit:#f28b80; --crit-soft:#3a1c1a; --ok:#8fd19e; --ok-soft:#173022; --bar:#34485c; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--night)}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1200px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.022em}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:700}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-cond);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--night);border-bottom:1px solid var(--night-line)}
+.nav .inner{display:flex;align-items:center;gap:20px;min-height:56px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--chrome);text-decoration:none}
+.mark{width:34px;height:34px;flex:none}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:.02em;color:#fff}
+.demo-tag{display:inline-block;margin-top:3px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.2em;color:#1b1205;background:var(--tell);border-radius:3px;padding:1px 5px;font-weight:500}
+.mark-wrap{display:flex;flex-direction:column;align-items:center}
+.brand small{display:block;font-family:var(--f-cond);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--chrome-dim);line-height:1}
+.links{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto}
+.links a{color:var(--chrome);text-decoration:none;font-family:var(--f-body);font-size:14px;font-weight:500;letter-spacing:0;padding:4px 0;border-bottom:2px solid transparent}
+.links a:hover,.links a:focus-visible{color:#fff;border-bottom-color:var(--tell)}
+@media (max-width:760px){.links{display:none}}
+.theme-btn{display:inline-flex;align-items:center;gap:8px;margin-left:12px;font:600 13px/1 var(--f-body);color:var(--chrome);background:transparent;border:1px solid var(--night-line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.theme-btn:hover{border-color:var(--tell);color:#fff}
+.theme-btn:focus-visible{outline:2px solid var(--tell);outline-offset:2px}
+.theme-btn svg{width:16px;height:16px}
+@media (max-width:760px){.theme-btn{margin-left:auto}}
+
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 85% -10%,#1b3554 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);color:var(--chrome);overflow:hidden}
+.hero > .inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:36px;align-items:center;padding-block:48px 40px}
+@media (max-width:960px){.hero > .inner{grid-template-columns:minmax(0,1fr)}}
+.hero .eyebrow{color:var(--tell)}
+.hero h1{font-size:clamp(34px,5vw,58px);font-weight:800;line-height:1.02;color:#fff;margin-top:12px}
+.hero h1 em{font-style:normal;color:var(--tell)}
+.hero .lede{margin-top:16px;max-width:54ch;color:var(--chrome);font-size:16.5px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--f-body);padding:12px 18px;border-radius:999px;text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn.primary{background:var(--tell);color:#1b1205}
+.btn.line{border-color:var(--chrome-dim);color:#fff;background:transparent}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.badge{font-family:var(--f-mono);font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--night-line);color:var(--chrome)}
+.badge.warn{border-color:#6a4a16;color:var(--tell)}
+
+/* readout */
+.cluster{position:relative;border-radius:24px;padding:22px;background:linear-gradient(180deg,#0e1c2e,#091321);border:1px solid var(--night-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 30px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:18px}
+.ro-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.ro-head b{color:#fff;font-size:15px;font-weight:600}
+.ro-head span{font-size:12px;color:var(--chrome-dim)}
+.ro-body{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:22px;align-items:center}
+@media (max-width:520px){.ro-body{grid-template-columns:minmax(0,1fr)}}
+.ring{position:relative;width:100%;max-width:200px;margin:0 auto;aspect-ratio:1}
+.ring svg{width:100%;height:100%;display:block}
+.ring .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring .mid b{font-size:52px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ring .mid span{font-size:12.5px;color:var(--chrome);margin-top:4px;max-width:12ch;line-height:1.3}
+.ro-legend{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;white-space:nowrap;color:var(--chrome)}
+.ro-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:0}
+.ro-stats{display:flex;flex-direction:column;gap:16px;min-width:0}
+.ro-stat{display:flex;flex-direction:column;gap:6px}
+.ro-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ro-top span{font-size:12.5px;color:var(--chrome-dim);font-weight:500}
+.ro-top b{font-size:22px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.ro-top b small{font-size:12px;font-weight:500;color:var(--chrome-dim);margin-left:4px}
+.ro-bar{height:8px;border-radius:999px;background:#1b2c42;position:relative;overflow:hidden}
+.ro-bar i{position:absolute;inset:0 auto 0 0;border-radius:999px;background:linear-gradient(90deg,#4f8fc0,#7fb6e0)}
+.ro-div{height:8px;border-radius:999px;background:linear-gradient(90deg,#7a2620 0%,#3a2a24 45%,#2a3a36 55%,#1f5a52 100%);position:relative}
+.ro-div::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--chrome-dim)}
+.ro-div i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--tell);transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(242,163,58,.25)}
+.ro-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--chrome-dim)}
+.ro-alert{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,107,94,.08);border:1px solid rgba(255,107,94,.25);font-size:13px;color:var(--chrome)}
+.ro-alert b{color:#fff;font-weight:600}
+.lamp{flex:none;margin-top:5px;width:8px;height:8px;border-radius:50%;background:var(--tell-red);box-shadow:0 0 10px var(--tell-red)}
+.seg{transition:opacity .4s ease}
+@media (prefers-reduced-motion:no-preference){.lamp{animation:blink 2.4s ease-in-out infinite}@keyframes blink{50%{opacity:.35}}}
+
+/* flow */
+.flow-wrap{background:var(--night-2);border-top:1px solid var(--night-line)}
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;padding-block:22px}
+.step{position:relative;padding:4px 18px 4px 0;color:var(--chrome);min-width:0}
+.step + .step{padding-left:18px;border-left:1px solid var(--night-line)}
+.step .n{font-family:var(--f-display);font-weight:800;font-size:13px;color:var(--tell)}
+.step b{display:block;color:#fff;font-family:var(--f-display);font-size:15.5px;margin:2px 0}
+.step span{font-size:13px;color:var(--chrome-dim)}
+@media (max-width:900px){.flow{grid-template-columns:minmax(0,1fr)}.step + .step{border-left:0;padding-left:0;border-top:1px solid var(--night-line);padding-top:12px;margin-top:12px}}
+
+/* sections */
+main{display:flex;flex-direction:column;gap:44px;padding-block:44px 64px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;margin-bottom:18px}
+.sec-head p{color:var(--muted);max-width:60ch}
+.grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px}
+.grid2.wide{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (max-width:920px){.grid2,.grid2.wide{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 12px;flex-wrap:wrap}
+.panel-head p{color:var(--muted);font-size:13px}
+
+/* queue */
+.queue{display:flex;flex-direction:column}
+.ticket{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
+.ticket:first-child{border-top:0}
+.sev{align-self:stretch;border-radius:2px;background:var(--amber)}
+.sev.crit{background:var(--crit)}
+.ticket .line1{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.ticket .sub{font-size:13px;color:var(--muted)}
+.why{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.why span{font-family:var(--f-mono);font-size:11.5px;padding:2px 7px;border-radius:4px;background:var(--accent-soft);color:var(--ink)}
+.score{font-family:var(--f-display);font-weight:800;font-size:26px;text-align:right;line-height:1}
+.score small{display:block;font-family:var(--f-mono);font-size:11px;font-weight:400;margin-top:4px}
+.lv-crit{color:var(--crit)} .lv-warn{color:var(--amber)}
+
+/* defects */
+.defects{display:flex;flex-direction:column;gap:13px}
+.def{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px}
+.def .name{font-weight:600;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.def .nums{font-size:13px;color:var(--muted);text-align:right}
+.track{grid-column:1/-1;height:10px;background:var(--line);border-radius:5px;position:relative;overflow:hidden}
+.track i{position:absolute;inset:0 auto 0 0;background:var(--bar);border-radius:5px}
+.track i.open{background:var(--accent)}
+.def .detail{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.chip{font-family:var(--f-mono);font-size:11px;padding:1px 7px;border-radius:999px;background:var(--crit-soft);color:var(--crit)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* table */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px}
+th{font-family:var(--f-cond);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.r,th.r{text-align:right}
+.rating{display:flex;align-items:center;gap:10px}
+.rating .bar{flex:1;min-width:50px;height:8px;background:var(--line);border-radius:4px;position:relative}
+.rating .bar i{position:absolute;inset:0 auto 0 0;border-radius:4px;background:var(--accent)}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;font-weight:500}
+.pill.neg{background:var(--crit-soft);color:var(--crit)} .pill.pos{background:var(--ok-soft);color:var(--ok)} .pill.mid{background:var(--amber-soft);color:var(--amber)}
+.note{font-size:12.5px;color:var(--muted)}
+.trend svg{width:100%;height:auto;display:block}
+
+/* assistant */
+.assist{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px}
+@media (max-width:920px){.assist{grid-template-columns:minmax(0,1fr)}}
+.chat{display:flex;flex-direction:column;gap:12px;min-height:460px}
+.chat-top{display:flex;align-items:center;gap:12px}
+.bot{width:40px;height:40px;border-radius:12px;background:var(--night);display:grid;place-items:center;flex:none}
+.chat-top b{font-family:var(--f-display);font-size:17px}
+.chat-top span{display:block;font-size:12.5px;color:var(--muted)}
+.log{flex:1;display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:430px;min-height:220px;padding:4px 2px}
+.msg{max-width:92%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.ai ul{margin:6px 0;padding-left:18px}
+.msg.ai p + p{margin-top:6px}
+.msg .tools{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.msg .tools span{font-family:var(--f-mono);font-size:11px;padding:2px 7px;border-radius:999px;background:var(--amber-soft);color:var(--amber)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:500 13px/1.3 var(--f-body);text-align:left;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 11px;border-radius:999px;cursor:pointer}
+.chips button:hover{border-color:var(--accent)}
+.ask{display:flex;gap:8px}
+.ask input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:10px 14px}
+.ask button,.solid{font:600 14px/1 var(--f-body);border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:10px 16px;cursor:pointer}
+.ghost{font:600 13px/1 var(--f-body);border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:8px 12px;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.offline{border:1px dashed var(--line);border-radius:10px;padding:12px;font-size:13.5px;color:var(--muted)}
+label{font-weight:600;font-size:14px}
+textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.result{border:1px dashed var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14px;margin:0}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:500}
+
+/* architecture */
+.arch{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1.1fr);align-items:stretch}
+.lane{display:flex;flex-direction:column;gap:10px;min-width:0}
+.lane h3{font-family:var(--f-cond);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.box{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:13.5px}
+.box b{display:block;font-size:14px}
+.box.key{border-color:var(--accent);background:var(--accent-soft)}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--f-mono)}
+@media (max-width:920px){.arch{grid-template-columns:minmax(0,1fr)}.arrow{transform:rotate(90deg);height:30px}}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:920px){.cols3{grid-template-columns:minmax(0,1fr)}}
+ul.clean{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+ul.clean li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px;font-size:14px}
+.ck{color:var(--ok);font-weight:700}
+
+.fab{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:20;display:inline-flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:var(--tell);color:#1b1205;font:600 15px/1 var(--f-body);text-decoration:none;box-shadow:0 12px 30px rgba(10,20,34,.35),0 0 0 4px rgba(242,163,58,.18)}
+.fab:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(10,20,34,.4),0 0 0 6px rgba(242,163,58,.22)}
+.fab:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.fab{transition:transform .15s ease,box-shadow .15s ease}}
+@media (max-width:520px){.fab{padding:14px}.fab span{display:none}}
+.fab{border:0;cursor:pointer}
+.drawer{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:21;width:min(430px,calc(100vw - 32px));height:min(640px,calc(100vh - 120px));display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px rgba(10,20,34,.35);overflow:hidden}
+.drawer[hidden]{display:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px 12px 18px;background:var(--night);color:#fff}
+.drawer-head b{font-size:14.5px;font-weight:600}
+.drawer-head .x{width:32px;height:32px;border-radius:999px;border:1px solid var(--night-line);background:transparent;color:#fff;font-size:20px;line-height:1;cursor:pointer}
+.drawer-head .x:focus-visible{outline:2px solid var(--tell);outline-offset:2px}
+.drawer-body{flex:1;min-height:0;display:flex}
+.drawer-body .panel.chat{border:0;border-radius:0;flex:1;min-height:0;padding:14px}
+.drawer-body .chat-top{display:none}
+.drawer-body .log{max-height:none}
+.chat-away{border:1px dashed var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;color:var(--muted)}
+@media (max-width:520px){.drawer{right:8px;left:8px;width:auto;bottom:calc(80px + env(safe-area-inset-bottom,0px));height:calc(100vh - 110px)}}
+footer{padding-bottom:72px;background:var(--night);color:var(--chrome-dim);font-size:13px}
+footer .inner{padding-block:24px;display:flex;flex-direction:column;gap:6px}
+footer b{color:var(--chrome)}
+</style>
+
+<nav class="nav gut" aria-label="Sections">
+  <div class="inner">
+    <a class="brand" href="#top" aria-label="Customer Voice Hub, top">
+      <span class="mark-wrap"><svg class="mark" viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" fill="#112135" stroke="#f2a33a" stroke-width="1.6"/><path d="M3.5 22 V18.6 Q4 16.6 6.4 16.1 L10.2 15.6 L13.6 11.7 Q14.6 10.6 16.1 10.6 H22 Q23.5 10.6 24.6 11.7 L28 15.6 Q30.3 16 30.6 18.1 V22 Z" fill="#c9d4df"/><path d="M11.9 15.6 L14.6 12.5 H18.9 V15.6 Z M20.2 12.5 H22.4 L25.1 15.6 H20.2 Z" fill="#112135"/><rect x="27.6" y="17.4" width="2.2" height="1.3" rx=".6" fill="#f2a33a"/><circle cx="10" cy="22" r="3" fill="#0a1422" stroke="#f2a33a" stroke-width="1.6"/><circle cx="24.2" cy="22" r="3" fill="#0a1422" stroke="#f2a33a" stroke-width="1.6"/></svg><span class="demo-tag">DEMO</span></span>
+      <span><b>Customer Voice Hub</b><small>After-sales command center</small></span>
+    </a>
+    <div class="links">
+      <a href="#queue">Escalations</a><a href="#defects">Defects</a><a href="#models">Models</a><a href="#assistant">Ask the Hub</a><a href="#build">How it works</a>
+    </div>
+    <button type="button" class="theme-btn" id="theme" aria-label="Switch colour theme"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><span id="theme-label">Dark mode</span></button>
+  </div>
+</nav>
+
+<header class="hero gut" id="top">
+  <div class="inner">
+    <div>
+      <div class="eyebrow">Hyundai India · after-sales customer voice</div>
+      <h1>From 266 customer signals to <em><span id="h-esc">9</span> decisions</em> today.</h1>
+      <p class="lede">Reviews, social posts and service tickets are scored, linked to recurring defects and routed to the team that owns the fix. An AI agent in Claude Cowork does the reading and writing; two custom n8n tools apply the business rules.</p>
+      <div class="cta">
+        <a class="btn primary" href="#assistant">Ask the Hub</a>
+        <a class="btn line" href="#queue">See today's escalations</a>
+        <a class="btn line" href="https://lumpish-character-reload.ngrok-free.dev/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">Live n8n bot ↗</a>
+      </div>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--chrome-dim)">The live n8n bot runs on the presenter's demo server and is online during demos.</p>
+      <div class="badges"><span class="badge warn">Synthetic demo data</span><span class="badge">2 custom MCP servers</span><span class="badge">5-skill plugin</span><span class="badge">8 connectors</span></div>
+    </div>
+    <div class="cluster" role="group" aria-label="Today's readout">
+      <div class="ro-head"><b>Today's readout</b><span>Ticket snapshot to 17 Oct 2026</span></div>
+      <div class="ro-body">
+        <div>
+          <div class="ring" id="ring"></div>
+          <div class="ro-legend" id="ring-legend"></div>
+        </div>
+        <div class="ro-stats">
+          <div class="ro-stat"><div class="ro-top"><span>Open service tickets</span><b id="ro-open"></b></div><div class="ro-bar"><i id="ro-open-bar"></i></div></div>
+          <div class="ro-stat"><div class="ro-top"><span>Net customer sentiment</span><b id="ro-net"></b></div><div class="ro-div"><i id="ro-net-dot"></i></div><div class="ro-scale"><span>−100 negative</span><span>0</span><span>positive +100</span></div></div>
+          <div class="ro-stat"><div class="ro-top"><span>Recurring defects (8+ reports)</span><b id="ro-rec"></b></div></div>
+        </div>
+      </div>
+      <div class="ro-alert"><i class="lamp"></i><span id="ro-alert"></span></div>
+    </div>
+  </div>
+  <div class="flow-wrap gut">
+    <div class="inner">
+      <div class="flow" aria-label="How a complaint flows">
+        <div class="step"><span class="n">1</span><b>Customer speaks</b><span>Review, social post, call-centre note or service ticket</span></div>
+        <div class="step"><span class="n">2</span><b>score_review</b><span>Sentiment, themes, urgency, safety and churn flags</span></div>
+        <div class="step"><span class="n">3</span><b>escalation_radar</b><span>0–100 risk score and recurring-defect match</span></div>
+        <div class="step"><span class="n">4</span><b>Agent judgment</b><span>Skills route to every team involved and explain overrides</span></div>
+        <div class="step"><span class="n">5</span><b>Action</b><span>Gmail draft, Calendar review, Drive brief, customer reply</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="inner" style="display:flex;flex-direction:column;gap:44px">
+
+  <section>
+    <div class="sec-head">
+      <div><div class="eyebrow">Today</div><h2>What needs a decision</h2></div>
+      <p>Ranked by the escalation_radar tool. Every score shows the rules that produced it, so nothing is a black box.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel" id="queue">
+        <div class="panel-head"><h3>Escalation queue</h3><p>Top open tickets by risk</p></div>
+        <div class="queue" id="queue-list"></div>
+      </div>
+      <div class="panel" id="defects">
+        <div class="panel-head"><h3>Recurring defects</h3><p>Same problem, many customers</p></div>
+        <div class="legend"><span><i style="background:var(--accent)"></i>still open</span><span><i style="background:var(--bar)"></i>resolved</span></div>
+        <div class="defects" id="defect-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="models">
+    <div class="sec-head">
+      <div><div class="eyebrow">Voice of customer</div><h2>How each model is talked about</h2></div>
+      <p>180 reviews scored by the score_review tool. Lowest-rated model first.</p>
+    </div>
+    <div class="grid2 wide">
+      <div class="panel">
+        <div class="tbl"><table>
+          <thead><tr><th>Model</th><th class="r">Reviews</th><th>Avg rating (of 5)</th><th class="r">Net sentiment</th><th>Top complaint</th></tr></thead>
+          <tbody id="model-rows"></tbody>
+        </table></div>
+        <p class="note">Net sentiment = % positive reviews minus % negative reviews.</p>
+      </div>
+      <div class="panel trend">
+        <div class="panel-head"><h3>New tickets per week</h3><p>Jul to Oct 2026</p></div>
+        <div id="trend"></div>
+        <p class="note">Intake rose from about 6 a week in August to 9–11 a week from mid-September, driven by DCT judder and sunroof leaks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="assistant">
+    <div class="sec-head">
+      <div><div class="eyebrow">AI agent</div><h2>Ask the Hub</h2></div>
+      <p>A chat assistant that answers with the same tools: it scores complaints, ranks tickets and compares models, then explains what to do. It also reads Hinglish.</p>
+    </div>
+    <div class="assist">
+      <div id="chat-home" class="chat-home"><div class="panel chat" id="chat-panel">
+        <div class="chat-top">
+          <div class="bot" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 16 a8 8 0 0 1 16 0" fill="none" stroke="#c9d4df" stroke-width="2" stroke-linecap="round"/><path d="M12 16 L16 10.5" stroke="#f2a33a" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16" r="1.8" fill="#f2a33a"/></svg></div>
+          <div><b>Hub assistant</b><span id="bot-status">Uses score_review, escalation_radar and model_voice on this page's data</span></div>
+        </div>
+        <div class="log" id="log" aria-live="polite"></div>
+        <div class="chips" id="chips"></div>
+        <form class="ask" id="ask">
+          <input id="q" autocomplete="off" placeholder="Ask about defects, tickets or a complaint…" aria-label="Your question">
+          <button type="submit" id="send">Ask</button>
+          <button type="button" class="ghost" id="stop" hidden>Stop</button>
+        </form>
+        <p class="note">Prefer the n8n version? The same tools power a <a href="https://lumpish-character-reload.ngrok-free.dev/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener" style="color:var(--accent)">live n8n + Gemini chatbot</a>, online during demos.</p>
+        <div class="offline" id="offline" hidden>The assistant runs when this page is opened in Claude by a signed-in viewer who allows it. The rule-based scorer in the Ask the Hub section works for everyone.</div>
+      </div>
+        <div class="chat-away" id="chat-away" hidden><p>The assistant is open in the chat window.</p><button type="button" class="ghost" id="chat-return">Bring it back here</button></div></div>
+      <div class="panel">
+        <div class="panel-head"><h3>Try the review scorer</h3><p>Same rules as the n8n tool, plus a pattern check for the chosen model</p></div>
+        <label for="rv">Customer review or complaint</label>
+        <textarea id="rv">Gearbox jerks badly in stop-go traffic, felt unsafe at a signal. Second time at the workshop and the service advisor never called back.</textarea>
+        <label for="md">Model</label>
+        <select id="md"></select>
+        <div class="row">
+          <button class="solid" id="go" type="button">Score</button>
+          <button class="ghost" type="button" data-ex="Water leaking from sunroof during monsoon, roof lining got wet.">Sunroof leak</button>
+          <button class="ghost" type="button" data-ex="Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya.">Hinglish</button>
+        </div>
+        <div class="result" id="out" aria-live="polite"></div>
+        <p class="note">This browser version runs the rules only, so the Hinglish example scores as "no theme found". The live n8n tool (v4) first sends the text through Gemini for translation, then scores it: AC & Cooling and Service Experience, routed to Service Engineering.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="build">
+    <div class="sec-head">
+      <div><div class="eyebrow">Architecture</div><h2>How it is built</h2></div>
+      <p>Rules where decisions need an audit trail. The AI agent for judgment and communication.</p>
+    </div>
+    <div class="panel">
+      <div class="arch">
+        <div class="lane">
+          <h3>Data</h3>
+          <div class="box"><b>Google Sheets</b>180 customer reviews and 86 service tickets, published as CSV</div>
+          <div class="box"><b>Customer text</b>Reviews, social posts and complaints pasted into Cowork</div>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="lane">
+          <h3>Custom tools · n8n in Docker</h3>
+          <div class="box key"><b>MCP #1 · Review Intelligence</b>Gemini Flash translates Hindi or Hinglish, then <span class="mono">score_review</span> rules give sentiment, 12 themes, urgency, safety and churn flags, owner team</div>
+          <div class="box key"><b>MCP #2 · Escalation Radar</b><span class="mono">escalation_radar</span>: 0–100 risk from 5 business rules, recurring-defect clusters</div>
+          <div class="box"><b>ngrok</b>Fixed HTTPS address so Claude can reach n8n on the laptop</div>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="lane">
+          <h3>AI agent · Claude Cowork</h3>
+          <div class="box key"><b>Plugin: hyundai-customer-voice</b>5 skills + both MCP connectors, one-step install</div>
+          <div class="box"><b>Actions</b>Gmail escalation drafts, Calendar reviews, Drive briefs, English or Hinglish replies</div>
+          <div class="box"><b>Scheduled agent (designed)</b>Weekday 8:50 AM brief drafted to Gmail, no prompt needed</div>
+        </div>
+      </div>
+    </div>
+    <div class="cols3" style="margin-top:20px">
+      <div class="panel"><h3>8 connectors</h3><ul class="clean" id="conn"></ul></div>
+      <div class="panel"><h3>5 skills, 1 plugin</h3><ul class="clean" id="skills"></ul></div>
+      <div class="panel"><h3>Limitations</h3><ul class="clean" id="limits"></ul></div>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<button type="button" class="fab" id="fab" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg><span>Chat with the bot</span></button>
+<div class="drawer" id="drawer" role="dialog" aria-label="Hub assistant chat" hidden>
+  <div class="drawer-head"><b>Customer Voice Hub · assistant</b><button type="button" class="x" id="drawer-close" aria-label="Close chat">×</button></div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+<footer class="gut">
+  <div class="inner">
+    <p><b>Customer Voice Hub</b> · built by Subha Das, MBA Business Analytics, Chandigarh University, for the AI For All 2.0 Cowork capstone.</p>
+    <p><b>DEMO · for interview demonstration only.</b> Independent student portfolio project. Not affiliated with or endorsed by Hyundai Motor India. All customers, tickets, dealers and reviews are synthetic.</p>
+  </div>
+</footer>
+
+<script>
+const D = {"summary":{"open":57,"escalate":9,"recurring":7,"reviews":180,"tickets":86,"net":-8},"top":[{"id":"TK-0067","model":"Verna","city":"Delhi NCR","issue":"DCT-JUDDER","score":83,"level":"Escalate today","owner":"Powertrain Quality","why":["+10 open 12 days","+25 3 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)","+8 Corporate lease customer"]},{"id":"TK-0019","model":"Venue","city":"Delhi NCR","issue":"DCT-JUDDER","score":75,"level":"Escalate today","owner":"Powertrain Quality","why":["+25 open 63 days","+10 1 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)"]},{"id":"TK-0040","model":"Creta","city":"Kolkata","issue":"DCT-JUDDER","score":75,"level":"Escalate today","owner":"Powertrain Quality","why":["+25 open 42 days","+10 1 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)"]},{"id":"TK-0070","model":"Creta","city":"Chandigarh","issue":"DCT-JUDDER","score":75,"level":"Escalate today","owner":"Powertrain Quality","why":["+10 open 8 days","+25 3 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)"]},{"id":"TK-0071","model":"Venue","city":"Hyderabad","issue":"DCT-JUDDER","score":75,"level":"Escalate today","owner":"Powertrain Quality","why":["+10 open 8 days","+25 4 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)"]},{"id":"TK-0017","model":"Verna","city":"Delhi NCR","issue":"DCT-JUDDER","score":65,"level":"Escalate today","owner":"Powertrain Quality","why":["+25 open 65 days","+25 safety-related","+15 recurring issue (16 reports)"]},{"id":"TK-0074","model":"Creta","city":"Jaipur","issue":"DCT-JUDDER","score":62,"level":"Escalate today","owner":"Powertrain Quality","why":["+4 open 7 days","+10 1 repeat workshop visit(s)","+25 safety-related","+15 recurring issue (16 reports)","+8 Fleet customer"]},{"id":"TK-0001","model":"Grand i10 Nios","city":"Chennai","issue":"AC-WEAK","score":60,"level":"Escalate today","owner":"Service Engineering","why":["+25 open 87 days","+20 2 repeat workshop visit(s)","+15 recurring issue (10 reports)"]}],"recurring":[{"issue":"DCT-JUDDER","category":"Transmission","total_reports":16,"still_open":9,"models":{"Verna":6,"Venue":6,"Creta":4},"cities":8,"safety_related":true,"owner":"Powertrain Quality"},{"issue":"SUNROOF-LEAK","category":"Sunroof","total_reports":12,"still_open":10,"models":{"Creta":5,"Venue":6,"Alcazar":1},"cities":7,"safety_related":false,"owner":"Plant Quality"},{"issue":"BLUELINK-DISC","category":"Infotainment & Bluelink","total_reports":11,"still_open":6,"models":{"Venue":4,"Verna":2,"Alcazar":2,"Creta":3},"cities":6,"safety_related":false,"owner":"Connected Car (Bluelink)"},{"issue":"AC-WEAK","category":"AC & Cooling","total_reports":10,"still_open":6,"models":{"Grand i10 Nios":6,"Aura":3,"Exter":1},"cities":7,"safety_related":false,"owner":"Service Engineering"},{"issue":"DASH-RATTLE","category":"Build Quality","total_reports":9,"still_open":8,"models":{"Verna":3,"i20":3,"Creta":3},"cities":7,"safety_related":false,"owner":"Plant Quality"},{"issue":"ADVISOR-FOLLOWUP","category":"Service Experience","total_reports":8,"still_open":3,"models":{"Verna":2,"Venue":2,"Aura":1,"Alcazar":1,"i20":2},"cities":7,"safety_related":false,"owner":"Dealer Network / Customer Care"},{"issue":"BILLING","category":"Service Cost","total_reports":8,"still_open":7,"models":{"Verna":3,"Venue":3,"Alcazar":1,"Exter":1},"cities":7,"safety_related":false,"owner":"After-Sales Pricing"}],"models":[{"model":"Exter","reviews":23,"avg":2.61,"net":-35,"topIssue":"AC & Cooling","topCount":19},{"model":"i20","reviews":26,"avg":2.73,"net":-12,"topIssue":"Service Experience","topCount":16},{"model":"Creta","reviews":27,"avg":2.74,"net":-26,"topIssue":"Sunroof","topCount":18},{"model":"Verna","reviews":22,"avg":2.86,"net":-9,"topIssue":"Build Quality","topCount":16},{"model":"Venue","reviews":34,"avg":3,"net":-18,"topIssue":"Transmission","topCount":20},{"model":"Grand i10 Nios","reviews":15,"avg":3.27,"net":13,"topIssue":"No dominant issue","topCount":3},{"model":"Alcazar","reviews":19,"avg":3.47,"net":26,"topIssue":"Spare Parts","topCount":5},{"model":"Aura","reviews":14,"avg":3.64,"net":29,"topIssue":"No dominant issue","topCount":4}],"weeks":[["2026-07-20",7],["2026-07-27",5],["2026-08-03",4],["2026-08-10",8],["2026-08-17",6],["2026-08-24",6],["2026-08-31",4],["2026-09-07",1],["2026-09-14",10],["2026-09-21",6],["2026-09-28",9],["2026-10-05",11],["2026-10-12",9]],"tickets":[["TK-0001","2026-07-22","Grand i10 Nios","Chennai","Chennai Dealer 02","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; blower works but air not cold","Open",87,2,"Retail","No"],["TK-0002","2026-07-22","Verna","Chennai","Chennai Dealer 02","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; noise from left side of dash","Open",87,3,"Retail","No"],["TK-0003","2026-07-22","Verna","Hyderabad","Hyderabad Dealer 02","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer called 5 times","In progress",87,0,"Retail","No"],["TK-0004","2026-07-23","Venue","Jaipur","Jaipur Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; telematics unit reset did not help","Resolved",3,0,"Fleet","No"],["TK-0005","2026-07-24","Creta","Chennai","Chennai Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; drain tube suspected blocked","Open",85,0,"Retail","No"],["TK-0006","2026-07-25","Verna","Chennai","Chennai Dealer 02","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; labour charges not explained","Open",84,0,"Retail","No"],["TK-0007","2026-07-26","Creta","Chandigarh","Chandigarh Dealer 02","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; water dripping near grab handle","Open",83,0,"Fleet","No"],["TK-0008","2026-07-27","Creta","Chennai","Chennai Dealer 02","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; no ETA given","In progress",82,0,"Retail","No"],["TK-0009","2026-07-27","Venue","Chennai","Chennai Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; labour charges not explained","Open",82,1,"Corporate lease","No"],["TK-0010","2026-07-28","Verna","Jaipur","Jaipur Dealer 01","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","Resolved",7,4,"Retail","Yes"],["TK-0011","2026-07-30","Venue","Jaipur","Jaipur Dealer 02","Transmission","DCT-JUDDER","Venue Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; customer says it felt unsafe","Resolved",4,1,"Retail","Yes"],["TK-0012","2026-07-31","Alcazar","Chandigarh","Chandigarh Dealer 02","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; part on back order from regional warehouse","Open",78,0,"Retail","No"],["TK-0013","2026-08-04","Venue","Jaipur","Jaipur Dealer 02","Transmission","DCT-JUDDER","Venue Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; happens when gearbox is hot","Resolved",11,0,"Retail","Yes"],["TK-0014","2026-08-06","Venue","Chandigarh","Chandigarh Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; roof lining stained","In progress",72,0,"Retail","No"],["TK-0015","2026-08-08","Verna","Chennai","Chennai Dealer 02","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; telematics unit reset did not help","Resolved",1,1,"Retail","No"],["TK-0016","2026-08-08","Creta","Lucknow","Lucknow Dealer 02","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; customer needs car for office","Resolved",12,1,"Retail","No"],["TK-0017","2026-08-13","Verna","Delhi NCR","Delhi NCR Dealer 02","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; happens when gearbox is hot","Open",65,0,"Retail","Yes"],["TK-0018","2026-08-13","Aura","Pune","Pune Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","Open",65,2,"Retail","No"],["TK-0019","2026-08-15","Venue","Delhi NCR","Delhi NCR Dealer 01","Transmission","DCT-JUDDER","Venue Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","In progress",63,1,"Retail","Yes"],["TK-0020","2026-08-15","Grand i10 Nios","Lucknow","Lucknow Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","In progress",63,0,"Fleet","No"],["TK-0021","2026-08-15","Verna","Lucknow","Lucknow Dealer 01","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; started after 4000 km","Open",63,0,"Fleet","No"],["TK-0022","2026-08-15","Venue","Chandigarh","Chandigarh Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; customer asking for itemised bill","In progress",63,1,"Retail","No"],["TK-0023","2026-08-15","Venue","Pune","Pune Dealer 01","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer threatened to switch brand","In progress",63,3,"Retail","No"],["TK-0024","2026-08-16","Venue","Pune","Pune Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; customer paid for subscription","Open",62,0,"Retail","No"],["TK-0025","2026-08-18","Grand i10 Nios","Hyderabad","Hyderabad Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","In progress",60,1,"Retail","No"],["TK-0026","2026-08-19","Alcazar","Mumbai","Mumbai Dealer 01","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; no ETA given","Open",59,0,"Retail","No"],["TK-0027","2026-08-20","Venue","Delhi NCR","Delhi NCR Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; drain tube suspected blocked","In progress",58,0,"Retail","No"],["TK-0028","2026-08-20","Grand i10 Nios","Delhi NCR","Delhi NCR Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","Resolved",2,1,"Corporate lease","No"],["TK-0029","2026-08-22","Creta","Chandigarh","Chandigarh Dealer 02","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; roof lining stained","Resolved",3,0,"Retail","No"],["TK-0030","2026-08-23","Verna","Lucknow","Lucknow Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; app login fine but car offline","Open",55,1,"Retail","No"],["TK-0031","2026-08-25","Alcazar","Pune","Pune Dealer 02","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; telematics unit reset did not help","Open",53,0,"Retail","No"],["TK-0032","2026-08-27","Verna","Bengaluru","Bengaluru Dealer 01","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","Resolved",3,3,"Retail","Yes"],["TK-0033","2026-08-28","Exter","Kolkata","Kolkata Dealer 01","ADAS & Safety","BRAKE-NOISE","Brake squeal and vibration while braking at speed; vibration in steering while braking","Resolved",12,1,"Retail","Yes"],["TK-0034","2026-08-30","Verna","Chennai","Chennai Dealer 02","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; car lurched forward at signal","Resolved",12,0,"Retail","Yes"],["TK-0035","2026-08-30","Creta","Bengaluru","Bengaluru Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; roof lining stained","Open",48,0,"Retail","No"],["TK-0036","2026-08-30","Exter","Jaipur","Jaipur Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","Resolved",3,1,"Retail","No"],["TK-0037","2026-08-31","Creta","Mumbai","Mumbai Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; telematics unit reset did not help","Resolved",1,1,"Retail","No"],["TK-0038","2026-09-02","Verna","Bengaluru","Bengaluru Dealer 01","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; noise from left side of dash","In progress",45,0,"Retail","No"],["TK-0039","2026-09-04","Alcazar","Delhi NCR","Delhi NCR Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; customer asking for itemised bill","Open",43,3,"Retail","No"],["TK-0040","2026-09-05","Creta","Kolkata","Kolkata Dealer 02","Transmission","DCT-JUDDER","Creta Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; customer says it felt unsafe","Open",42,1,"Retail","Yes"],["TK-0041","2026-09-07","Aura","Chandigarh","Chandigarh Dealer 02","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer threatened to switch brand","Resolved",1,1,"Retail","No"],["TK-0042","2026-09-14","Aura","Chennai","Chennai Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; blower works but air not cold","Resolved",8,3,"Retail","No"],["TK-0043","2026-09-14","Creta","Hyderabad","Hyderabad Dealer 02","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; customer needs car for office","Open",33,0,"Fleet","No"],["TK-0044","2026-09-14","Verna","Delhi NCR","Delhi NCR Dealer 01","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer called 5 times","In progress",33,1,"Retail","No"],["TK-0045","2026-09-16","Venue","Lucknow","Lucknow Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; app login fine but car offline","In progress",31,0,"Retail","No"],["TK-0046","2026-09-16","Alcazar","Mumbai","Mumbai Dealer 02","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; telematics unit reset did not help","Open",31,1,"Fleet","No"],["TK-0047","2026-09-16","Creta","Kolkata","Kolkata Dealer 01","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; customer needs car for office","Resolved",3,2,"Fleet","No"],["TK-0048","2026-09-17","i20","Bengaluru","Bengaluru Dealer 02","Spare Parts","PARTS-DELAY","Car waiting at workshop, spare part not available; customer needs car for office","Open",30,0,"Retail","No"],["TK-0049","2026-09-20","Venue","Pune","Pune Dealer 02","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; roof lining stained","Open",27,0,"Retail","No"],["TK-0050","2026-09-20","Creta","Lucknow","Lucknow Dealer 01","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; customer paid for subscription","Resolved",11,2,"Retail","No"],["TK-0051","2026-09-20","Exter","Hyderabad","Hyderabad Dealer 02","ADAS & Safety","BRAKE-NOISE","Brake squeal and vibration while braking at speed; vibration in steering while braking","Open",27,0,"Retail","Yes"],["TK-0052","2026-09-23","Venue","Chennai","Chennai Dealer 02","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; customer paid for subscription","Resolved",1,2,"Corporate lease","No"],["TK-0053","2026-09-23","Exter","Pune","Pune Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; customer asking for itemised bill","In progress",24,2,"Retail","No"],["TK-0054","2026-09-24","Verna","Lucknow","Lucknow Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; customer asking for itemised bill","Resolved",3,0,"Retail","No"],["TK-0055","2026-09-25","Venue","Lucknow","Lucknow Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; water dripping near grab handle","Open",22,1,"Retail","No"],["TK-0056","2026-09-26","Venue","Hyderabad","Hyderabad Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; labour charges not explained","In progress",21,1,"Retail","No"],["TK-0057","2026-09-27","i20","Bengaluru","Bengaluru Dealer 02","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; started after 4000 km","In progress",20,2,"Retail","No"],["TK-0058","2026-09-28","Alcazar","Jaipur","Jaipur Dealer 02","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; water dripping near grab handle","Open",19,1,"Fleet","No"],["TK-0059","2026-09-28","Creta","Delhi NCR","Delhi NCR Dealer 02","Infotainment & Bluelink","BLUELINK-DISC","Bluelink app shows vehicle offline, remote AC start not working; app login fine but car offline","Open",19,0,"Retail","No"],["TK-0060","2026-09-29","Aura","Jaipur","Jaipur Dealer 02","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; blower works but air not cold","In progress",18,1,"Retail","No"],["TK-0061","2026-10-02","i20","Chennai","Chennai Dealer 01","ADAS & Safety","BRAKE-NOISE","Brake squeal and vibration while braking at speed; customer worried about safety","Open",15,0,"Retail","Yes"],["TK-0062","2026-10-03","Venue","Chandigarh","Chandigarh Dealer 01","Transmission","DCT-JUDDER","Venue Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; happens when gearbox is hot","Resolved",7,1,"Retail","Yes"],["TK-0063","2026-10-03","Creta","Delhi NCR","Delhi NCR Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; water dripping near grab handle","Resolved",6,0,"Fleet","No"],["TK-0064","2026-10-03","i20","Hyderabad","Hyderabad Dealer 02","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; customer recorded video","In progress",14,0,"Retail","No"],["TK-0065","2026-10-03","Verna","Bengaluru","Bengaluru Dealer 01","Service Cost","BILLING","Final service bill much higher than estimate given at check-in; labour charges not explained","In progress",14,0,"Retail","No"],["TK-0066","2026-10-04","Creta","Chandigarh","Chandigarh Dealer 02","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; noise from left side of dash","Open",13,1,"Fleet","No"],["TK-0067","2026-10-05","Verna","Delhi NCR","Delhi NCR Dealer 02","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","In progress",12,3,"Corporate lease","Yes"],["TK-0068","2026-10-07","Venue","Pune","Pune Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; roof lining stained","In progress",10,3,"Retail","No"],["TK-0069","2026-10-07","Venue","Chandigarh","Chandigarh Dealer 01","Sunroof","SUNROOF-LEAK","Water leaking from sunroof onto roof lining after heavy rain; water dripping near grab handle","In progress",10,1,"Fleet","No"],["TK-0070","2026-10-09","Creta","Chandigarh","Chandigarh Dealer 02","Transmission","DCT-JUDDER","Creta Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","Open",8,3,"Retail","Yes"],["TK-0071","2026-10-09","Venue","Hyderabad","Hyderabad Dealer 01","Transmission","DCT-JUDDER","Venue Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","In progress",8,4,"Retail","Yes"],["TK-0072","2026-10-09","Creta","Kolkata","Kolkata Dealer 01","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; noise from left side of dash","Resolved",7,2,"Retail","No"],["TK-0073","2026-10-09","Venue","Mumbai","Mumbai Dealer 02","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer threatened to switch brand","Resolved",2,0,"Retail","No"],["TK-0074","2026-10-10","Creta","Jaipur","Jaipur Dealer 02","Transmission","DCT-JUDDER","Creta Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; car lurched forward at signal","In progress",7,1,"Fleet","Yes"],["TK-0075","2026-10-10","Creta","Delhi NCR","Delhi NCR Dealer 02","Transmission","DCT-JUDDER","Creta Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; happens when gearbox is hot","Resolved",1,0,"Retail","Yes"],["TK-0076","2026-10-10","Grand i10 Nios","Chandigarh","Chandigarh Dealer 01","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; customer has small kids","Open",7,1,"Retail","No"],["TK-0077","2026-10-11","Venue","Jaipur","Jaipur Dealer 02","Transmission","DCT-JUDDER","Venue Petrol DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; second visit for same issue","In progress",6,1,"Retail","Yes"],["TK-0078","2026-10-12","i20","Delhi NCR","Delhi NCR Dealer 02","ADAS & Safety","BRAKE-NOISE","Brake squeal and vibration while braking at speed; vibration in steering while braking","Resolved",3,0,"Retail","Yes"],["TK-0079","2026-10-12","Alcazar","Delhi NCR","Delhi NCR Dealer 02","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; escalated on social media","Resolved",4,2,"Retail","No"],["TK-0080","2026-10-12","i20","Bengaluru","Bengaluru Dealer 01","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer threatened to switch brand","Resolved",4,2,"Retail","No"],["TK-0081","2026-10-13","Creta","Bengaluru","Bengaluru Dealer 01","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; noise from left side of dash","In progress",4,2,"Fleet","No"],["TK-0082","2026-10-14","i20","Delhi NCR","Delhi NCR Dealer 01","Build Quality","DASH-RATTLE","Rattle noise from dashboard and door trim on rough roads; customer recorded video","Open",3,2,"Retail","No"],["TK-0083","2026-10-16","Grand i10 Nios","Chandigarh","Chandigarh Dealer 02","AC & Cooling","AC-WEAK","AC not cooling enough in afternoon, cabin stays hot; gas top-up done last month","Resolved",1,0,"Retail","No"],["TK-0084","2026-10-16","i20","Lucknow","Lucknow Dealer 01","Service Experience","ADVISOR-FOLLOWUP","Service advisor not responding, no update on vehicle status; customer called 5 times","Resolved",1,2,"Corporate lease","No"],["TK-0085","2026-10-17","Verna","Mumbai","Mumbai Dealer 02","Transmission","DCT-JUDDER","Verna Turbo DCT: jerks and judder in stop-go traffic, gearbox hesitates from standstill; customer says it felt unsafe","Open",0,1,"Retail","Yes"],["TK-0086","2026-10-17","Exter","Mumbai","Mumbai Dealer 02","ADAS & Safety","BRAKE-NOISE","Brake squeal and vibration while braking at speed; customer worried about safety","In progress",0,0,"Retail","Yes"]],"reviews":[["RV-0016","2026-07-01","Verna","Lucknow",2,"Build quality feels solid. But panel gaps and rattles from the door trim."],["RV-0040","2026-07-01","Venue","Mumbai",5,"Delivery was on the promised date. Plus, Bluelink app and connected features are very useful."],["RV-0074","2026-07-01","Venue","Kolkata",3,"Touchscreen and bose sound are superb. But forward collision warning triggers falsely."],["RV-0089","2026-07-02","Venue","Mumbai",1,"Dct judder and jerks in stop-go traffic. charged for parts that were not replaced."],["RV-0062","2026-07-03","Aura","Jaipur",5,"Ac cools the cabin very fast. Also, six airbags and ADAS give real peace of mind."],["RV-0140","2026-07-03","Exter","Bengaluru",4,"Gearbox hesitation at low speed, felt unsafe once. Also, mileage is excellent, getting 18 kmpl in city."],["RV-0123","2026-07-04","Exter","Hyderabad",2,"Periodic maintenance is affordable. But AC takes too long to cool, compressor noise."],["RV-0156","2026-07-04","Creta","Chennai",3,"Water leaking from sunroof during monsoon. However, delivery experience was memorable."],["RV-0160","2026-07-04","Grand i10 Nios","Delhi NCR",5,"Bluelink app and connected features are very useful. clutch is light and gear shifts are easy."],["RV-0033","2026-07-06","Venue","Chandigarh",2,"Gearbox hesitation at low speed, felt unsafe once. AC takes too long to cool, compressor noise."],["RV-0103","2026-07-06","Verna","Bengaluru",2,"Dashboard rattle noise started within 3 months. Plus, charged for parts that were not replaced."],["RV-0176","2026-07-06","Verna","Lucknow",1,"Service advisor never called back, very poor follow-up. Also, Bluelink app keeps disconnecting."],["RV-0109","2026-07-07","Verna","Kolkata",1,"Dashboard rattle noise started within 3 months. Plus, fuel economy dropped after the first service."],["RV-0165","2026-07-07","Verna","Mumbai",1,"Panel gaps and rattles from the door trim. suspension feels stiff on bad roads."],["RV-0039","2026-07-08","Creta","Chandigarh",5,"Spare parts were available immediately. Plus, climate control works perfectly."],["RV-0094","2026-07-08","Venue","Kolkata",3,"Ventilated seats are a blessing in summer. But water leaking from sunroof during monsoon."],["RV-0141","2026-07-08","i20","Mumbai",2,"Service advisor never called back, very poor follow-up. And Bluelink app and connected features are very useful."],["RV-0035","2026-07-09","Creta","Lucknow",3,"Water leaking from sunroof during monsoon. Also, build quality feels solid."],["RV-0119","2026-07-09","Venue","Mumbai",3,"Dct judder and jerks in stop-go traffic. But periodic maintenance is affordable."],["RV-0056","2026-07-10","Grand i10 Nios","Pune",5,"Touchscreen and bose sound are superb. Also, service cost is reasonable."],["RV-0066","2026-07-11","Creta","Chennai",2,"Infotainment screen freezes and android auto drops. forward collision warning triggers falsely."],["RV-0111","2026-07-11","Venue","Mumbai",3,"Fuel efficiency is better than expected. However, charged for parts that were not replaced."],["RV-0137","2026-07-12","i20","Kolkata",4,"Service advisor was polite and explained everything. And dashboard rattle noise started within 3 months."],["RV-0058","2026-07-13","Creta","Delhi NCR",3,"Service cost is reasonable. But service took 3 days longer than promised."],["RV-0076","2026-07-13","i20","Kolkata",1,"Service took 3 days longer than promised. AC cooling is weak in peak summer afternoon."],["RV-0118","2026-07-14","Venue","Mumbai",3,"Gearbox hesitation at low speed, felt unsafe once. Also, periodic maintenance is affordable."],["RV-0093","2026-07-16","Exter","Chandigarh",3,"Ac cooling is weak in peak summer afternoon. Also, ride quality is smooth and cabin is quiet."],["RV-0158","2026-07-16","Venue","Chennai",5,"Six airbags and adas give real peace of mind. Also, ventilated seats are a blessing in summer."],["RV-0025","2026-07-19","Venue","Jaipur",5,"Genuine parts arrived same day. AC cools the cabin very fast."],["RV-0146","2026-07-20","i20","Mumbai",3,"Touchscreen and bose sound are superb. Also, service bill was much higher than estimate."],["RV-0151","2026-07-20","Exter","Kolkata",3,"Ac cooling is weak in peak summer afternoon. But delivery was on the promised date."],["RV-0152","2026-07-20","Venue","Lucknow",3,"Gearbox hesitation at low speed, felt unsafe once. However, fuel efficiency is better than expected."],["RV-0069","2026-07-21","Creta","Chandigarh",2,"Water leaking from sunroof during monsoon. Also, AC takes too long to cool, compressor noise."],["RV-0174","2026-07-21","Exter","Chandigarh",1,"Ac cooling is weak in peak summer afternoon. Plus, charged for parts that were not replaced."],["RV-0006","2026-07-22","i20","Lucknow",1,"Service took 3 days longer than promised. Also, AC takes too long to cool, compressor noise."],["RV-0032","2026-07-22","Alcazar","Pune",5,"Mileage is excellent, getting 17 kmpl in city. clutch is light and gear shifts are easy."],["RV-0163","2026-07-24","i20","Chandigarh",2,"Service advisor never called back, very poor follow-up. And periodic maintenance is affordable."],["RV-0179","2026-07-24","Creta","Chandigarh",2,"Water leaking from sunroof during monsoon. But service advisor was polite and explained everything."],["RV-0131","2026-07-26","Venue","Bengaluru",2,"Gearbox hesitation at low speed, felt unsafe once. However, periodic maintenance is affordable."],["RV-0014","2026-07-27","Aura","Bengaluru",5,"Build quality feels solid. Also, spare parts were available immediately."],["RV-0130","2026-07-27","Venue","Chandigarh",3,"Dct judder and jerks in stop-go traffic. But climate control works perfectly."],["RV-0167","2026-07-27","Exter","Kolkata",1,"Ac takes too long to cool, compressor noise. infotainment screen freezes and Android Auto drops."],["RV-0057","2026-07-28","i20","Lucknow",4,"Fit and finish is premium. Plus, spare parts were available immediately."],["RV-0145","2026-07-28","Creta","Delhi NCR",1,"Water leaking from sunroof during monsoon. Plus, sunroof drain blocked, roof lining got wet."],["RV-0008","2026-07-29","Creta","Chennai",1,"Water leaking from sunroof during monsoon. Plus, suspension feels stiff on bad roads."],["RV-0098","2026-07-29","Venue","Lucknow",2,"Dct judder and jerks in stop-go traffic. forward collision warning triggers falsely."],["RV-0011","2026-08-01","Grand i10 Nios","Bengaluru",3,"Dct gearbox is smooth and quick. But sunroof drain blocked, roof lining got wet."],["RV-0021","2026-08-01","Verna","Kolkata",3,"Panel gaps and rattles from the door trim. But AC cools the cabin very fast."],["RV-0079","2026-08-01","Exter","Pune",1,"Ac cooling is weak in peak summer afternoon. Plus, panel gaps and rattles from the door trim."],["RV-0138","2026-08-01","Venue","Bengaluru",3,"Dct judder and jerks in stop-go traffic. However, six airbags and ADAS give real peace of mind."],["RV-0083","2026-08-02","Verna","Kolkata",2,"Panel gaps and rattles from the door trim. And spare parts were available immediately."],["RV-0121","2026-08-03","Creta","Hyderabad",2,"Sunroof drain blocked, roof lining got wet. And service was completed on time."],["RV-0037","2026-08-04","Grand i10 Nios","Delhi NCR",4,"Ac takes too long to cool, compressor noise. But service was completed on time."],["RV-0112","2026-08-04","i20","Chandigarh",2,"Spare part not available, car stuck for 8 days. Also, AC cooling is weak in peak summer afternoon."],["RV-0047","2026-08-09","Alcazar","Lucknow",3,"Spare part not available, car stuck for 11 days. However, fit and finish is premium."],["RV-0124","2026-08-09","Exter","Mumbai",3,"Ac cooling is weak in peak summer afternoon. Also, spare parts were available immediately."],["RV-0177","2026-08-09","Creta","Chennai",3,"Water leaking from sunroof during monsoon. But clutch is light and gear shifts are easy."],["RV-0009","2026-08-10","Venue","Chennai",4,"Dct judder and jerks in stop-go traffic. However, panoramic sunroof is the best feature."],["RV-0010","2026-08-10","Verna","Hyderabad",5,"Genuine parts arrived same day. Also, climate control works perfectly."],["RV-0022","2026-08-10","Aura","Hyderabad",3,"Suspension feels stiff on bad roads. Also, spare parts were available immediately."],["RV-0143","2026-08-10","Verna","Kolkata",4,"Dct gearbox is smooth and quick. Also, service was completed on time."],["RV-0144","2026-08-10","Verna","Bengaluru",3,"Panel gaps and rattles from the door trim. However, sunroof makes the cabin feel premium."],["RV-0075","2026-08-11","Venue","Pune",2,"Service advisor never called back, very poor follow-up. Plus, sunroof drain blocked, roof lining got wet."],["RV-0052","2026-08-12","i20","Mumbai",4,"Service was completed on time. Plus, DCT gearbox is smooth and quick."],["RV-0092","2026-08-12","i20","Delhi NCR",4,"Service took 3 days longer than promised. But ride quality is smooth and cabin is quiet."],["RV-0106","2026-08-12","Alcazar","Chennai",3,"Spare part not available, car stuck for 11 days. But service was completed on time."],["RV-0015","2026-08-14","Verna","Delhi NCR",3,"Panel gaps and rattles from the door trim. Also, mileage is excellent, getting 17 kmpl in city."],["RV-0044","2026-08-14","Alcazar","Kolkata",3,"Spare part not available, car stuck for 12 days. However, Bluelink app and connected features are very useful."],["RV-0061","2026-08-15","Exter","Bengaluru",3,"Ac cooling is weak in peak summer afternoon. Also, service advisor was polite and explained everything."],["RV-0113","2026-08-15","Grand i10 Nios","Jaipur",4,"Mileage is excellent, getting 16 kmpl in city. Plus, service was completed on time."],["RV-0115","2026-08-15","Alcazar","Bengaluru",5,"Climate control works perfectly. Also, clutch is light and gear shifts are easy."],["RV-0020","2026-08-16","Verna","Chandigarh",1,"Panel gaps and rattles from the door trim. gearbox hesitation at low speed, felt unsafe once."],["RV-0155","2026-08-16","Exter","Kolkata",4,"Delivery experience was memorable. panoramic sunroof is the best feature."],["RV-0004","2026-08-17","Grand i10 Nios","Delhi NCR",2,"Bluelink app keeps disconnecting. Plus, DCT judder and jerks in stop-go traffic."],["RV-0012","2026-08-18","Verna","Mumbai",3,"Dashboard rattle noise started within 3 months. However, delivery experience was memorable."],["RV-0147","2026-08-18","Aura","Lucknow",3,"Dct gearbox is smooth and quick. But suspension feels stiff on bad roads."],["RV-0150","2026-08-18","Grand i10 Nios","Lucknow",3,"Ac takes too long to cool, compressor noise. However, service was completed on time."],["RV-0102","2026-08-19","Venue","Mumbai",2,"Dct judder and jerks in stop-go traffic. However, panoramic sunroof is the best feature."],["RV-0133","2026-08-19","Aura","Pune",3,"Sunroof drain blocked, roof lining got wet. However, DCT gearbox is smooth and quick."],["RV-0081","2026-08-20","Alcazar","Hyderabad",3,"Dashboard rattle noise started within 3 months. But periodic maintenance is affordable."],["RV-0105","2026-08-20","Grand i10 Nios","Chennai",1,"Infotainment screen freezes and android auto drops. Plus, water leaking from sunroof during monsoon."],["RV-0148","2026-08-20","Alcazar","Chennai",4,"Genuine parts arrived same day. Also, waiting for spare parts for over a week."],["RV-0030","2026-08-21","Creta","Chennai",1,"Water leaking from sunroof during monsoon. Plus, infotainment screen freezes and Android Auto drops."],["RV-0090","2026-08-21","Exter","Delhi NCR",5,"Dct gearbox is smooth and quick. sunroof makes the cabin feel premium."],["RV-0117","2026-08-21","Venue","Chandigarh",3,"Fit and finish is premium. But AC cooling is weak in peak summer afternoon."],["RV-0153","2026-08-21","i20","Mumbai",1,"Service advisor never called back, very poor follow-up. Also, gearbox hesitation at low speed, felt unsafe once."],["RV-0045","2026-08-23","i20","Hyderabad",4,"Mileage is excellent, getting 17 kmpl in city. And service took 3 days longer than promised."],["RV-0107","2026-08-23","Aura","Hyderabad",3,"Ventilated seats are a blessing in summer. But waiting period of 13 weeks is too long."],["RV-0157","2026-08-23","Venue","Bengaluru",3,"Dct judder and jerks in stop-go traffic. But service advisor was polite and explained everything."],["RV-0169","2026-08-23","Grand i10 Nios","Bengaluru",3,"Ac cooling is weak in peak summer afternoon. But sunroof makes the cabin feel premium."],["RV-0024","2026-08-24","i20","Hyderabad",4,"Service advisor never called back, very poor follow-up. Also, fuel efficiency is better than expected."],["RV-0088","2026-08-24","i20","Mumbai",4,"Service was completed on time. fuel efficiency is better than expected."],["RV-0178","2026-08-27","Exter","Jaipur",1,"Ac cooling is weak in peak summer afternoon. AC takes too long to cool, compressor noise."],["RV-0077","2026-08-28","Venue","Jaipur",4,"Delivery experience was memorable. Also, service cost is reasonable."],["RV-0166","2026-08-28","Creta","Mumbai",5,"Delivery experience was memorable. service was completed on time."],["RV-0099","2026-08-29","Exter","Chennai",2,"Ac takes too long to cool, compressor noise. And ventilated seats are a blessing in summer."],["RV-0036","2026-08-30","i20","Pune",3,"Spare part not available, car stuck for 15 days. But touchscreen and Bose sound are superb."],["RV-0127","2026-08-30","Alcazar","Delhi NCR",2,"Waiting for spare parts for over a week. charged for parts that were not replaced."],["RV-0139","2026-08-31","Alcazar","Kolkata",4,"Build quality feels solid. spare parts were available immediately."],["RV-0171","2026-08-31","i20","Hyderabad",3,"Service took 3 days longer than promised. But ride quality is smooth and cabin is quiet."],["RV-0018","2026-09-01","Creta","Mumbai",3,"Sunroof drain blocked, roof lining got wet. But fuel efficiency is better than expected."],["RV-0149","2026-09-01","Exter","Chandigarh",3,"Ac takes too long to cool, compressor noise. However, mileage is excellent, getting 21 kmpl in city."],["RV-0180","2026-09-02","Aura","Chennai",1,"Suspension feels stiff on bad roads. waiting for spare parts for over a week."],["RV-0064","2026-09-04","Grand i10 Nios","Pune",1,"Delivery got delayed without any update. charged for parts that were not replaced."],["RV-0159","2026-09-04","Creta","Pune",2,"Sunroof drain blocked, roof lining got wet. Plus, sunroof drain blocked, roof lining got wet."],["RV-0108","2026-09-05","Venue","Bengaluru",4,"Dct judder and jerks in stop-go traffic. But AC cools the cabin very fast."],["RV-0043","2026-09-06","Creta","Delhi NCR",2,"Water leaking from sunroof during monsoon. But mileage is excellent, getting 20 kmpl in city."],["RV-0095","2026-09-07","Verna","Bengaluru",2,"Panel gaps and rattles from the door trim. Also, fuel efficiency is better than expected."],["RV-0104","2026-09-07","i20","Mumbai",1,"Service took 3 days longer than promised. service took 3 days longer than promised."],["RV-0007","2026-09-09","Venue","Chennai",1,"Dct judder and jerks in stop-go traffic. forward collision warning triggers falsely."],["RV-0110","2026-09-09","Verna","Mumbai",1,"Dashboard rattle noise started within 3 months. Plus, dashboard rattle noise started within 3 months."],["RV-0154","2026-09-09","i20","Lucknow",3,"Dct gearbox is smooth and quick. And waiting period of 11 weeks is too long."],["RV-0034","2026-09-11","Aura","Jaipur",3,"Touchscreen and bose sound are superb. But suspension feels stiff on bad roads."],["RV-0049","2026-09-11","Alcazar","Mumbai",5,"Service cost is reasonable. Also, fit and finish is premium."],["RV-0091","2026-09-11","Alcazar","Jaipur",2,"Spare part not available, car stuck for 8 days. But mileage is excellent, getting 21 kmpl in city."],["RV-0164","2026-09-11","Venue","Kolkata",2,"Dct judder and jerks in stop-go traffic. Also, DCT judder and jerks in stop-go traffic."],["RV-0005","2026-09-12","i20","Pune",1,"Service took 3 days longer than promised. water leaking from sunroof during monsoon."],["RV-0084","2026-09-12","Alcazar","Chennai",5,"Genuine parts arrived same day. fuel efficiency is better than expected."],["RV-0050","2026-09-13","Creta","Mumbai",1,"Sunroof drain blocked, roof lining got wet. Plus, water leaking from sunroof during monsoon."],["RV-0170","2026-09-13","Verna","Jaipur",5,"Fuel efficiency is better than expected. Plus, DCT gearbox is smooth and quick."],["RV-0172","2026-09-14","Grand i10 Nios","Delhi NCR",5,"Bluelink app and connected features are very useful. Plus, delivery was on the promised date."],["RV-0065","2026-09-15","Creta","Pune",3,"Service was completed on time. However, gearbox hesitation at low speed, felt unsafe once."],["RV-0001","2026-09-16","Exter","Hyderabad",1,"Ac takes too long to cool, compressor noise. Plus, charged for parts that were not replaced."],["RV-0063","2026-09-16","Alcazar","Mumbai",3,"Spare part not available, car stuck for 15 days. But ADAS lane keep works well on highway."],["RV-0070","2026-09-16","i20","Bengaluru",4,"Service advisor never called back, very poor follow-up. But ride quality is smooth and cabin is quiet."],["RV-0026","2026-09-17","Venue","Delhi NCR",3,"Gearbox hesitation at low speed, felt unsafe once. However, sunroof makes the cabin feel premium."],["RV-0055","2026-09-17","Verna","Lucknow",5,"Service was completed on time. Also, climate control works perfectly."],["RV-0100","2026-09-17","i20","Mumbai",5,"Spare parts were available immediately. Also, delivery was on the promised date."],["RV-0048","2026-09-18","Exter","Lucknow",3,"Ac cooling is weak in peak summer afternoon. And DCT gearbox is smooth and quick."],["RV-0120","2026-09-18","Exter","Lucknow",4,"Mileage is poor, only 9 kmpl in city traffic. But genuine parts arrived same day."],["RV-0173","2026-09-19","Alcazar","Delhi NCR",2,"Waiting for spare parts for over a week. But six airbags and ADAS give real peace of mind."],["RV-0175","2026-09-19","Venue","Bengaluru",1,"Dct judder and jerks in stop-go traffic. Plus, waiting period of 11 weeks is too long."],["RV-0002","2026-09-21","Exter","Hyderabad",4,"Ac cooling is weak in peak summer afternoon. However, ride quality is smooth and cabin is quiet."],["RV-0019","2026-09-21","Grand i10 Nios","Chandigarh",4,"Fuel efficiency is better than expected. But spare part not available, car stuck for 12 days."],["RV-0068","2026-09-21","Venue","Hyderabad",4,"Bluelink app and connected features are very useful. And gearbox hesitation at low speed, felt unsafe once."],["RV-0054","2026-09-23","Creta","Mumbai",3,"Water leaking from sunroof during monsoon. But DCT gearbox is smooth and quick."],["RV-0072","2026-09-23","i20","Bengaluru",2,"Service advisor never called back, very poor follow-up. Plus, mileage is poor, only 8 kmpl in city traffic."],["RV-0096","2026-09-23","i20","Hyderabad",2,"Service took 3 days longer than promised. However, six airbags and ADAS give real peace of mind."],["RV-0031","2026-09-24","Exter","Pune",3,"Ac cooling is weak in peak summer afternoon. Also, delivery experience was memorable."],["RV-0082","2026-09-24","Verna","Chandigarh",4,"Dashboard rattle noise started within 3 months. But touchscreen and Bose sound are superb."],["RV-0078","2026-09-25","Verna","Chandigarh",5,"Service advisor was polite and explained everything. Also, Bluelink app and connected features are very useful."],["RV-0132","2026-09-25","Venue","Bengaluru",5,"Climate control works perfectly. Also, Bluelink app and connected features are very useful."],["RV-0162","2026-09-25","Venue","Hyderabad",2,"Bluelink app and connected features are very useful. Also, service advisor never called back, very poor follow-up."],["RV-0027","2026-09-26","Venue","Lucknow",3,"Gearbox hesitation at low speed, felt unsafe once. However, sunroof makes the cabin feel premium."],["RV-0135","2026-09-26","Exter","Delhi NCR",1,"Ac cooling is weak in peak summer afternoon. Plus, Bluelink app keeps disconnecting."],["RV-0087","2026-09-27","Alcazar","Delhi NCR",4,"Genuine parts arrived same day. And waiting period of 17 weeks is too long."],["RV-0085","2026-09-28","Aura","Delhi NCR",5,"Clutch is light and gear shifts are easy. Plus, service was completed on time."],["RV-0013","2026-09-30","Exter","Bengaluru",2,"Forward collision warning triggers falsely. AC takes too long to cool, compressor noise."],["RV-0080","2026-09-30","Grand i10 Nios","Bengaluru",2,"Six airbags and adas give real peace of mind. But water leaking from sunroof during monsoon."],["RV-0134","2026-09-30","Venue","Delhi NCR",3,"Gearbox hesitation at low speed, felt unsafe once. However, Bluelink app and connected features are very useful."],["RV-0053","2026-10-01","Grand i10 Nios","Delhi NCR",4,"Genuine parts arrived same day. Plus, climate control works perfectly."],["RV-0101","2026-10-01","Venue","Chandigarh",2,"Sunroof drain blocked, roof lining got wet. Also, six airbags and ADAS give real peace of mind."],["RV-0161","2026-10-01","Alcazar","Lucknow",4,"Service cost is reasonable. And ADAS beeps too often and is annoying in city."],["RV-0023","2026-10-02","Creta","Pune",1,"Rear seat is cramped for long trips. Also, infotainment screen freezes and Android Auto drops."],["RV-0126","2026-10-02","Aura","Lucknow",3,"Touchscreen and bose sound are superb. Also, delivery got delayed without any update."],["RV-0042","2026-10-03","i20","Jaipur",2,"Service was completed on time. But service took 3 days longer than promised."],["RV-0046","2026-10-03","Exter","Mumbai",4,"Ac cooling is weak in peak summer afternoon. However, build quality feels solid."],["RV-0073","2026-10-03","Creta","Mumbai",3,"Service advisor was polite and explained everything. And water leaking from sunroof during monsoon."],["RV-0097","2026-10-03","Verna","Hyderabad",4,"Panel gaps and rattles from the door trim. And ride quality is smooth and cabin is quiet."],["RV-0168","2026-10-03","Creta","Kolkata",4,"Sunroof drain blocked, roof lining got wet. Also, Bluelink app and connected features are very useful."],["RV-0060","2026-10-04","Creta","Kolkata",4,"Sunroof drain blocked, roof lining got wet. But ADAS lane keep works well on highway."],["RV-0003","2026-10-05","Alcazar","Hyderabad",3,"Forward collision warning triggers falsely. However, climate control works perfectly."],["RV-0114","2026-10-05","Creta","Bengaluru",3,"Infotainment screen freezes and android auto drops. And ADAS lane keep works well on highway."],["RV-0041","2026-10-06","Verna","Chandigarh",4,"Panel gaps and rattles from the door trim. However, DCT gearbox is smooth and quick."],["RV-0067","2026-10-06","Alcazar","Hyderabad",5,"Sunroof makes the cabin feel premium. Also, clutch is light and gear shifts are easy."],["RV-0125","2026-10-06","Aura","Lucknow",3,"Sunroof makes the cabin feel premium. And service advisor never called back, very poor follow-up."],["RV-0136","2026-10-07","Exter","Mumbai",2,"Ac takes too long to cool, compressor noise. Also, delivery was on the promised date."],["RV-0028","2026-10-08","Verna","Delhi NCR",2,"Panel gaps and rattles from the door trim. Also, dashboard rattle noise started within 3 months."],["RV-0029","2026-10-08","Venue","Hyderabad",3,"Mileage is excellent, getting 18 kmpl in city. However, spare part not available, car stuck for 10 days."],["RV-0059","2026-10-10","Alcazar","Hyderabad",1,"Infotainment screen freezes and android auto drops. waiting for spare parts for over a week."],["RV-0142","2026-10-11","Aura","Chennai",4,"Ride quality is smooth and cabin is quiet. However, water leaking from sunroof during monsoon."],["RV-0116","2026-10-12","Aura","Chandigarh",5,"Fit and finish is premium. Also, six airbags and ADAS give real peace of mind."],["RV-0017","2026-10-14","i20","Bengaluru",3,"Service took 3 days longer than promised. However, service was completed on time."],["RV-0122","2026-10-14","Creta","Kolkata",3,"Infotainment screen freezes and android auto drops. Also, mileage is excellent, getting 21 kmpl in city."],["RV-0038","2026-10-15","Aura","Mumbai",5,"Delivery was on the promised date. DCT gearbox is smooth and quick."],["RV-0129","2026-10-15","Venue","Pune",5,"Adas lane keep works well on highway. Plus, climate control works perfectly."],["RV-0051","2026-10-16","Grand i10 Nios","Jaipur",3,"Dashboard rattle noise started within 3 months. But ride quality is smooth and cabin is quiet."],["RV-0071","2026-10-16","Creta","Bengaluru",5,"Build quality feels solid. fuel efficiency is better than expected."],["RV-0086","2026-10-16","i20","Lucknow",2,"Forward collision warning triggers falsely. But clutch is light and gear shifts are easy."],["RV-0128","2026-10-17","Creta","Chandigarh",4,"Sunroof drain blocked, roof lining got wet. However, delivery experience was memorable."]]};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ISSUE = {"DCT-JUDDER":"DCT judder","SUNROOF-LEAK":"Sunroof leak","BLUELINK-DISC":"Bluelink disconnects","AC-WEAK":"Weak AC cooling","DASH-RATTLE":"Dashboard rattle","ADVISOR-FOLLOWUP":"No advisor follow-up","BILLING":"Bill above estimate","PARTS-DELAY":"Spare part delay","BRAKE-NOISE":"Brake noise"};
+const OWNER = {"Mileage":"Product Planning","ADAS & Safety":"Quality & Safety","Infotainment & Bluelink":"Connected Car (Bluelink)","Ride & Comfort":"Product Planning","Build Quality":"Plant Quality","AC & Cooling":"Service Engineering","Transmission":"Powertrain Quality","Sunroof":"Plant Quality","Service Experience":"Dealer Network / Customer Care","Service Cost":"After-Sales Pricing","Delivery & Waiting":"Sales Ops & Logistics","Spare Parts":"Parts Supply Chain"};
+const TICKETS = D.tickets.map(r => ({ticket_id:r[0],opened:r[1],model:r[2],city:r[3],dealer:r[4],category:r[5],issue_cluster:r[6],description:r[7],status:r[8],days_open:+r[9],repeat_visits:+r[10],customer_type:r[11],safety_related:r[12]}));
+const REVIEWS = D.reviews.map(r => ({id:r[0],date:r[1],model:r[2],city:r[3],rating:+r[4],text:r[5]}));
+
+/* ---------- readout ---------- */
+(function readout() {
+  const radar = (typeof escalationRadar === 'function') ? null : null;
+  const open = TICKETS.filter(t => t.status !== 'Resolved');
+  const sizes = {}; TICKETS.forEach(t => sizes[t.issue_cluster] = (sizes[t.issue_cluster] || 0) + 1);
+  const score = t => Math.min(100, (t.days_open > 30 ? 25 : t.days_open > 14 ? 18 : t.days_open > 7 ? 10 : 4) + Math.min(t.repeat_visits * 10, 25) + (t.safety_related === 'Yes' ? 25 : 0) + (sizes[t.issue_cluster] >= 10 ? 15 : sizes[t.issue_cluster] >= 6 ? 8 : 0) + (t.customer_type !== 'Retail' ? 8 : 0));
+  const scores = open.map(score).sort((a, b) => b - a);
+  const esc_ = scores.filter(x => x >= 60).length, watch = scores.filter(x => x >= 35 && x < 60).length, routine = scores.length - esc_ - watch;
+  const n = scores.length, cx = 100, cy = 100, r = 84, gap = 1.6, sweep = 360 / n;
+  const col = x => x >= 60 ? '#ff6b5e' : x >= 35 ? '#f2a33a' : '#2b4566';
+  let segs = '';
+  scores.forEach((x, i) => {
+    const a0 = (-90 + i * sweep + gap / 2) * Math.PI / 180, a1 = (-90 + (i + 1) * sweep - gap / 2) * Math.PI / 180;
+    const p = (a, rr) => `${(cx + rr * Math.cos(a)).toFixed(2)} ${(cy + rr * Math.sin(a)).toFixed(2)}`;
+    segs += `<path class="seg" d="M${p(a0, r)} A${r} ${r} 0 0 1 ${p(a1, r)}" stroke="${col(x)}" stroke-width="14" fill="none"/>`;
+  });
+  $('ring').innerHTML = `<svg viewBox="0 0 200 200" role="img" aria-label="${n} open tickets: ${esc_} escalate today, ${watch} watch, ${routine} routine"><circle cx="100" cy="100" r="66" fill="none" stroke="#14263b" stroke-width="1"/>${segs}</svg><div class="mid"><b>${esc_}</b><span>tickets to escalate today</span></div>`;
+  $('ring-legend').innerHTML = `<span><i style="background:#ff6b5e"></i>Escalate ${esc_}</span><span><i style="background:#f2a33a"></i>Watch ${watch}</span><span><i style="background:#2b4566"></i>Routine ${routine}</span>`;
+  $('ro-open').innerHTML = `${n}<small>of ${TICKETS.length}</small>`;
+  $('ro-open-bar').style.width = (n / TICKETS.length * 100) + '%';
+  const net = D.summary.net;
+  $('ro-net').textContent = (net > 0 ? '+' : net < 0 ? '−' : '') + Math.abs(net);
+  $('ro-net-dot').style.left = (50 + net / 2) + '%';
+  $('ro-rec').textContent = D.summary.recurring;
+  const top = D.recurring[0];
+  $('ro-alert').innerHTML = `<b>${esc(ISSUE[top.issue])}</b> is the top recurring defect: ${top.total_reports} reports, ${top.still_open} open, ${top.cities} cities${top.safety_related ? ', safety-related' : ''}.`;
+  $('h-esc').textContent = esc_;
+})();
+
+/* ---------- queue, defects, models, trend ---------- */
+$('queue-list').innerHTML = D.top.slice(0, 6).map(t => {
+  const crit = t.level === 'Escalate today';
+  return `<div class="ticket"><span class="sev ${crit ? 'crit' : ''}"></span>
+  <div><div class="line1"><span class="mono">${t.id}</span><b>${esc(t.model)} · ${esc(ISSUE[t.issue] || t.issue)}</b></div>
+  <div class="sub">${esc(t.city)} · owner: ${esc(t.owner)}</div>
+  <div class="why">${t.why.map(w => `<span>${esc(w)}</span>`).join('')}</div></div>
+  <div class="score num ${crit ? 'lv-crit' : 'lv-warn'}">${t.score}<small>${crit ? 'Escalate today' : 'Watch'}</small></div></div>`;
+}).join('');
+const maxRep = Math.max(...D.recurring.map(c => c.total_reports));
+$('defect-list').innerHTML = D.recurring.map(c => {
+  const models = Object.entries(c.models).sort((a, b) => b[1] - a[1]).map(([m, n]) => `${m} ${n}`).join(', ');
+  return `<div class="def"><div class="name">${esc(ISSUE[c.issue] || c.issue)}${c.safety_related ? '<span class="chip">safety</span>' : ''}</div>
+  <div class="nums num">${c.total_reports} reports · ${c.still_open} open</div>
+  <div class="track" role="img" aria-label="${c.total_reports} reports, ${c.still_open} open"><i style="width:${c.total_reports / maxRep * 100}%"></i><i class="open" style="width:${c.still_open / maxRep * 100}%"></i></div>
+  <div class="detail">${esc(models)} · ${c.cities} cities · owner: ${esc(c.owner)}</div></div>`;
+}).join('');
+$('model-rows').innerHTML = D.models.map(m => {
+  const cls = m.net <= -15 ? 'neg' : m.net >= 10 ? 'pos' : 'mid';
+  return `<tr><td><b>${esc(m.model)}</b></td><td class="r num">${m.reviews}</td>
+  <td><div class="rating"><span class="num" style="width:2.6em">${m.avg.toFixed(2)}</span><span class="bar"><i style="width:${m.avg / 5 * 100}%"></i></span></div></td>
+  <td class="r"><span class="pill ${cls} num">${m.net > 0 ? '+' : ''}${m.net}</span></td><td>${esc(m.topIssue)}</td></tr>`;
+}).join('');
+(function trend() {
+  const W = 560, H = 220, L = 34, R = 28, T = 30, B = 34;
+  const vals = D.weeks.map(w => w[1]); const max = 12;
+  const x = i => L + i * (W - L - R) / (vals.length - 1);
+  const y = v => T + (H - T - B) * (1 - v / max);
+  let g = '';
+  [0, 4, 8, 12].forEach(v => { g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Inter, sans-serif">${v}</text>`; });
+  const pts = vals.map((v, i) => `${x(i)},${y(v)}`).join(' ');
+  const last = vals.length - 1;
+  const labels = D.weeks.map((w, i) => i % 3 === 0 || i === last ? `<text x="${x(i)}" y="${H - 12}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="Inter, sans-serif">${new Date(w[0]).toLocaleDateString('en-IN', {day: 'numeric', month: 'short'})}</text>` : '').join('');
+  $('trend').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="New service tickets per week, from ${vals[0]} in late July to ${vals[last]} in the week of 12 October">${g}
+  <polygon points="${L},${y(0)} ${pts} ${x(last)},${y(0)}" fill="var(--accent-soft)"/><polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="${x(last)}" cy="${y(vals[last])}" r="4.5" fill="var(--accent)"/><text x="${x(last)}" y="${T - 12}" text-anchor="end" font-size="12" font-weight="600" fill="var(--ink)" font-family="Inter, sans-serif">${vals[last]} this week</text>${labels}</svg>`;
+})();
+
+/* ---------- the same rules as the n8n tools ---------- */
+const THEMES = {"Mileage":["mileage","kmpl","fuel efficiency","fuel economy"],"ADAS & Safety":["adas","airbag","lane keep","collision","brake","unsafe"],"Infotainment & Bluelink":["bluelink","infotainment","touchscreen","android auto","screen"],"Ride & Comfort":["ride","suspension","seat","cabin","cramped"],"Build Quality":["rattle","build quality","fit and finish","panel gap","trim"],"AC & Cooling":[" ac ","cooling","climate control","compressor"],"Transmission":["dct","gearbox","judder","jerk","clutch","gear"],"Sunroof":["sunroof","roof lining"],"Service Experience":["service advisor","advisor","follow-up","called back","service took"],"Service Cost":["bill","estimate","charged","cost"],"Delivery & Waiting":["delivery","waiting period","delayed"],"Spare Parts":["spare part","parts","not available"]};
+const POS = ["excellent","good","great","smooth","solid","premium","superb","best","useful","polite","affordable","reasonable","quick","fast","perfect","memorable","blessing","quiet","easy","peace of mind","on time"];
+const NEG = ["poor","bad","weak","leak","rattle","judder","jerk","freeze","drops","disconnect","annoying","falsely","cramped","stiff","delay","longer than promised","never","higher than","not available","stuck","too long","unsafe","hesitation","noise","not cooling","wet","blocked"];
+const SAFETY = ["unsafe","brake","lurch","airbag","fire","smoke","steering","hesitat"];
+const CHURN = ["switch brand","never buy","social media","consumer court","refund","worst"];
+function scoreReview(textIn, model) {
+  const text = String(textIn || '').toLowerCase();
+  const clauses = text.split(/[.;!?,]|\bbut\b|\bhowever\b/).map(c => c.trim()).filter(Boolean);
+  let pos = 0, neg = 0; const themes = {};
+  for (const c of clauses) {
+    const p = POS.filter(w => c.includes(w)).length, n = NEG.filter(w => c.includes(w)).length;
+    pos += p; neg += n;
+    const pol = n > p ? 'negative' : p > n ? 'positive' : 'neutral';
+    for (const [t, ws] of Object.entries(THEMES)) if (ws.some(w => (' ' + c + ' ').includes(w))) { if (!themes[t] || pol === 'negative') themes[t] = pol; }
+  }
+  const s = pos + neg ? Number(((pos - neg) / (pos + neg)).toFixed(2)) : 0;
+  const sentiment = s >= 0.34 ? 'Positive' : s <= -0.34 ? 'Negative' : 'Mixed';
+  const negT = Object.keys(themes).filter(t => themes[t] === 'negative');
+  const safety = neg > 0 && SAFETY.some(w => text.includes(w));
+  const churn = CHURN.some(w => text.includes(w));
+  const urgency = safety ? 'Critical' : (churn || s <= -0.6) ? 'High' : negT.length ? 'Medium' : 'Low';
+  return {model: model || 'Not specified', sentiment, sentiment_score: s, urgency, safety_flag: safety, churn_signal: churn,
+    themes: Object.entries(themes).map(([theme, polarity]) => ({theme, polarity, owner: OWNER[theme]})),
+    route_to: negT.length ? OWNER[negT[0]] : 'No action: share as positive feedback'};
+}
+function escalationRadar(modelIn, limitIn) {
+  const m = String(modelIn || 'All').trim().toLowerCase(), limit = Math.max(1, Math.min(10, Number(limitIn) || 5));
+  const clusters = {};
+  for (const t of TICKETS) { const c = clusters[t.issue_cluster] ||= {issue: t.issue_cluster, category: t.category, total: 0, open: 0, models: {}, cities: new Set(), safety: false}; c.total++; if (t.status !== 'Resolved') c.open++; c.models[t.model] = (c.models[t.model] || 0) + 1; c.cities.add(t.city); if (t.safety_related === 'Yes') c.safety = true; }
+  const risk = t => { const why = []; let s = 0; const add = (p, r) => { if (p > 0) { s += p; why.push(`+${p} ${r}`); } };
+    const size = clusters[t.issue_cluster].total;
+    add(t.days_open > 30 ? 25 : t.days_open > 14 ? 18 : t.days_open > 7 ? 10 : 4, `open ${t.days_open} days`);
+    add(Math.min(t.repeat_visits * 10, 25), `${t.repeat_visits} repeat visit(s)`);
+    add(t.safety_related === 'Yes' ? 25 : 0, 'safety-related');
+    add(size >= 10 ? 15 : size >= 6 ? 8 : 0, `recurring issue (${size} reports)`);
+    add(t.customer_type !== 'Retail' ? 8 : 0, `${t.customer_type} customer`);
+    s = Math.min(s, 100);
+    return {ticket_id: t.ticket_id, model: t.model, city: t.city, issue: t.issue_cluster, description: t.description, risk_score: s, level: s >= 60 ? 'Escalate today' : s >= 35 ? 'Watch' : 'Routine', why}; };
+  const open = TICKETS.filter(t => t.status !== 'Resolved' && (m === 'all' || t.model.toLowerCase() === m));
+  const ranked = open.map(risk).sort((a, b) => b.risk_score - a.risk_score);
+  const recurring = Object.values(clusters).filter(c => c.total >= 8 && (m === 'all' || Object.keys(c.models).some(x => x.toLowerCase() === m))).sort((a, b) => b.total - a.total)
+    .map(c => ({issue: c.issue, category: c.category, total_reports: c.total, still_open: c.open, models: c.models, cities: c.cities.size, safety_related: c.safety}));
+  return {scope: m === 'all' ? 'All models' : modelIn, open_tickets: open.length, escalate_today: ranked.filter(r => r.level === 'Escalate today').length, top_risks: ranked.slice(0, limit), recurring_issues: recurring};
+}
+function modelVoice(modelIn) {
+  const m = String(modelIn || '').trim().toLowerCase();
+  const stat = D.models.find(x => x.model.toLowerCase() === m);
+  if (!stat) throw new Error('Unknown model. Known: ' + D.models.map(x => x.model).join(', '));
+  const rs = REVIEWS.filter(r => r.model.toLowerCase() === m).map(r => ({...r, s: scoreReview(r.text, r.model)}));
+  const neg = {}; rs.forEach(r => r.s.themes.filter(t => t.polarity === 'negative').forEach(t => neg[t.theme] = (neg[t.theme] || 0) + 1));
+  return {model: stat.model, reviews: stat.reviews, avg_rating: stat.avg, net_sentiment: stat.net,
+    negative_themes: Object.entries(neg).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([theme, n]) => ({theme, mentions: n, owner: OWNER[theme]})),
+    sample_negative_reviews: rs.filter(r => r.s.sentiment === 'Negative').slice(-3).map(r => `${r.id} (${r.city}, ${r.rating}★): ${r.text}`)};
+}
+
+/* ---------- scorer panel ---------- */
+$('md').innerHTML = D.models.map(m => m.model).sort().map(m => `<option${m === 'Venue' ? ' selected' : ''}>${esc(m)}</option>`).join('');
+function renderScore() {
+  const r = scoreReview($('rv').value, $('md').value);
+  const cls = r.sentiment === 'Negative' ? 'neg' : r.sentiment === 'Positive' ? 'pos' : 'mid';
+  const ucls = r.urgency === 'Critical' || r.urgency === 'High' ? 'neg' : r.urgency === 'Medium' ? 'mid' : 'pos';
+  const th = r.themes.map(t => `<span class="pill ${t.polarity === 'negative' ? 'neg' : t.polarity === 'positive' ? 'pos' : 'mid'}">${esc(t.theme)}</span>`).join(' ') || '<span class="note">No known theme found</span>';
+  $('out').innerHTML = `<div class="eyebrow">score_review · ${esc(r.model)}</div><dl class="kv">
+  <dt>Sentiment</dt><dd><span class="pill ${cls}">${r.sentiment}</span> <span class="mono num">${r.sentiment_score > 0 ? '+' : ''}${r.sentiment_score}</span></dd>
+  <dt>Urgency</dt><dd><span class="pill ${ucls}">${r.urgency}</span></dd>
+  <dt>Safety / churn</dt><dd>${r.safety_flag ? 'Safety flag' : 'No safety flag'} · ${r.churn_signal ? 'churn signal' : 'no churn signal'}</dd>
+  <dt>Themes</dt><dd style="display:flex;flex-wrap:wrap;gap:6px">${th}</dd><dt>Route to</dt><dd>${esc(r.route_to)}</dd>
+  <dt>Pattern for ${esc(r.model)}</dt><dd>${patternCheck(r)}</dd></dl>`;
+}
+function patternCheck(r) {
+  const model = r.model, neg = r.themes.filter(t => t.polarity === 'negative').map(t => t.theme);
+  const hits = D.recurring.filter(c => neg.includes(c.category) && (c.models[model] || 0) > 0)
+    .map(c => `Matches <b>${esc(ISSUE[c.issue] || c.issue)}</b>: ${c.models[model]} ${esc(model)} report${c.models[model] > 1 ? 's' : ''} (${c.total_reports} across all models, ${c.still_open} open)`);
+  const stat = D.models.find(m => m.model === model);
+  const top = stat && stat.topIssue !== 'No dominant issue' ? `${esc(model)}'s top complaint in reviews: ${esc(stat.topIssue)}.` : '';
+  if (hits.length) return hits.join('<br>') + (top ? `<br><span class="note">${top}</span>` : '');
+  if (!neg.length) return `No complaint to match.${top ? ' <span class="note">' + top + '</span>' : ''}`;
+  return `New for ${esc(model)}: no recurring ticket pattern on these themes. <span class="note">${top}</span>`;
+}
+$('md').addEventListener('change', renderScore);
+$('go').addEventListener('click', renderScore);
+document.querySelectorAll('[data-ex]').forEach(b => b.addEventListener('click', () => { $('rv').value = b.dataset.ex; if (b.textContent === 'Hinglish') $('md').value = 'Exter'; renderScore(); }));
+renderScore();
+
+/* ---------- Ask the Hub ---------- */
+const RULES = `You are the Hub assistant inside "Customer Voice Hub", a student capstone that helps Hyundai India after-sales teams act on customer complaints. All data is synthetic demo data.
+Tools: score_review (scores one complaint with the rule engine), escalation_radar (ranks open service tickets by 0-100 risk and lists recurring defects), model_voice (review stats and top complaints for one model).
+Rules:
+- Get every number from a tool. Never invent ticket IDs, counts or scores.
+- If a complaint is in Hindi or Hinglish, translate it to English yourself first, then call score_review with the English text, and mention the translation.
+- After using the tools, add judgment the rules miss: route to every team involved, treat a product defect plus poor service or a repeat visit as churn risk, and say when a safety tag came only from the word "unsafe".
+- Be brief: at most 8 short lines or bullets, plain business language, lead with the answer. Use **bold** sparingly and "- " for bullets. End with one recommended action.
+Models: ${D.models.map(m => m.model).join(', ')}. Ticket snapshot to 17 Oct 2026: ${D.summary.open} open, ${D.summary.escalate} to escalate today.`;
+const TOOLS = [
+  {name: 'score_review', description: 'Score one customer review or complaint (English text) with the Hyundai rule engine. Returns sentiment, score -1..1, urgency, safety and churn flags, themes with owner teams, and route_to.',
+   inputSchema: {type: 'object', properties: {review_text: {type: 'string'}, model: {type: 'string', description: 'Hyundai model name or "Not specified"'}}, required: ['review_text']},
+   execute: i => { mark('score_review'); return scoreReview(String(i.review_text || ''), i.model ? String(i.model) : 'Not specified'); }},
+  {name: 'escalation_radar', description: 'Rank open service tickets by escalation risk (0-100) with the reasons, and list recurring defects (8+ reports). Use model "All" or a model name.',
+   inputSchema: {type: 'object', properties: {model: {type: 'string'}, limit: {type: 'number'}}, required: ['model']},
+   execute: i => { mark('escalation_radar'); return escalationRadar(i.model, i.limit); }},
+  {name: 'model_voice', description: 'Review statistics for one model: review count, average rating, net sentiment, top negative themes with owners, and 3 recent negative reviews.',
+   inputSchema: {type: 'object', properties: {model: {type: 'string'}}, required: ['model']},
+   execute: i => { mark('model_voice'); return modelVoice(i.model); }},
+];
+const SUGGEST = ["Which defect should leadership worry about most, and why?", "Which Venue tickets need escalation today?", "Score this: \"Exter ka AC bilkul thanda nahi karta, service center ne kuch nahi kiya\"", "Compare Creta and Venue customer sentiment."];
+const turns = []; let ctl = null, used = null, sample = null, canTools = false;
+function md(t) {
+  const lines = esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').split('\n');
+  let html = '', inList = false;
+  for (const l of lines) {
+    const b = l.match(/^\s*[-•*]\s+(.*)/);
+    if (b) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${b[1]}</li>`; continue; }
+    if (inList) { html += '</ul>'; inList = false; }
+    if (l.trim()) html += `<p>${l}</p>`;
+  }
+  return html + (inList ? '</ul>' : '');
+}
+function bubble(cls, html) { const d = document.createElement('div'); d.className = 'msg ' + cls; d.innerHTML = html; $('log').append(d); $('log').scrollTop = $('log').scrollHeight; return d; }
+function mark(name) { if (used) { used.add(name); const t = used.el.querySelector('.tools'); if (t) t.innerHTML = [...used].map(n => `<span>${n}</span>`).join(''); } }
+bubble('ai', md("Hi. I can score a complaint (English or Hinglish), find today's escalations, or compare models. Pick a question below or type your own."));
+$('chips').innerHTML = SUGGEST.map((s, i) => `<button type="button" data-s="${i}">${esc(s)}</button>`).join('');
+document.querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => { $('q').value = SUGGEST[+b.dataset.s]; ask(); }));
+$('ask').addEventListener('submit', e => { e.preventDefault(); ask(); });
+$('stop').addEventListener('click', () => ctl?.abort());
+const COPY = {not_granted: 'The assistant needs your permission to use Claude. Reload the page to be asked again.', sampling_disabled: 'Claude is not available for this account.', rate_limited: 'Too many questions at once. Wait a minute and ask again.', session_expired: 'Please sign in to Claude again.', refused: 'I can’t answer that one. Try a question about complaints, tickets or models.', prompt_too_large: 'That was too long. Try a shorter question.'};
+async function ask() {
+  const q = $('q').value.trim(); if (!q || ctl) return;
+  if (!sample) { $('offline').hidden = false; return; }
+  $('q').value = ''; bubble('me', esc(q)); turns.push({role: 'user', content: q});
+  const out = bubble('ai', '<div class="tools"></div><p class="note">Thinking…</p>');
+  used = new Set(); used.el = out;
+  ctl = new AbortController(); $('send').disabled = true; $('stop').hidden = false;
+  const body = () => out.querySelector('.tools').outerHTML;
+  try {
+    const opts = {signal: ctl.signal, modelTier: 'quick', onText: ({text}) => { out.innerHTML = body() + md(text); $('log').scrollTop = $('log').scrollHeight; }};
+    let input = [{role: 'user', content: RULES}, ...turns.slice(-8)];
+    if (canTools) opts.tools = TOOLS; else { opts.cache = false; input = [{role: 'user', content: RULES + '\n\nTool results are not available in this view. Use this data:\n' + JSON.stringify({radar: escalationRadar('All', 6), models: D.models})}, ...turns.slice(-8)]; }
+    const {text} = await sample(input, opts);
+    out.innerHTML = body() + md(text); turns.push({role: 'assistant', content: text});
+  } catch (e) {
+    if (e && e.code === 'cancelled') { out.innerHTML = body() + md((e.text || '') + '\n(stopped)'); }
+    else { out.innerHTML = body() + (e && e.text ? md(e.text) : '') + `<p class="note">${esc(COPY[e && e.code] || 'Something went wrong on the way to Claude. Ask again in a moment.')}</p>`; }
+    turns.pop();
+  } finally { ctl = null; used = null; $('send').disabled = false; $('stop').hidden = true; }
+}
+(async () => {
+  try { sample = window.claude ? await window.claude.use('sample') : null; } catch (e) { sample = null; }
+  if (!sample) { $('offline').hidden = false; $('bot-status').textContent = 'Available when opened in Claude'; return; }
+  try { const lim = await sample.limits(); canTools = !!lim.tools; } catch (e) { canTools = false; }
+})();
+
+/* ---------- theme toggle ---------- */
+(function () {
+  const body = document.body, root = document.documentElement;
+  const sys = () => root.getAttribute('data-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const current = () => body.dataset.cvh || sys();
+  const label = () => { const d = current() === 'dark'; $('theme-label').textContent = d ? 'Light mode' : 'Dark mode'; $('theme').setAttribute('aria-pressed', String(d)); };
+  body.dataset.cvh = 'light';
+  try { const saved = localStorage.getItem('cvh-theme'); if (saved === 'dark' || saved === 'light') body.dataset.cvh = saved; } catch (e) {}
+  label();
+  $('theme').addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    body.dataset.cvh = next;
+    try { localStorage.setItem('cvh-theme', next); } catch (e) {}
+    label();
+  });
+  new MutationObserver(label).observe(root, {attributes: true, attributeFilter: ['data-theme']});
+})();
+
+/* ---------- chat window ---------- */
+(function () {
+  const fab = $('fab'), drawer = $('drawer'), body = $('drawer-body'), panel = $('chat-panel'), home = $('chat-home'), away = $('chat-away');
+  const open = () => { body.append(panel); away.hidden = false; drawer.hidden = false; fab.setAttribute('aria-expanded', 'true'); fab.querySelector('span').textContent = 'Close chat'; setTimeout(() => $('q').focus(), 50); $('log').scrollTop = $('log').scrollHeight; };
+  const close = () => { home.prepend(panel); away.hidden = true; drawer.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.querySelector('span').textContent = 'Chat with the bot'; };
+  fab.addEventListener('click', () => drawer.hidden ? open() : close());
+  $('drawer-close').addEventListener('click', close);
+  $('chat-return').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) close(); });
+})();
+
+/* ---------- lists ---------- */
+const CONN = [["Hyundai Review Intelligence","custom n8n MCP: scores any review or complaint"],["Hyundai Escalation Radar","custom n8n MCP: risk-ranks tickets, finds recurring defects"],["Gmail","escalation drafts, briefs and customer replies"],["Google Calendar","books defect review meetings"],["Google Drive","holds the review and ticket sheets, stores briefs"],["GitHub","version control for workflow exports and tool code"],["Canva","visuals for the leadership deck"],["Lovable","public landing page for the project"]];
+$('conn').innerHTML = CONN.map(([n, d]) => `<li><span class="ck">✓</span><span><b>${esc(n)}</b><br><span class="note">${esc(d)}</span></span></li>`).join('');
+const SK = [["complaint-triage","calls both tools, routes to every team involved, fixes rule gaps"],["escalation-email","P1/P2/P3 Gmail drafts with ticket IDs, never sends"],["quality-brief","the same 6-part leadership brief every time"],["customer-reply","warm English or Hinglish replies, no fix-date promises"],["data-guardrails","no invented numbers, need-to-know, humans send"],["Plugin","bundles all 5 skills and both MCP connectors"]];
+$('skills').innerHTML = SK.map(([n, d]) => `<li><span class="ck">✓</span><span><b class="mono">${esc(n)}</b><br><span class="note">${esc(d)}</span></span></li>`).join('');
+const LIM = [["Synthetic data","All tickets and reviews are generated to look realistic. The numbers show the method, not Hyundai's real performance."],["Live only during demos","The n8n tools and the chatbot run on the presenter's laptop, so they are offline when it is switched off."],["Keyword-based scoring","Gemini translates Hindi and Hinglish, but the scoring rules can still miss sarcasm or new phrasing."]];
+$('limits').innerHTML = LIM.map(([n, d]) => `<li><span style="color:var(--amber);font-weight:700">!</span><span><b>${esc(n)}</b><br><span class="note">${esc(d)}</span></span></li>`).join('');
+</script>
+
+</body></html>
