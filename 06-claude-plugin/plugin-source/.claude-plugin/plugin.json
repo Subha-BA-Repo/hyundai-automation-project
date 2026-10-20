@@ -1,0 +1,7 @@
+{
+  "name": "hyundai-customer-voice",
+  "version": "0.1.0",
+  "description": "Hyundai Customer Voice & Service Insight Hub: triage complaints, spot recurring defects, draft escalations and customer replies, and brief leadership, using two custom n8n MCP tools plus Gmail, Calendar and Drive.",
+  "author": { "name": "Subha Das" },
+  "keywords": ["hyundai", "customer-voice", "quality", "after-sales", "n8n", "mcp"]
+}
