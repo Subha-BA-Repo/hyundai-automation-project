@@ -1,0 +1,300 @@
+{
+  "name": "Chat – Hub Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "  Hi! I'm the Customer Voice Hub bot for Hyundai India after-sales (demo data).\n  Ask me which defect is most urgent, which tickets to escalate, or paste a complaint in English or Hinglish.",
+        "options": {
+          "inputPlaceholder": "e.g. Which Venue tickets need escalation today?",
+          "subtitle": "AI agent · n8n + Gemini · synthetic demo data",
+          "title": "Customer Voice Hub",
+          "customCss": "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Saira:wght@700&display=swap');\n:root {\n  --chat--font-family: 'IBM Plex Sans', system-ui, sans-serif;\n  --chat--color-primary: #f2a33a;\n  --chat--color-primary-shade-50: #d98f2c;\n  --chat--color-secondary: #1f5f8b;\n  --chat--color-white: #ffffff;\n  --chat--color-light: #eef1f4;\n  --chat--color-dark: #0f1b2a;\n  --chat--header--background: #0a1422;\n  --chat--header--color: #ffffff;\n  --chat--heading--font-size: 1.6em;\n  --chat--message--font-size: 0.95rem;\n  --chat--message--bot--background: #ffffff;\n  --chat--message--bot--color: #0f1b2a;\n  --chat--message--user--background: #1f5f8b;\n  --chat--message--user--color: #ffffff;\n  --chat--border-radius: 14px;\n}\nbody { font-family: 'IBM Plex Sans', system-ui, sans-serif; background: #eef1f4; }\n.chat-heading h1 { font-family: 'Saira', 'IBM Plex Sans', sans-serif; }"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "eca0057e-404a-4e76-a99e-acca7d586525",
+      "name": "When chat message received",
+      "webhookId": "ca0d46d6-0a19-42a9-b7bc-64d1a43d363e"
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "     You are the Customer Voice Hub assistant for Hyundai India after-sales (demo, synthetic data). Use score_review for any complaint text (it handles Hindi/Hinglish) and escalation_radar for tickets, escalations and recurring defects (model = a Hyundai model or \"All\"). Never invent numbers. Answer in 3-6 short lines and end with one recommended action.",
+          "maxIterations": 4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        240,
+        -16
+      ],
+      "id": "8045fe66-e035-4c90-b332-c5b113d9d39c",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 1000,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {
+          "maxOutputTokens": 600,
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -48,
+        224
+      ],
+      "id": "90a26b92-e0b5-48da-b749-c5cecdfb1349",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FCGuSZKaOccGsjHX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        304,
+        208
+      ],
+      "id": "f282bb52-7b9d-4e16-a1c7-766c5b869f0b",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "K8FjPHn9yDJr4Hm1",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/K8FjPHn9yDJr4Hm1",
+          "cachedResultName": "Tool – Score Review"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "review_text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('review_text', ``, 'string') }}",
+            "model": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('model', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "review_text",
+              "displayName": "review_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        208
+      ],
+      "id": "07f1d373-0900-4fdc-9aed-cb20f5c8d47e",
+      "name": "Call 'Tool – Score Review'"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "WzZLOuuXclO2OWgb",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/WzZLOuuXclO2OWgb",
+          "cachedResultName": "Tool – Escalation Radar"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "model": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('model', ``, 'string') }}",
+            "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('limit', ``, 'number') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "limit",
+              "displayName": "limit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        208
+      ],
+      "id": "b13f1ed5-a027-48bf-b4f9-257777626e81",
+      "name": "Call 'Tool – Escalation Radar'"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.8-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        144,
+        224
+      ],
+      "id": "4f511c89-d664-4b08-a805-158bd1cde3f7",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FCGuSZKaOccGsjHX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Customer Voice Hub · Chatbot\nAI agent (Gemini) that answers using our two tools.\n\n**Website:** [Customer Voice Hub](https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv)\n**Open this chatbot:** [Chat page](http://localhost:5678/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat)\n\nSynthetic demo data · built by Subha Das",
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -48
+      ],
+      "id": "2441e72e-797d-4109-8b39-8142953d1aa4",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Tool – Score Review'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Tool – Escalation Radar'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "36becb06-b443-4d23-b37c-079851511c7c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "85a8240c7037a1bb35a57f70fb2734ce27e32f8ff3644a2512ef8a9550fbdbd3"
+  },
+  "nodeGroups": [],
+  "id": "jNCFZ2HlEVRANaMI",
+  "tags": []
+}

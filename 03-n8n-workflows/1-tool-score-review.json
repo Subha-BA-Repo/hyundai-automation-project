@@ -1,0 +1,142 @@
+{
+  "name": "Tool – Score Review",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "review_text"
+            },
+            {
+              "name": "model"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -384,
+        -224
+      ],
+      "id": "fc0402ba-e231-4d8c-88de-f6af3cec64a4",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== Hyundai Review Scorer v2 (MCP #1, tool 1) – Gemini + rules =====\n// Inputs come from the trigger (review_text, model). Gemini's English version comes from the Basic LLM Chain.\nconst input = $('When Executed by Another Workflow').first().json;\nconst english = $input.first().json.text;            // Gemini output (missing if Gemini failed)\nconst text = String(english || input.review_text || '').toLowerCase();\nconst model = input.model || 'Not specified';\n\n// 1) THEMES – which part of the car / ownership experience is the customer talking about?\nconst THEMES = {\n  'Mileage': ['mileage', 'kmpl', 'fuel efficiency', 'fuel economy'],\n  'ADAS & Safety': ['adas', 'airbag', 'lane keep', 'collision', 'brake', 'unsafe'],\n  'Infotainment & Bluelink': ['bluelink', 'infotainment', 'touchscreen', 'android auto', 'screen'],\n  'Ride & Comfort': ['ride', 'suspension', 'seat', 'cabin', 'cramped'],\n  'Build Quality': ['rattle', 'build quality', 'fit and finish', 'panel gap', 'trim'],\n  'AC & Cooling': [' ac ', 'cooling', 'climate control', 'compressor'],\n  'Transmission': ['dct', 'gearbox', 'judder', 'jerk', 'clutch', 'gear'],\n  'Sunroof': ['sunroof', 'roof lining'],\n  'Service Experience': ['service advisor', 'advisor', 'follow-up', 'called back', 'service took', 'service center', 'service centre', 'dealer'],\n  'Service Cost': ['bill', 'estimate', 'charged', 'cost'],\n  'Delivery & Waiting': ['delivery', 'waiting period', 'delayed'],\n  'Spare Parts': ['spare part', 'parts', 'not available'],\n};\n\n// 2) OWNER – which Hyundai team should act on each theme\nconst OWNER = {\n  'Mileage': 'Product Planning', 'ADAS & Safety': 'Quality & Safety', 'Infotainment & Bluelink': 'Connected Car (Bluelink)',\n  'Ride & Comfort': 'Product Planning', 'Build Quality': 'Plant Quality', 'AC & Cooling': 'Service Engineering',\n  'Transmission': 'Powertrain Quality', 'Sunroof': 'Plant Quality', 'Service Experience': 'Dealer Network / Customer Care',\n  'Service Cost': 'After-Sales Pricing', 'Delivery & Waiting': 'Sales Ops & Logistics', 'Spare Parts': 'Parts Supply Chain',\n};\n\n// 3) WORD LISTS for sentiment and business risk\nconst POSITIVE = ['excellent', 'good', 'great', 'smooth', 'solid', 'premium', 'superb', 'best', 'useful', 'polite',\n  'affordable', 'reasonable', 'quick', 'fast', 'perfect', 'memorable', 'blessing', 'quiet', 'easy', 'peace of mind', 'on time'];\nconst NEGATIVE = ['poor', 'bad', 'weak', 'leak', 'rattle', 'judder', 'jerk', 'freeze', 'drops', 'disconnect', 'annoying',\n  'falsely', 'cramped', 'stiff', 'delay', 'longer than promised', 'never', 'higher than', 'not available', 'stuck', 'too long',\n  'unsafe', 'hesitation', 'noise', 'not cooling', 'does not cool', \"doesn't cool\", 'did nothing', 'nothing was done', 'wet', 'blocked'];\nconst SAFETY = ['unsafe', 'brake', 'lurch', 'airbag', 'fire', 'smoke', 'steering', 'hesitat'];\nconst CHURN = ['switch brand', 'never buy', 'social media', 'consumer court', 'refund', 'worst'];\n\n// 4) Split the review into clauses, so \"AC is great but mileage is poor\" is scored part by part\nconst clauses = text.split(/[.;!?,]|\\bbut\\b|\\bhowever\\b/).map(c => c.trim()).filter(Boolean);\nlet pos = 0, neg = 0;\nconst themes = {};\nfor (const c of clauses) {\n  const p = POSITIVE.filter(w => c.includes(w)).length;\n  const n = NEGATIVE.filter(w => c.includes(w)).length;\n  pos += p; neg += n;\n  const polarity = n > p ? 'negative' : p > n ? 'positive' : 'neutral';\n  for (const [theme, words] of Object.entries(THEMES)) {\n    if (words.some(w => (' ' + c + ' ').includes(w))) {\n      if (!themes[theme] || polarity === 'negative') themes[theme] = polarity;\n    }\n  }\n}\n\n// 5) Sentiment score from -1 (very negative) to +1 (very positive)\nconst score = pos + neg ? Number(((pos - neg) / (pos + neg)).toFixed(2)) : 0;\nconst sentiment = score >= 0.34 ? 'Positive' : score <= -0.34 ? 'Negative' : 'Mixed';\n\n// 6) Business rules – this is the part no off-the-shelf connector does\nconst safety = neg > 0 && SAFETY.some(w => text.includes(w));\nconst churn = CHURN.some(w => text.includes(w));\nconst negThemes = Object.keys(themes).filter(t => themes[t] === 'negative');\nconst urgency = safety ? 'Critical' : (churn || score <= -0.6) ? 'High' : negThemes.length ? 'Medium' : 'Low';\n\nreturn [{\n  json: {\n    model,\n    original_text: input.review_text,\n    english_text: english || null,\n    language_step: english ? 'Gemini translation' : 'skipped (used original text)',\n    sentiment,\n    sentiment_score: score,\n    urgency,\n    safety_flag: safety,\n    churn_signal: churn,\n    themes: Object.entries(themes).map(([theme, polarity]) => ({ theme, polarity, owner: OWNER[theme] })),\n    route_to: negThemes.length ? OWNER[negThemes[0]] : 'No action – share as positive feedback',\n    reason: negThemes.length\n      ? `Negative about ${negThemes.join(', ')}${safety ? ', with a safety keyword' : ''}${churn ? ', and a churn signal' : ''}.`\n      : 'No negative theme found.',\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        32
+      ],
+      "id": "411ed4e6-6cbf-4673-9e18-3fdf2b0b2e0f",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=   You translate Hyundai India customer feedback. Rewrite the customer text below in plain English, keeping every complaint, car part and emotion. If it is already English, return it unchanged. Return only the rewritten text.\n   Customer text: {{ $json.review_text }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -144,
+        -208
+      ],
+      "id": "93ada05f-c84f-4f43-af6b-074c927b04ed",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {
+          "maxOutputTokens": 200,
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        0
+      ],
+      "id": "9c231041-e33f-499f-80e0-a4ab488dadd2",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FCGuSZKaOccGsjHX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "**Score Review** – This workflow scores one customer complaint and is used by both Claude and the chatbot. It receives the complaint text and the car model, then sends the text to Google Gemini, which translates Hindi or Hinglish into plain English (if Gemini is busy or fails, the original text is used so the tool never stops). The Code node then applies our business rules: it finds which of 12 topics the customer is talking about (gearbox, AC, sunroof, service and so on), scores the tone from −1 (very negative) to +1 (very positive), sets the urgency, flags safety and churn risks, and names the team that should act. To add a new topic or change a team, edit the THEMES and OWNER lists at the top of the code. Website: [Customer Voice Hub](https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv)",
+        "height": 272,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -208
+      ],
+      "id": "f758f083-a731-44ad-b80f-0687a9eb1641",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "7d7a9952-47bd-476f-b03f-da25b9a1f5ee",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "85a8240c7037a1bb35a57f70fb2734ce27e32f8ff3644a2512ef8a9550fbdbd3"
+  },
+  "nodeGroups": [],
+  "id": "K8FjPHn9yDJr4Hm1",
+  "tags": []
+}

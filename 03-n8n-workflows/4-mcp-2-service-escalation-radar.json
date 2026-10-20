@@ -1,0 +1,110 @@
+{
+  "name": "MCP 2 – Service Escalation Radar",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "hyundai-escalation-radar",
+        "instructions": "   Hyundai after-sales service escalation tools. Use them to find which open service tickets need escalation today and which defects keep recurring across customers, models and cities. Data is synthetic, for demonstration only. Always call the tool; never estimate risk scores yourself."
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        -432,
+        -128
+      ],
+      "id": "24b22a54-d3be-4173-b2ff-30af4647c0e6",
+      "name": "MCP Server Trigger",
+      "webhookId": "c0209f3d-31e0-4a47-912e-20e9d3fcdfcb"
+    },
+    {
+      "parameters": {
+        "description": "   Ranks open Hyundai service tickets by escalation risk and detects recurring defects. Use it when the user asks which complaints or service cases need attention, what to escalate today, or whether a problem is widespread. Inputs: model (a Hyundai model such as Venue or Creta, or \"All\") and limit (how many top tickets to return, default 5). Returns open ticket count, number to escalate today, the top tickets with a 0-100 risk score, level, owner team and the reasons behind the score, plus recurring issues with total reports, models and cities affected.",
+        "workflowId": {
+          "__rl": true,
+          "value": "WzZLOuuXclO2OWgb",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/WzZLOuuXclO2OWgb",
+          "cachedResultName": "Tool – Escalation Radar"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "model": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('model', ``, 'string') }}",
+            "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('limit', ``, 'number') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "limit",
+              "displayName": "limit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        96
+      ],
+      "id": "fdb40c91-460b-4513-9d7f-35962bfe5b08",
+      "name": "escalation_radar"
+    },
+    {
+      "parameters": {
+        "content": "## Customer Voice Hub · Tool for Claude\nThis workflow lets Claude call our scoring rules.\nClaude asks → this tool runs → the answer goes back to Claude.\n\n**Website:** [Customer Voice Hub](https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv)\n",
+        "width": 464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -128
+      ],
+      "id": "46e5249e-b920-4db1-a908-1f440d14e3fe",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "escalation_radar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "144426fa-1cc7-4447-9ffd-06442a4e0f8e",
+  "meta": {
+    "instanceId": "85a8240c7037a1bb35a57f70fb2734ce27e32f8ff3644a2512ef8a9550fbdbd3"
+  },
+  "nodeGroups": [],
+  "id": "0B4PyJGGzqcfX7rd",
+  "tags": []
+}

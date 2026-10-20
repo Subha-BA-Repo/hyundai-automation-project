@@ -1,0 +1,113 @@
+{
+  "name": "MCP 1 – Review Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "hyundai-review-intel",
+        "instructions": "Hyundai Customer Voice tools for the Customer Experience and Quality teams. Use these tools to analyse customer reviews and complaints about Hyundai India cars and decide which team should act. All data is synthetic, for demonstration only. Never invent scores yourself; always call the tool and quote its result."
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        -272,
+        -144
+      ],
+      "id": "1110463b-c1b5-40a9-bd92-db57202a7d6a",
+      "name": "MCP Server Trigger",
+      "webhookId": "91f32676-4ced-474a-b3eb-16952d445df3"
+    },
+    {
+      "parameters": {
+        "description": "Scores a single Hyundai customer review or complaint. Use this whenever the user shares review text, a social media comment, a survey answer or a service complaint and wants to know how serious it is or who should handle it. Inputs: review_text (the customer's exact words) and model (Hyundai model name such as Creta, Venue, Exter; use \"Not specified\" if unknown). Returns sentiment (Positive/Mixed/Negative), a score from -1 to +1, urgency (Low/Medium/High/Critical), safety and churn flags, the themes mentioned with polarity, and the Hyundai team it should be routed to, with a one-line reason.",
+        "workflowId": {
+          "__rl": true,
+          "value": "K8FjPHn9yDJr4Hm1",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/K8FjPHn9yDJr4Hm1",
+          "cachedResultName": "Tool – Score Review"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "review_text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('review_text', ``, 'string') }}",
+            "model": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('model', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "review_text",
+              "displayName": "review_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        80
+      ],
+      "id": "9d83452f-26cf-4b5c-bcac-c0db24581b88",
+      "name": "score_review"
+    },
+    {
+      "parameters": {
+        "content": "## Customer Voice Hub · Tool for Claude\nThis workflow lets Claude call our scoring rules.\nClaude asks → this tool runs → the answer goes back to Claude.\n\n**Website:** [Customer Voice Hub](https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv)",
+        "height": 176,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -144
+      ],
+      "id": "9adbcbb2-bf7d-4598-858c-56952f0934b4",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "score_review": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e6829bfe-590f-4678-b0f2-36a08ac1fa9b",
+  "meta": {
+    "instanceId": "85a8240c7037a1bb35a57f70fb2734ce27e32f8ff3644a2512ef8a9550fbdbd3"
+  },
+  "nodeGroups": [],
+  "id": "X5RbUNsm19oxjWVI",
+  "tags": []
+}
