@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open Customer Voice Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#0a1422;--card:#112135;--line:#22364f;--ink:#fff;--muted:#a9b9ca;--amber:#f2a33a;--blue:#1f5f8b;--ok:#8fd19e;--f:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 400px at 85% -10%,#1b3554 0%,transparent 60%),var(--bg);color:var(--ink);font-family:var(--f);-webkit-font-smoothing:antialiased;display:flex;align-items:center}
+.wrap{max-width:900px;margin:0 auto;padding:40px 20px;width:100%}
+small{color:var(--amber);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(30px,5vw,46px);letter-spacing:-.03em;line-height:1.05;margin:10px 0 10px}
+p.lede{color:var(--muted);max-width:60ch;margin:0 0 28px;font-size:16px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:minmax(0,1fr)}}
+a.tile{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
+a.tile:hover{border-color:var(--amber);transform:translateY(-2px)}
+a.tile:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+a.tile.main{grid-column:1/-1;background:linear-gradient(135deg,#1f5f8b,#123b5a);border-color:#2f6f9c}
+.t{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.d{color:var(--muted);font-size:14.5px;line-height:1.5}
+a.tile.main .d{color:#d6e4f0}
+.go{margin-top:8px;font-weight:600;font-size:14px;color:var(--amber)}
+.need{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:#1b2c42;color:var(--ok);align-self:flex-start}
+.foot{margin-top:28px;color:var(--muted);font-size:13.5px;line-height:1.6}
+.foot code{background:#1b2c42;color:#fff;padding:1px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <small>Customer Voice Hub · launcher</small>
+  <h1>Open the live app</h1>
+  <p class="lede">Start here. The website is always online. The chatbot and n8n need your laptop on with Docker Desktop running (see <code style="background:#1b2c42;padding:1px 6px;border-radius:5px">02-start-guide/start-guide.html</code>).</p>
+  <div class="grid">
+    <a class="tile main" href="https://claude.ai/artifact/5zcaETuNP1thw1ksJPTWLv" target="_blank" rel="noopener">
+      <span class="need">Always online</span>
+      <span class="t">Customer Voice Hub · live website</span>
+      <span class="d">Today's readout, escalations, repeated faults, model feedback and the review scorer. Open it inside the Claude app so the "Chat with the bot" window works (click Allow the first time).</span>
+      <span class="go">Open website ↗</span>
+    </a>
+    <a class="tile" href="http://localhost:5678/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">
+      <span class="need">Laptop + Docker on</span>
+      <span class="t">Hub Bot · on this laptop</span>
+      <span class="d">The n8n + Gemini chatbot. Fastest option during your demo.</span>
+      <span class="go">Open chatbot ↗</span>
+    </a>
+    <a class="tile" href="https://lumpish-character-reload.ngrok-free.dev/webhook/ca0d46d6-0a19-42a9-b7bc-64d1a43d363e/chat" target="_blank" rel="noopener">
+      <span class="need">Laptop + Docker on</span>
+      <span class="t">Hub Bot · any device</span>
+      <span class="d">Same chatbot through the public address. Share it so someone can try it on their phone. Click "Visit Site" if ngrok shows a notice.</span>
+      <span class="go">Open chatbot ↗</span>
+    </a>
+    <a class="tile" href="http://localhost:5678" target="_blank" rel="noopener">
+      <span class="need">Laptop + Docker on</span>
+      <span class="t">n8n workflows</span>
+      <span class="d">See the five workflows and replay any run in the Executions tab to show how the data flows.</span>
+      <span class="go">Open n8n ↗</span>
+    </a>
+    <a class="tile" href="../02-start-guide/demo-walkthrough.html">
+      <span class="need">Guide</span>
+      <span class="t">Demo walkthrough</span>
+      <span class="d">Messages to copy into Claude, sample answers, and questions for the website and the chatbot.</span>
+      <span class="go">Open guide →</span>
+    </a>
+  </div>
+  <p class="foot">Shortcuts in this folder open the same links with a double-click: <code>Customer Voice Hub (live)</code>, <code>Hub Bot - this laptop</code>, <code>Hub Bot - any device</code>, <code>n8n workflows</code>. The page in <code>offline-copy</code> is only a backup to view without internet; its chat does not work there.<br>Student portfolio project by Subha Das · synthetic demo data · not affiliated with Hyundai Motor India.</p>
+</div>
+</body>
+</html>
